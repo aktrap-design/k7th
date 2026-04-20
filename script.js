@@ -31,7 +31,6 @@
   const lightboxClose = document.getElementById('lightbox-close');
   const lightboxPrev = document.getElementById('lightbox-prev');
   const lightboxNext = document.getElementById('lightbox-next');
-  const pageTopBtn = document.getElementById('page-top');
 
   // ---------- INIT ----------
   async function init() {
@@ -44,13 +43,10 @@
     }
 
     buildHeroCarousel(galleryData.hero);
-    buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
     setupLightbox();
     observeScrollReveal();
-    setupVideoParallax();
-    setupPageTopButton();
   }
 
   // ==========================================
@@ -67,17 +63,6 @@
       heroTrack.appendChild(div);
     });
 
-    // Create transition bars for wipe effect
-    const transitionLayer = document.createElement('div');
-    transitionLayer.className = 'transition-bars';
-    for (let i = 0; i < 6; i++) {
-      const bar = document.createElement('div');
-      bar.className = 'bar bar-' + i;
-      transitionLayer.appendChild(bar);
-    }
-    const hero = document.getElementById('hero');
-    hero.appendChild(transitionLayer);
-
     // Create indicator dots
     slides.forEach((_, i) => {
       const dot = document.createElement('button');
@@ -91,6 +76,7 @@
     startCarouselTimer();
 
     // Touch/swipe on hero
+    const hero = document.getElementById('hero');
     hero.addEventListener('touchstart', onHeroTouchStart, { passive: true });
     hero.addEventListener('touchend', onHeroTouchEnd, { passive: true });
 
@@ -109,34 +95,16 @@
     const dots = heroIndicators.querySelectorAll('.hero-dot');
     if (index === currentSlide || index < 0 || index >= slides.length) return;
 
-    const prevSlideEl = slides[currentSlide];
-    const nextSlideEl = slides[index];
-    const hero = document.getElementById('hero');
+    // Reset Ken Burns on previous slide
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
 
-    // 1. Black bars slide IN to cover the screen
-    hero.classList.add('bars-in');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
 
-    // 2. When screen is completely covered (at 650ms), swap the image invisibly
-    setTimeout(() => {
-      prevSlideEl.classList.remove('active');
-      dots[currentSlide].classList.remove('active');
-      
-      currentSlide = index;
-      nextSlideEl.classList.add('active');
-      dots[currentSlide].classList.add('active');
-
-      // 3. Black bars slide OUT to reveal new image
-      hero.classList.remove('bars-in');
-      hero.classList.add('bars-out');
-
-      // Reset auto-advance timer
-      startCarouselTimer();
-    }, 650);
-
-    // 4. Clean up transition classes after animation finishes
-    setTimeout(() => {
-      hero.classList.remove('bars-out');
-    }, 1300);
+    // Reset timer
+    startCarouselTimer();
   }
 
   function nextSlide() {
@@ -174,86 +142,6 @@
       if (dx < 0) nextSlide();
       else prevSlide();
     }
-  }
-
-  // ==========================================
-  //  CURATED CAROUSEL
-  // ==========================================
-  function buildCuratedCarousel(curated) {
-    const track = document.getElementById('curated-track');
-    if (!track || !curated || curated.length === 0) return;
-
-    let isDraggingCurated = false;
-
-    // Helper to create item
-    const createItem = (img) => {
-      const item = document.createElement('div');
-      item.className = 'curated-item';
-      const mainIndex = galleryData.gallery.findIndex(g => g.src === img.src);
-      item.innerHTML = `<img src="${img.src}" alt="${img.alt}" loading="lazy">`;
-      
-      item.addEventListener('click', () => {
-        if (!isDraggingCurated && mainIndex !== -1) {
-          openLightbox(mainIndex);
-        }
-      });
-      return item;
-    };
-
-    // Append original set
-    curated.forEach(img => track.appendChild(createItem(img)));
-    // Append duplicated set for infinite scrolling
-    curated.forEach(img => track.appendChild(createItem(img)));
-
-    // Mouse drag to scroll functionality
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    track.addEventListener('mousedown', (e) => {
-      isDown = true;
-      isDraggingCurated = false;
-      track.classList.add('dragging');
-      startX = e.pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-    });
-
-    track.addEventListener('mouseleave', () => {
-      isDown = false;
-      track.classList.remove('dragging');
-    });
-
-    track.addEventListener('mouseup', () => {
-      isDown = false;
-      track.classList.remove('dragging');
-      setTimeout(() => { isDraggingCurated = false; }, 50);
-    });
-
-    track.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 2;
-      if (Math.abs(walk) > 5) isDraggingCurated = true;
-      track.scrollLeft = scrollLeft - walk;
-    });
-
-    // Slow auto-scroll loop
-    const autoScrollSpeed = 0.5; // pixels per frame
-    const autoScroll = () => {
-      if (!isDown) {
-        track.scrollLeft += autoScrollSpeed;
-        
-        // Infinite loop seam reset
-        // Since we duplicated exactly once, the scrollWidth is 2x the content width.
-        if (track.scrollLeft >= track.scrollWidth / 2) {
-          track.scrollLeft -= track.scrollWidth / 2;
-        }
-      }
-      requestAnimationFrame(autoScroll);
-    };
-    
-    // Start auto-scroll
-    requestAnimationFrame(autoScroll);
   }
 
   // ==========================================
@@ -440,52 +328,6 @@
     document.querySelectorAll('.gallery-item.reveal').forEach((item) => {
       observer.observe(item);
     });
-  }
-
-  // ==========================================
-  //  VIDEO PARALLAX
-  // ==========================================
-  function setupVideoParallax() {
-    const videoSection = document.getElementById('video-section');
-    const videoWrapper = videoSection ? videoSection.querySelector('.video-parallax-wrapper') : null;
-    if (!videoSection || !videoWrapper) return;
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const rect = videoSection.getBoundingClientRect();
-          const windowH = window.innerHeight;
-          // Only animate when section is in view
-          if (rect.bottom > 0 && rect.top < windowH) {
-            const progress = (windowH - rect.top) / (windowH + rect.height);
-            const offset = (progress - 0.5) * 20; // -10% to +10% range
-            videoWrapper.style.transform = `translateY(${offset}%)`;
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-  }
-
-  // ==========================================
-  //  PAGE TOP BUTTON
-  // ==========================================
-  function setupPageTopButton() {
-    if (!pageTopBtn) return;
-
-    const toggleVisibility = () => {
-      const shouldShow = window.scrollY > 500;
-      pageTopBtn.classList.toggle('show', shouldShow);
-    };
-
-    pageTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    toggleVisibility();
   }
 
   // ---------- BOOT ----------
