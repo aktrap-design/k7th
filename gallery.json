@@ -2,19 +2,19 @@
   "hero": [
     {
       "src": "heroes/k7-hero001.jpg",
-      "alt": "spring graphics"
+      "alt": "SPRING"
     },
     {
       "src": "heroes/k7-hero002.jpg",
-      "alt": "spring graphics"
+      "alt": "MODE"
     },
     {
       "src": "heroes/k7-hero003.jpg",
-      "alt": "spring graphics"
+      "alt": "RED"
     },
     {
       "src": "heroes/k7-hero004.jpg",
-      "alt": "spring graphics"
+      "alt": "WHITE"
     },
     {
       "src": "heroes/k7-hero005.jpg",
@@ -594,7 +594,17 @@
     {
       "src": "images/K7_catch.png",
       "alt": "catch",
-      "category": "LIFE"
-    }
+      "category": "ART"
+    },
+        {
+      "src": "images/K7_260419A1-2.png",
+      "alt": "K7_260419A1-2",
+      "category": "ART"
+    },
+        {
+      "src": "images/K7_260419A1-3.png",
+      "alt": "K7_260419A1-3",
+      "category": "ART"
+    },
   ]
 }
