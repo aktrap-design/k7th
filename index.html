@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>galleryK7th</title>
+  <meta name="description" content="galleryK7th — A curated visual collection of life and art.">
+  <meta property="og:title" content="galleryK7th">
+  <meta property="og:description" content="A curated visual collection of life and graphics.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://k7th-graphics.github.io/gallery/">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== HERO CAROUSEL ========== -->
+  <section class="hero" id="hero" aria-label="Featured works carousel">
+    <div class="hero-track" id="hero-track"></div>
+
+    <!-- Overlay with title -->
+    <div class="hero-overlay">
+      <h1 class="hero-title">
+        <span class="title-gallery">galleryK7th</span>
+      </h1>
+    </div>
+
+    <!-- Carousel indicators -->
+    <div class="hero-indicators" id="hero-indicators"></div>
+
+    <!-- Scroll cue -->
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-cue-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== GALLERY ========== -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <h2 class="section-title">IMAGINATIONS</h2>
+      <nav class="filter-bar" id="filter-bar" aria-label="Category filter">
+        <button class="filter-btn active" data-filter="ALL">ALL</button>
+      </nav>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </section>
+
+  <!-- ========== LIGHTBOX ========== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img class="lightbox-image" id="lightbox-image" src="" alt="">
+      <div class="lightbox-info" id="lightbox-info">
+        <span class="lightbox-title"></span>
+        <span class="lightbox-category"></span>
+      </div>
+    </div>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Next image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-social">
+        <!-- X (Twitter) -->
+        <a href="https://x.com/anckosweets8" class="social-link" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/k7th_kananana/" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <!-- Threads -->
+        <a href="https://www.threads.com/@k7th_kananana" class="social-link" aria-label="Threads" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.432 1.781 3.632 2.695 6.54 2.717 2.227-.017 4.07-.55 5.476-1.587 1.2-.884 2.06-2.063 2.564-3.504.396-1.13.594-2.418.594-3.834 0-.678-.044-1.332-.128-1.953a7.465 7.465 0 0 0-.573-2.053c-.547-1.18-1.355-2.07-2.418-2.646-1.07-.58-2.39-.87-3.926-.865-1.273.004-2.39.253-3.32.74a4.863 4.863 0 0 0-2.136 2.143c-.428.864-.642 1.882-.642 3.03 0 1.61.482 2.88 1.437 3.78.944.89 2.16 1.338 3.608 1.338.948 0 1.778-.2 2.468-.596a3.28 3.28 0 0 0 1.448-1.57l.003-.01c.15-.4.225-.84.225-1.308 0-.576-.128-1.06-.384-1.438-.258-.38-.638-.572-1.128-.572-.358 0-.632.11-.818.329-.18.21-.292.516-.332.9l-.005.072c-.017.32.05.6.2.836.142.225.363.337.672.337.13 0 .225-.024.3-.052l.68 1.78a3.278 3.278 0 0 1-1.18.211c-.952 0-1.716-.333-2.272-.996-.55-.656-.825-1.528-.825-2.594 0-.763.14-1.46.426-2.074a3.87 3.87 0 0 1 1.263-1.572c.564-.41 1.26-.617 2.067-.617 1.036 0 1.908.332 2.592.984.69.66 1.038 1.572 1.038 2.716 0 .694-.107 1.345-.317 1.933a4.988 4.988 0 0 1-.975 1.678 5.017 5.017 0 0 1-1.685 1.2c-.688.31-1.478.47-2.356.477h-.043c-2.024-.013-3.685-.69-4.937-2.014C6.564 15.188 5.928 13.421 5.928 11.3c0-1.52.295-2.848.883-3.96a6.613 6.613 0 0 1 2.607-2.78c1.148-.684 2.567-1.032 4.214-1.04h.053c1.948.007 3.63.42 5.003 1.228 1.378.81 2.42 1.998 3.097 3.532.452.976.753 2.07.897 3.261.109.88.163 1.8.163 2.745 0 1.633-.228 3.135-.68 4.467-.626 1.84-1.716 3.303-3.24 4.347C17.276 23.442 14.967 23.978 12.186 24z"/></svg>
+        </a>
+        <!-- Litlink -->
+        <a href="https://lit.link/k7th" class="social-link" aria-label="Litlink" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </a>
+      </div>
+      <p class="footer-copy">&copy; K7th</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
