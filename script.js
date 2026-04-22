@@ -47,6 +47,7 @@
     buildGallery(galleryData.gallery);
     setupLightbox();
     observeScrollReveal();
+    setupVideoParallax();
   }
 
   // ==========================================
@@ -95,12 +96,26 @@
     const dots = heroIndicators.querySelectorAll('.hero-dot');
     if (index === currentSlide || index < 0 || index >= slides.length) return;
 
-    // Reset Ken Burns on previous slide
-    slides[currentSlide].classList.remove('active');
+    const prevSlideEl = slides[currentSlide];
+    const nextSlideEl = slides[index];
+
+    // Glitch accent line
+    heroTrack.classList.add('transitioning');
+    setTimeout(() => heroTrack.classList.remove('transitioning'), 800);
+
+    // Leaving animation on previous slide
+    prevSlideEl.classList.remove('active');
+    prevSlideEl.classList.add('leaving');
     dots[currentSlide].classList.remove('active');
 
+    // Clean up leaving class after animation
+    setTimeout(() => {
+      prevSlideEl.classList.remove('leaving');
+    }, 1400);
+
+    // Activate new slide
     currentSlide = index;
-    slides[currentSlide].classList.add('active');
+    nextSlideEl.classList.add('active');
     dots[currentSlide].classList.add('active');
 
     // Reset timer
@@ -328,6 +343,33 @@
     document.querySelectorAll('.gallery-item.reveal').forEach((item) => {
       observer.observe(item);
     });
+  }
+
+  // ==========================================
+  //  VIDEO PARALLAX
+  // ==========================================
+  function setupVideoParallax() {
+    const videoSection = document.getElementById('video-section');
+    const videoWrapper = videoSection ? videoSection.querySelector('.video-parallax-wrapper') : null;
+    if (!videoSection || !videoWrapper) return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const rect = videoSection.getBoundingClientRect();
+          const windowH = window.innerHeight;
+          // Only animate when section is in view
+          if (rect.bottom > 0 && rect.top < windowH) {
+            const progress = (windowH - rect.top) / (windowH + rect.height);
+            const offset = (progress - 0.5) * 20; // -10% to +10% range
+            videoWrapper.style.transform = `translateY(${offset}%)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
   // ---------- BOOT ----------
