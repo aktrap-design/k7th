@@ -32,12 +32,12 @@
   "gallery": [
     {
       "src": "images/K7_260419A1-3.png",
-      "alt": "K7_260419A1-3",
+      "alt": "K7_260419A1-3 BREEZE",
       "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260419A1-2.png",
-      "alt": "K7_260419A1-2",
+      "alt": "K7_260419A1-2 FLOWER",
       "category": "GRAPHIC"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "src": "images/K7_260418M.png",
-      "alt": "260418M",
+      "alt": "260418M SUMMER",
       "category": "GRAPHIC"
     },
     {
@@ -63,7 +63,7 @@
     {
       "src": "images/K7_260413M.png",
       "alt": "260413M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260412M.png",
@@ -73,7 +73,7 @@
     {
       "src": "images/K7_260411M.png",
       "alt": "260411M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260408A.png",
@@ -83,12 +83,12 @@
     {
       "src": "images/K7_260330A.png",
       "alt": "260330A",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260327N.png",
       "alt": "260327N",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260327M.png",
@@ -98,17 +98,17 @@
     {
       "src": "images/K7_260325M.png",
       "alt": "260325M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260324M.png",
       "alt": "260324M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260323M.png",
       "alt": "260323M",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260322.png",
@@ -123,11 +123,11 @@
     {
       "src": "images/K7_260319M.png",
       "alt": "260319M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260308An.png",
-      "alt": "260308An",
+      "alt": "260308An LOCATION",
       "category": "GRAPHIC"
     },
     {
@@ -148,7 +148,7 @@
     {
       "src": "images/K7_260221MN.png",
       "alt": "260221MN",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260216A1.png",
@@ -168,7 +168,7 @@
     {
       "src": "images/K7_260210Na.png",
       "alt": "260210Na",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260201AN.png",
@@ -178,7 +178,7 @@
     {
       "src": "images/K7_260127A.png",
       "alt": "260127A",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260121A.png",
@@ -188,12 +188,12 @@
     {
       "src": "images/K7_260117N.png",
       "alt": "260117N",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260110As.png",
       "alt": "260110As",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260107N.png",
@@ -203,17 +203,17 @@
     {
       "src": "images/K7_260104M.png",
       "alt": "260104M",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260102A.png",
       "alt": "260102A",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251230MN.png",
       "alt": "251230MN",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251230M.png",
@@ -238,47 +238,47 @@
     {
       "src": "images/K7_251129AN.png",
       "alt": "251129AN",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251128M.png",
       "alt": "251128M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251126M.png",
       "alt": "251126M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251124M.png",
       "alt": "251124M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251124-1.png",
       "alt": "251124-1",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251123A.png",
       "alt": "251123A",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251118M2.png",
       "alt": "251118M2",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251117NLip.png",
       "alt": "251117NLip",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251116Na.png",
       "alt": "251116Na",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251115A.png",
@@ -287,7 +287,7 @@
     },
     {
       "src": "images/K7_251113Gazetta.png",
-      "alt": "251113Gazetta",
+      "alt": "Gazetta Replica",
       "category": "GRAPHIC"
     },
     {
@@ -313,12 +313,12 @@
     {
       "src": "images/K7_251109Na2.png",
       "alt": "251109Na2",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251105M.png",
       "alt": "251105M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251105A.png",
@@ -328,7 +328,7 @@
     {
       "src": "images/K7_251103M.png",
       "alt": "251103M",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251103Ev.png",
@@ -343,7 +343,7 @@
     {
       "src": "images/K7_251102eM.png",
       "alt": "251102eM",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251102ane.png",
@@ -352,18 +352,18 @@
     },
     {
       "src": "images/K7_251031HELL.png",
-      "alt": "251031HELL",
+      "alt": "HALLOWEEN'25",
       "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251025em.png",
       "alt": "251025em",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251024N.png",
       "alt": "251024N",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251024MN.png",
@@ -383,7 +383,7 @@
     {
       "src": "images/K7_251014M.png",
       "alt": "251014M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251014A.png",
@@ -402,23 +402,23 @@
     },
     {
       "src": "images/K7_251006MNX.png",
-      "alt": "251006MNX",
+      "alt": "MOON SHINE DANCE",
       "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251005A.png",
-      "alt": "251005A",
+      "alt": "THE TWIN",
       "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251003M.png",
       "alt": "251003M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_251001N.png",
       "alt": "251001N",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250927eM.png",
@@ -452,8 +452,8 @@
     },
     {
       "src": "images/K7_250921.png",
-      "alt": "250921",
-      "category": "GRAPHIC"
+      "alt": "250921 with cat",
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250920Na.png",
@@ -463,22 +463,22 @@
     {
       "src": "images/K7_250915A3.png",
       "alt": "250915A3",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250915A2.png",
       "alt": "250915A2",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250910A.png",
       "alt": "250910A",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250909em.png",
       "alt": "250909em",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250909MN.png",
@@ -498,7 +498,7 @@
     {
       "src": "images/K7_250831A7.png",
       "alt": "250831A7",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250831A1.png",
@@ -522,17 +522,17 @@
     },
     {
       "src": "images/K7_250727MN.png",
-      "alt": "250727MN",
-      "category": "GRAPHIC"
+      "alt": "250727 FES",
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250725MN.png",
       "alt": "250725MN",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250706Nan.png",
-      "alt": "250706Nan",
+      "alt": "250706N Photo",
       "category": "GRAPHIC"
     },
     {
@@ -543,7 +543,7 @@
     {
       "src": "images/K7_250625N.png",
       "alt": "250625N",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250510MN.png",
@@ -568,12 +568,12 @@
     {
       "src": "images/K7_250411M.png",
       "alt": "250411M",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250315MN.png",
-      "alt": "250315MN",
-      "category": "GRAPHIC"
+      "alt": "250315MN BEER",
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250315E.png",
@@ -583,7 +583,7 @@
     {
       "src": "images/K7_250313N.png",
       "alt": "250313N",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250209N.png",
@@ -607,7 +607,7 @@
     },
     {
       "src": "images/K7_23HELLOWEEN.png",
-      "alt": "23HELLOWEEN",
+      "alt": "HELLOWEEN'23",
       "category": "GRAPHIC"
     }
   ]
