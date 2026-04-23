@@ -43,6 +43,7 @@
     }
 
     buildHeroCarousel(galleryData.hero);
+    buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
     setupLightbox();
@@ -171,6 +172,91 @@
       if (dx < 0) nextSlide();
       else prevSlide();
     }
+  }
+
+  // ==========================================
+  //  CURATED CAROUSEL
+  // ==========================================
+  function buildCuratedCarousel(curated) {
+    const track = document.getElementById('curated-track');
+    if (!track || !curated || curated.length === 0) return;
+
+    let isDraggingCurated = false;
+
+    // Helper to create item
+    const createItem = (img) => {
+      const item = document.createElement('div');
+      item.className = 'curated-item';
+      const mainIndex = galleryData.gallery.findIndex(g => g.src === img.src);
+      item.innerHTML = `<img src="${img.src}" alt="${img.alt}" loading="lazy">`;
+      
+      item.addEventListener('click', () => {
+        if (!isDraggingCurated && mainIndex !== -1) {
+          openLightbox(mainIndex);
+        }
+      });
+      return item;
+    };
+
+    // Append original set
+    curated.forEach(img => track.appendChild(createItem(img)));
+    // Append duplicated set for infinite scrolling
+    curated.forEach(img => track.appendChild(createItem(img)));
+
+    // Mouse drag to scroll functionality
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let isHovering = false;
+
+    track.addEventListener('mouseenter', () => isHovering = true);
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      isDraggingCurated = false;
+      track.classList.add('dragging');
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+
+    track.addEventListener('mouseleave', () => {
+      isDown = false;
+      isHovering = false;
+      track.classList.remove('dragging');
+    });
+
+    track.addEventListener('mouseup', () => {
+      isDown = false;
+      track.classList.remove('dragging');
+      setTimeout(() => { isDraggingCurated = false; }, 50);
+    });
+
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 2;
+      if (Math.abs(walk) > 5) isDraggingCurated = true;
+      track.scrollLeft = scrollLeft - walk;
+    });
+
+    // Slow auto-scroll loop
+    const autoScrollSpeed = 0.5; // pixels per frame
+    const autoScroll = () => {
+      if (!isDown && !isHovering) {
+        track.scrollLeft += autoScrollSpeed;
+        
+        // Infinite loop seam reset
+        // Since we duplicated exactly once, the scrollWidth is 2x the content width.
+        if (track.scrollLeft >= track.scrollWidth / 2) {
+          track.scrollLeft -= track.scrollWidth / 2;
+        }
+      }
+      requestAnimationFrame(autoScroll);
+    };
+    
+    // Start auto-scroll
+    requestAnimationFrame(autoScroll);
   }
 
   // ==========================================

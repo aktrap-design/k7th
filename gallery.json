@@ -610,5 +610,57 @@
       "alt": "HELLOWEEN'23",
       "category": "GRAPHIC"
     }
+  ],
+  "curated": [
+    {
+      "src": "images/K7_260419A1-3.png",
+      "alt": "K7_260419A1-3 BREEZE",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260327N.png",
+      "alt": "260327N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260221MN.png",
+      "alt": "260221MN",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260104M.png",
+      "alt": "260104M",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251123A.png",
+      "alt": "251123A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251105A.png",
+      "alt": "251105A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251019NN.png",
+      "alt": "251019NN",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250924M.png",
+      "alt": "250924M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250902M.png",
+      "alt": "250902M",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250510Af.png",
+      "alt": "250510Af",
+      "category": "LIFE"
+    }
   ]
 }

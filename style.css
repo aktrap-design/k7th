@@ -247,7 +247,7 @@ a {
 .hero-dot {
   width: 28px;
   height: 3px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.55);
   border: none;
   border-radius: 2px;
   cursor: pointer;
@@ -332,6 +332,81 @@ a {
   z-index: 3;
   pointer-events: none;
   background: radial-gradient(ellipse at center, transparent 50%, rgba(10,10,10,0.6) 100%);
+}
+
+/* ---------- CURATED SECTION ---------- */
+.curated-section {
+  padding: 80px 0 40px;
+  background: var(--bg-primary);
+}
+
+.curated-header {
+  padding: 0 16px;
+  max-width: 1400px;
+  margin: 0 auto 32px;
+}
+
+.curated-track-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.curated-track {
+  display: flex;
+  gap: 8px; /* Reduced from 16px */
+  padding: 0 16px 24px;
+  overflow-x: auto;
+  scroll-snap-type: none; /* Removed snap for smooth auto-scrolling */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.curated-track::-webkit-scrollbar {
+  display: none;
+}
+
+.curated-track.dragging {
+  cursor: grabbing;
+}
+
+.curated-item {
+  flex: 0 0 auto;
+  height: 200px; /* Reduced from 280px */
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: transform 0.3s var(--timing-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.curated-item img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .curated-section {
+    padding: 100px 0 60px;
+  }
+  .curated-header {
+    padding: 0 40px;
+  }
+  .curated-track {
+    padding: 0 40px 32px;
+    gap: 12px; /* Reduced from 24px */
+  }
+  .curated-item {
+    height: 280px; /* Reduced from 380px */
+  }
+  .curated-item:hover {
+    transform: scale(1.02);
+  }
 }
 
 /* ---------- GALLERY SECTION ---------- */
