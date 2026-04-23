@@ -88,7 +88,6 @@
     startCarouselTimer();
 
     // Touch/swipe on hero
-    const hero = document.getElementById('hero');
     hero.addEventListener('touchstart', onHeroTouchStart, { passive: true });
     hero.addEventListener('touchend', onHeroTouchEnd, { passive: true });
 

@@ -187,7 +187,7 @@ a {
     rgba(10, 10, 10, 0.4) 80%,
     rgba(10, 10, 10, 0.85) 100%
   );
-  z-index: 2;
+  z-index: 15; /* Keeps title above transition bars */
   pointer-events: none;
 }
 
@@ -296,7 +296,7 @@ a {
 .video-section {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9; /* Reduced height, cinematic ratio */
   overflow: hidden;
   background: var(--bg-primary);
 }
@@ -320,7 +320,7 @@ a {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px);
   background-size: 4px 4px;
 }
 
