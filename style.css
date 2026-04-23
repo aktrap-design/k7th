@@ -139,17 +139,16 @@ a {
   transform: translateZ(0);
 }
 
-/* Layer 1: Image distortion via backdrop-filter */
+/* Layer 1: Cyan digital interference */
 .hero-track::before {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: invert(20%) sepia(30%) hue-rotate(180deg) saturate(300%);
-  -webkit-backdrop-filter: invert(20%) sepia(30%) hue-rotate(180deg) saturate(300%);
+  background: rgba(0, 238, 255, 0.35); /* Neon Cyan */
+  mix-blend-mode: screen;
 }
 
-/* Layer 2: Neon color dodge flash */
+/* Layer 2: Purple/Magenta digital interference */
 .hero-track::after {
-  background: var(--accent-glow);
-  mix-blend-mode: color-dodge;
+  background: rgba(168, 85, 247, 0.4); /* Neon Purple */
+  mix-blend-mode: screen;
 }
 
 .hero-track.transitioning::before {
@@ -162,7 +161,7 @@ a {
 
 @keyframes glitch-anim-1 {
   0%   { opacity: 0; clip-path: inset(12% 0 81% 0); transform: translateX(-3%); }
-  10%  { opacity: 1; clip-path: inset(45% 0 42% 0); transform: translateX(2%); }
+  10%  { opacity: 0.8; clip-path: inset(45% 0 42% 0); transform: translateX(2%); }
   20%  { clip-path: inset(82% 0 6% 0); transform: translateX(-2%); }
   30%  { clip-path: inset(22% 0 68% 0); transform: translateX(4%); }
   40%  { clip-path: inset(65% 0 28% 0); transform: translateX(-4%); }
@@ -173,7 +172,7 @@ a {
 
 @keyframes glitch-anim-2 {
   0%   { opacity: 0; clip-path: inset(78% 0 11% 0); transform: translateX(3%); }
-  15%  { opacity: 1; clip-path: inset(15% 0 79% 0); transform: translateX(-2%); }
+  15%  { opacity: 0.8; clip-path: inset(15% 0 79% 0); transform: translateX(-2%); }
   25%  { clip-path: inset(52% 0 38% 0); transform: translateX(2%); }
   35%  { clip-path: inset(8% 0 88% 0); transform: translateX(-3%); }
   45%  { clip-path: inset(68% 0 21% 0); transform: translateX(4%); }
