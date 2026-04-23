@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery K7th - CMS Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- SortableJS for easy drag-and-drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="header-content">
+      <h1>Gallery K7th - CMS</h1>
+      <button id="save-btn" class="btn btn-primary">Save Changes</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="status-bar" id="status-bar"></div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-target="hero-tab">HERO (Top Slider)</button>
+      <button class="tab-btn" data-target="curated-tab">CURATED (Middle)</button>
+      <button class="tab-btn" data-target="gallery-tab">IMAGINATIONS (All)</button>
+    </div>
+
+    <!-- HERO TAB -->
+    <section id="hero-tab" class="tab-content active">
+      <div class="section-header">
+        <h2>Hero Images</h2>
+        <p>Drag to reorder. Maximum 5 images recommended.</p>
+        <button class="btn btn-secondary add-new-btn" data-list="hero">Add New Hero Image</button>
+      </div>
+      <div class="list-container" id="hero-list"></div>
+    </section>
+
+    <!-- CURATED TAB -->
+    <section id="curated-tab" class="tab-content">
+      <div class="section-header">
+        <h2>Curated Images</h2>
+        <p>Drag to reorder. Exactly 10 images recommended.</p>
+        <button class="btn btn-secondary add-new-btn" data-list="curated">Add New Curated Image</button>
+      </div>
+      <div class="list-container" id="curated-list"></div>
+    </section>
+
+    <!-- GALLERY TAB -->
+    <section id="gallery-tab" class="tab-content">
+      <div class="section-header">
+        <h2>Imaginations (Main Gallery)</h2>
+        <p>All images shown in the grid. Drag to reorder.</p>
+        <button class="btn btn-secondary add-new-btn" data-list="gallery">Add New Gallery Image</button>
+      </div>
+      <div class="list-container" id="gallery-list"></div>
+    </section>
+
+  </main>
+
+  <!-- Upload Modal -->
+  <div class="modal" id="upload-modal">
+    <div class="modal-content">
+      <h3>Add New Image</h3>
+      <form id="upload-form">
+        <div class="form-group">
+          <label>Select Image File</label>
+          <input type="file" id="file-input" accept="image/*" required>
+        </div>
+        <div class="form-group">
+          <label>Alt Text / Title</label>
+          <input type="text" id="alt-input" placeholder="e.g. K7_250315E" required>
+        </div>
+        <div class="form-group" id="category-group" style="display: none;">
+          <label>Category</label>
+          <select id="category-input">
+            <option value="GRAPHIC">GRAPHIC</option>
+            <option value="LIFE">LIFE</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-text" id="cancel-upload">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submit-upload">Upload & Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
