@@ -64,6 +64,17 @@
       heroTrack.appendChild(div);
     });
 
+    // Create transition bars for wipe effect
+    const transitionLayer = document.createElement('div');
+    transitionLayer.className = 'transition-bars';
+    for (let i = 0; i < 6; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'bar bar-' + i;
+      transitionLayer.appendChild(bar);
+    }
+    const hero = document.getElementById('hero');
+    hero.appendChild(transitionLayer);
+
     // Create indicator dots
     slides.forEach((_, i) => {
       const dot = document.createElement('button');
@@ -98,28 +109,32 @@
 
     const prevSlideEl = slides[currentSlide];
     const nextSlideEl = slides[index];
+    const hero = document.getElementById('hero');
 
-    // Glitch accent line
-    heroTrack.classList.add('transitioning');
-    setTimeout(() => heroTrack.classList.remove('transitioning'), 800);
+    // 1. Black bars slide IN to cover the screen
+    hero.classList.add('bars-in');
 
-    // Leaving animation on previous slide
-    prevSlideEl.classList.remove('active');
-    prevSlideEl.classList.add('leaving');
-    dots[currentSlide].classList.remove('active');
-
-    // Clean up leaving class after animation
+    // 2. When screen is completely covered (at 650ms), swap the image invisibly
     setTimeout(() => {
-      prevSlideEl.classList.remove('leaving');
-    }, 1400);
+      prevSlideEl.classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      
+      currentSlide = index;
+      nextSlideEl.classList.add('active');
+      dots[currentSlide].classList.add('active');
 
-    // Activate new slide
-    currentSlide = index;
-    nextSlideEl.classList.add('active');
-    dots[currentSlide].classList.add('active');
+      // 3. Black bars slide OUT to reveal new image
+      hero.classList.remove('bars-in');
+      hero.classList.add('bars-out');
 
-    // Reset timer
-    startCarouselTimer();
+      // Reset auto-advance timer
+      startCarouselTimer();
+    }, 650);
+
+    // 4. Clean up transition classes after animation finishes
+    setTimeout(() => {
+      hero.classList.remove('bars-out');
+    }, 1300);
   }
 
   function nextSlide() {

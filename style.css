@@ -87,20 +87,12 @@ a {
   position: absolute;
   inset: 0;
   opacity: 0;
-  clip-path: inset(0 100% 0 0);
-  transition: opacity 0.6s var(--timing-smooth), clip-path 1.2s cubic-bezier(0.77, 0, 0.18, 1);
-  will-change: opacity, clip-path, transform;
+  transition: opacity 0.3s;
+  will-change: opacity, transform;
 }
 
 .hero-slide.active {
   opacity: 1;
-  clip-path: inset(0 0 0 0);
-}
-
-.hero-slide.leaving {
-  opacity: 1;
-  clip-path: inset(0 0 0 100%);
-  transition: opacity 0.8s var(--timing-smooth) 0.4s, clip-path 1.2s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 .hero-slide img {
@@ -126,59 +118,58 @@ a {
   }
 }
 
-/* Highly visible VHS-style Glitch effect */
-.hero-track::before,
-.hero-track::after {
-  content: '';
+/* ---------- TRANSITION BARS (BLACK BLINDS) ---------- */
+.transition-bars {
   position: absolute;
   inset: 0;
-  z-index: 5;
-  opacity: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
   pointer-events: none;
-  will-change: transform, clip-path, opacity;
-  transform: translateZ(0);
+  overflow: hidden;
 }
 
-/* Layer 1: Cyan digital interference */
-.hero-track::before {
-  background: rgba(0, 238, 255, 0.35); /* Neon Cyan */
-  mix-blend-mode: screen;
+.transition-bars .bar {
+  background: var(--bg-primary); /* Uses black background */
+  width: 100%;
+  will-change: transform;
 }
 
-/* Layer 2: Purple/Magenta digital interference */
-.hero-track::after {
-  background: rgba(168, 85, 247, 0.4); /* Neon Purple */
-  mix-blend-mode: screen;
-}
+/* Base state - hidden offscreen */
+.transition-bars .bar:nth-child(odd) { transform: translate3d(-100%, 0, 0); }
+.transition-bars .bar:nth-child(even) { transform: translate3d(100%, 0, 0); }
 
-.hero-track.transitioning::before {
-  animation: glitch-anim-1 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
+/* Uneven heights */
+.transition-bars .bar-0 { flex: 1.2; }
+.transition-bars .bar-1 { flex: 0.8; }
+.transition-bars .bar-2 { flex: 1.5; }
+.transition-bars .bar-3 { flex: 1.0; }
+.transition-bars .bar-4 { flex: 0.7; }
+.transition-bars .bar-5 { flex: 1.3; }
 
-.hero-track.transitioning::after {
-  animation: glitch-anim-2 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
+/* IN state: slide in to cover the screen */
+.hero.bars-in .transition-bars .bar { transform: translate3d(0, 0, 0); }
+.hero.bars-in .transition-bars .bar-0 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.0s; }
+.hero.bars-in .transition-bars .bar-1 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.1s; }
+.hero.bars-in .transition-bars .bar-2 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.05s; }
+.hero.bars-in .transition-bars .bar-3 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.15s; }
+.hero.bars-in .transition-bars .bar-4 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.08s; }
+.hero.bars-in .transition-bars .bar-5 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.03s; }
 
-@keyframes glitch-anim-1 {
-  0%   { opacity: 0; clip-path: inset(12% 0 81% 0); transform: translateX(-3%); }
-  10%  { opacity: 0.8; clip-path: inset(45% 0 42% 0); transform: translateX(2%); }
-  20%  { clip-path: inset(82% 0 6% 0); transform: translateX(-2%); }
-  30%  { clip-path: inset(22% 0 68% 0); transform: translateX(4%); }
-  40%  { clip-path: inset(65% 0 28% 0); transform: translateX(-4%); }
-  50%  { clip-path: inset(18% 0 76% 0); transform: translateX(2%); }
-  60%  { opacity: 0; transform: translateX(0); }
-  100% { opacity: 0; }
-}
+/* OUT state: continue sliding to the opposite side */
+.hero.bars-out .transition-bars .bar:nth-child(odd) { transform: translate3d(100%, 0, 0); }
+.hero.bars-out .transition-bars .bar:nth-child(even) { transform: translate3d(-100%, 0, 0); }
 
-@keyframes glitch-anim-2 {
-  0%   { opacity: 0; clip-path: inset(78% 0 11% 0); transform: translateX(3%); }
-  15%  { opacity: 0.8; clip-path: inset(15% 0 79% 0); transform: translateX(-2%); }
-  25%  { clip-path: inset(52% 0 38% 0); transform: translateX(2%); }
-  35%  { clip-path: inset(8% 0 88% 0); transform: translateX(-3%); }
-  45%  { clip-path: inset(68% 0 21% 0); transform: translateX(4%); }
-  55%  { clip-path: inset(32% 0 58% 0); transform: translateX(-1%); }
-  70%  { opacity: 0; transform: translateX(0); }
-  100% { opacity: 0; }
+.hero.bars-out .transition-bars .bar-0 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.0s; }
+.hero.bars-out .transition-bars .bar-1 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.1s; }
+.hero.bars-out .transition-bars .bar-2 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.05s; }
+.hero.bars-out .transition-bars .bar-3 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.15s; }
+.hero.bars-out .transition-bars .bar-4 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.08s; }
+.hero.bars-out .transition-bars .bar-5 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.03s; }
+
+/* Reset state: instant jump back without transition */
+.hero:not(.bars-in):not(.bars-out) .transition-bars .bar {
+  transition: none;
 }
 
 /* Hero overlay gradient + title */
