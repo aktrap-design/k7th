@@ -41,11 +41,6 @@
       "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_catch.png",
-      "alt": "catch",
-      "category": "GRAPHIC"
-    },
-    {
       "src": "images/K7_260418M.png",
       "alt": "260418M SUMMER",
       "category": "GRAPHIC"
@@ -216,13 +211,13 @@
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251230M.png",
-      "alt": "251230M",
-      "category": "LIFE"
+      "src": "images/K7_catch.png",
+      "alt": "Catch me if you can",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_251203N.png",
-      "alt": "251203N",
+      "src": "images/K7_251230M.png",
+      "alt": "Photogenic",
       "category": "GRAPHIC"
     },
     {
@@ -234,6 +229,11 @@
       "src": "images/K7_251129M.png",
       "alt": "251129M",
       "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251203N.png",
+      "alt": "The Dance",
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251129AN.png",
@@ -277,7 +277,7 @@
     },
     {
       "src": "images/K7_251116Na.png",
-      "alt": "251116Na",
+      "alt": "LAZERBEAM",
       "category": "GRAPHIC"
     },
     {
@@ -287,7 +287,7 @@
     },
     {
       "src": "images/K7_251113Gazetta.png",
-      "alt": "Gazetta Replica",
+      "alt": "Gazetta Replica '25WINTER",
       "category": "GRAPHIC"
     },
     {
@@ -327,7 +327,7 @@
     },
     {
       "src": "images/K7_251103M.png",
-      "alt": "251103M",
+      "alt": "Wide-angle",
       "category": "GRAPHIC"
     },
     {
@@ -368,7 +368,7 @@
     {
       "src": "images/K7_251024MN.png",
       "alt": "251024MN",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_251020NA.png",
@@ -423,11 +423,11 @@
     {
       "src": "images/K7_250927eM.png",
       "alt": "250927eM",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_250926MN2.png",
-      "alt": "250926MN2",
+      "alt": "Mirage",
       "category": "GRAPHIC"
     },
     {
@@ -512,7 +512,7 @@
     },
     {
       "src": "images/K7_250825M.png",
-      "alt": "250825M",
+      "alt": "Swings",
       "category": "GRAPHIC"
     },
     {
@@ -547,7 +547,7 @@
     },
     {
       "src": "images/K7_250510MN.png",
-      "alt": "250510MN",
+      "alt": "Pattern",
       "category": "GRAPHIC"
     },
     {
@@ -577,7 +577,7 @@
     },
     {
       "src": "images/K7_250315E.png",
-      "alt": "250315E",
+      "alt": "Waiting for the sunrise",
       "category": "GRAPHIC"
     },
     {
