@@ -268,6 +268,32 @@ body {
   display: block;
   width: 100%;
 }
+.drop-zone {
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 18px 12px;
+  text-align: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+  margin-bottom: 10px;
+}
+.drop-zone:hover,
+.drop-zone:focus {
+  border-color: var(--text-main);
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+  outline: none;
+}
+.drop-zone.drag-over {
+  border-color: var(--accent);
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.08);
+}
+.drop-zone p {
+  margin: 0;
+  font-size: 0.9rem;
+}
 .form-group input[type="text"],
 .form-group select {
   width: 100%;

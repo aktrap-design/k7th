@@ -31,13 +31,58 @@
   ],
   "gallery": [
     {
+      "src": "images/ATTITUDE_poster26.png",
+      "alt": "ATTITUDE_poster26",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260520A.png",
+      "alt": "260520A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260522Na.png",
+      "alt": "260522Na",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260512A.png",
+      "alt": "260512A",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260513N.png",
+      "alt": "260513N",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260510A.png",
+      "alt": "260510A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260509MN3.png",
+      "alt": "260509MN3",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260509A.png",
+      "alt": "260509A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260507A.png",
+      "alt": "260507A",
+      "category": "LIFE"
+    },
+    {
       "src": "images/K7_260419A1-3.png",
-      "alt": "K7_260419A1-3 BREEZE",
+      "alt": "260419A1-3 BREEZE",
       "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260419A1-2.png",
-      "alt": "K7_260419A1-2 FLOWER",
+      "alt": "260419A1-2 FLOWER",
       "category": "GRAPHIC"
     },
     {
@@ -73,7 +118,7 @@
     {
       "src": "images/K7_260408A.png",
       "alt": "260408A",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260330A.png",
@@ -123,7 +168,7 @@
     {
       "src": "images/K7_260308An.png",
       "alt": "260308An LOCATION",
-      "category": "GRAPHIC"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260306MN.png",
@@ -168,7 +213,7 @@
     {
       "src": "images/K7_260201AN.png",
       "alt": "260201AN",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260127A.png",
@@ -613,14 +658,13 @@
   ],
   "curated": [
     {
-      "src": "images/K7_260419A1-3.png",
-      "alt": "K7_260419A1-3 BREEZE",
-      "category": "GRAPHIC"
+      "src": "images/ATTITUDE_poster26.png",
+      "alt": "ATTITUDE_poster26"
     },
     {
-      "src": "images/K7_260327N.png",
-      "alt": "260327N",
-      "category": "LIFE"
+      "src": "images/K7_260419A1-3.png",
+      "alt": "260419A1-3 BREEZE",
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260221MN.png",
