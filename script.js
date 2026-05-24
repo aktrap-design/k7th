@@ -31,6 +31,7 @@
   const lightboxClose = document.getElementById('lightbox-close');
   const lightboxPrev = document.getElementById('lightbox-prev');
   const lightboxNext = document.getElementById('lightbox-next');
+  const pageTopBtn = document.getElementById('page-top');
 
   // ---------- INIT ----------
   async function init() {
@@ -49,6 +50,7 @@
     setupLightbox();
     observeScrollReveal();
     setupVideoParallax();
+    setupPageTopButton();
   }
 
   // ==========================================
@@ -207,10 +209,6 @@
     let isDown = false;
     let startX;
     let scrollLeft;
-    let isHovering = false;
-
-    track.addEventListener('mouseenter', () => isHovering = true);
-
     track.addEventListener('mousedown', (e) => {
       isDown = true;
       isDraggingCurated = false;
@@ -221,7 +219,6 @@
 
     track.addEventListener('mouseleave', () => {
       isDown = false;
-      isHovering = false;
       track.classList.remove('dragging');
     });
 
@@ -243,7 +240,7 @@
     // Slow auto-scroll loop
     const autoScrollSpeed = 0.5; // pixels per frame
     const autoScroll = () => {
-      if (!isDown && !isHovering) {
+      if (!isDown) {
         track.scrollLeft += autoScrollSpeed;
         
         // Infinite loop seam reset
@@ -470,6 +467,25 @@
         ticking = true;
       }
     }, { passive: true });
+  }
+
+  // ==========================================
+  //  PAGE TOP BUTTON
+  // ==========================================
+  function setupPageTopButton() {
+    if (!pageTopBtn) return;
+
+    const toggleVisibility = () => {
+      const shouldShow = window.scrollY > 500;
+      pageTopBtn.classList.toggle('show', shouldShow);
+    };
+
+    pageTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    toggleVisibility();
   }
 
   // ---------- BOOT ----------

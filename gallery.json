@@ -31,14 +31,44 @@
   ],
   "gallery": [
     {
+      "src": "images/K7_260523Naa.png",
+      "alt": "260523Na",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260522Ma.png",
+      "alt": "260522M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260523Nm.png",
+      "alt": "260523Nm",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260503MtM.png",
+      "alt": "260503M",
+      "category": "LIFE"
+    },
+    {
       "src": "images/ATTITUDE_poster26.png",
       "alt": "ATTITUDE_poster26",
       "category": "GRAPHIC"
     },
     {
+      "src": "images/K7_260510A2.png",
+      "alt": "260510A2",
+      "category": "LIFE"
+    },
+    {
       "src": "images/K7_260520A.png",
       "alt": "260520A",
       "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260502farewell.png",
+      "alt": "Our farewell",
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260522Na.png",
@@ -73,6 +103,11 @@
     {
       "src": "images/K7_260507A.png",
       "alt": "260507A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260426N.png",
+      "alt": "260426N",
       "category": "LIFE"
     },
     {
@@ -463,7 +498,7 @@
     {
       "src": "images/K7_251001N.png",
       "alt": "251001N",
-      "category": "LIFE"
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_250927eM.png",
