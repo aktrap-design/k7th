@@ -18,7 +18,7 @@
 <body>
 
   <!-- ========== BGM CONTROLLER ========== -->
-  <audio id="bgm-audio" loop src="sound/k7g_bgm.mp3"></audio>
+  <audio id="bgm-audio" loop src="sound/Calculated_Grace.mp3"></audio>
   <button id="sound-toggle" class="sound-toggle-btn" aria-label="Toggle Sound">
     <div class="sound-bars">
       <span class="bar bar-1"></span>
@@ -29,8 +29,18 @@
     <div class="sound-text">
       <span class="sound-label">SOUND</span>
       <span class="sound-state" id="sound-state">OFF</span>
+      <span class="sound-track-title" id="sound-track-title">Calculated Grace</span>
     </div>
   </button>
+  <div class="sound-drawer" id="sound-drawer">
+    <button id="sound-drawer-toggle" class="sound-drawer-toggle" type="button" aria-label="Open music selector">&gt;</button>
+    <select id="sound-select" class="sound-select" aria-label="Select background music">
+      <option value="sound/Calculated_Grace.mp3">Calculated Grace</option>
+      <option value="sound/Planet_Rounge.mp3">Planet Rounge</option>
+      <option value="sound/The_Obsidian_Step.mp3">The Obsidian Step</option>
+      <option value="sound/Velvet_Stride.mp3">Velvet Stride</option>
+    </select>
+  </div>
 
   <!-- ========== HERO CAROUSEL ========== -->
   <section class="hero" id="hero" aria-label="Featured works carousel">
@@ -75,15 +85,15 @@
     <div class="interlude-layer interlude-layer-mid" data-speed="0.12"></div>
     <div class="interlude-content" data-speed="0.2">
       <p class="interlude-kicker">MOTION TRACE</p>
-      <h2 class="interlude-title">NEON MEMORY</h2>
+      <h2 class="interlude-title">MEMORIES</h2>
     </div>
   </section>
   <section class="interlude-section" data-interlude-index="2" aria-label="Parallax interlude">
     <div class="interlude-layer interlude-layer-back" data-speed="-0.08"></div>
     <div class="interlude-layer interlude-layer-mid" data-speed="0.12"></div>
     <div class="interlude-content" data-speed="0.2">
-      <p class="interlude-kicker">AFTERIMAGE</p>
-      <h2 class="interlude-title">SLOW BURN</h2>
+      <p class="interlude-kicker">CASTING</p>
+      <h2 class="interlude-title">KANA-NANA</h2>
     </div>
   </section>
 
@@ -158,6 +168,8 @@
       <h2 class="video-title">
         <span class="title-gallery">galleryK7th</span>
       </h2>
+      <p class="video-credit">actress: KANA-NANA</p>
+      <p class="video-message">Every frame carries a pulse of memory.</p>
     </div>
     <div class="video-dot-overlay"></div>
   </section>

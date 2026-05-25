@@ -16,6 +16,8 @@ const uploadModal = document.getElementById('upload-modal');
 const uploadForm = document.getElementById('upload-form');
 const cancelUploadBtn = document.getElementById('cancel-upload');
 const categoryGroup = document.getElementById('category-group');
+const fileInput = document.getElementById('file-input');
+const dropZone = document.getElementById('drop-zone');
 
 // ---------- INIT ----------
 async function init() {
@@ -140,10 +142,43 @@ cancelUploadBtn.addEventListener('click', () => {
   uploadModal.classList.remove('open');
 });
 
+function setFileInputFiles(files) {
+  const dt = new DataTransfer();
+  Array.from(files).forEach((file) => dt.items.add(file));
+  fileInput.files = dt.files;
+}
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    fileInput.click();
+  }
+});
+
+['dragenter', 'dragover'].forEach((eventName) => {
+  dropZone.addEventListener(eventName, (e) => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+});
+
+['dragleave', 'drop'].forEach((eventName) => {
+  dropZone.addEventListener(eventName, (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+  });
+});
+
+dropZone.addEventListener('drop', (e) => {
+  const imageFiles = Array.from(e.dataTransfer.files).filter((file) => file.type.startsWith('image/'));
+  if (!imageFiles.length) return;
+  setFileInputFiles([imageFiles[0]]);
+});
+
 uploadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   
-  const fileInput = document.getElementById('file-input');
   const altInput = document.getElementById('alt-input');
   const categoryInput = document.getElementById('category-input');
 

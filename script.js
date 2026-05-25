@@ -41,6 +41,7 @@
   const throwbackPrev = document.getElementById('throwback-prev');
   const throwbackNext = document.getElementById('throwback-next');
   let throwbackIndex = 0;
+  let throwbackTouchStartX = 0;
 
   // ---------- INIT ----------
   async function init() {
@@ -464,6 +465,8 @@
     throwbackPrev.addEventListener('click', () => navigateThrowback(-1));
     throwbackNext.addEventListener('click', () => navigateThrowback(1));
     throwbackLightbox.querySelector('.throwback-backdrop').addEventListener('click', closeThrowback);
+    throwbackLightbox.addEventListener('touchstart', onThrowbackTouchStart, { passive: true });
+    throwbackLightbox.addEventListener('touchend', onThrowbackTouchEnd, { passive: true });
 
     document.addEventListener('keydown', (e) => {
       if (!throwbackLightbox.classList.contains('open')) return;
@@ -511,6 +514,17 @@
     throwbackImage.alt = item.alt || 'Throwback image';
     throwbackTitle.textContent = item.alt || `Throwback ${throwbackIndex + 1}`;
     throwbackCounter.textContent = `${throwbackIndex + 1} / ${items.length}`;
+  }
+
+  function onThrowbackTouchStart(e) {
+    throwbackTouchStartX = e.changedTouches[0].clientX;
+  }
+
+  function onThrowbackTouchEnd(e) {
+    const dx = e.changedTouches[0].clientX - throwbackTouchStartX;
+    if (Math.abs(dx) > SWIPE_THRESHOLD) {
+      navigateThrowback(dx < 0 ? 1 : -1);
+    }
   }
 
   // ==========================================
@@ -594,15 +608,24 @@
     const update = () => {
       const windowH = window.innerHeight;
 
-      sections.forEach((section) => {
+      sections.forEach((section, sectionIndex) => {
         const rect = section.getBoundingClientRect();
         if (rect.bottom > 0 && rect.top < windowH) {
           const progress = (windowH - rect.top) / (windowH + rect.height);
           const centered = progress - 0.5;
           section.querySelectorAll('[data-speed]').forEach((el) => {
             const speed = Number(el.dataset.speed || 0);
-            const offsetY = centered * speed * 280;
-            el.style.transform = `translate3d(0, ${offsetY}px, 0)`;
+            const phase = sectionIndex % 2 === 0 ? 1 : -1;
+            const scale = 1 + Math.abs(centered * speed) * 0.34;
+
+            if (el.classList.contains('interlude-content')) {
+              const offsetY = centered * speed * 380;
+              const offsetX = centered * speed * 980 * phase;
+              el.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) scale(${scale})`;
+            } else {
+              const offsetY = centered * speed * 760;
+              el.style.transform = `translate3d(0, ${offsetY}px, 0) scale(${scale})`;
+            }
           });
         }
       });
@@ -628,8 +651,36 @@
     const bgmAudio = document.getElementById('bgm-audio');
     const soundToggleBtn = document.getElementById('sound-toggle');
     const soundState = document.getElementById('sound-state');
+    const soundDrawer = document.getElementById('sound-drawer');
+    const soundDrawerToggle = document.getElementById('sound-drawer-toggle');
+    const soundSelect = document.getElementById('sound-select');
+    const soundTrackTitle = document.getElementById('sound-track-title');
     
-    if (!bgmAudio || !soundToggleBtn || !soundState) return;
+    if (!bgmAudio || !soundToggleBtn || !soundState || !soundDrawer || !soundDrawerToggle || !soundSelect || !soundTrackTitle) return;
+
+    const updateTrackTitle = () => {
+      const selectedOption = soundSelect.options[soundSelect.selectedIndex];
+      soundTrackTitle.textContent = selectedOption ? selectedOption.text : '';
+    };
+
+    const syncSelectionFromAudio = () => {
+      const currentSrc = bgmAudio.getAttribute('src');
+      for (let i = 0; i < soundSelect.options.length; i++) {
+        if (soundSelect.options[i].value === currentSrc) {
+          soundSelect.selectedIndex = i;
+          break;
+        }
+      }
+      updateTrackTitle();
+    };
+
+    syncSelectionFromAudio();
+
+    soundDrawerToggle.addEventListener('click', () => {
+      const isOpen = soundDrawer.classList.toggle('open');
+      soundDrawerToggle.textContent = isOpen ? '<' : '>';
+      soundDrawerToggle.setAttribute('aria-label', isOpen ? 'Close music selector' : 'Open music selector');
+    });
 
     soundToggleBtn.addEventListener('click', () => {
       if (bgmAudio.paused) {
@@ -643,6 +694,26 @@
         bgmAudio.pause();
         soundToggleBtn.classList.remove('is-playing');
         soundState.textContent = 'OFF';
+      }
+    });
+
+    soundSelect.addEventListener('change', () => {
+      const nextSrc = soundSelect.value;
+      const wasPlaying = !bgmAudio.paused;
+
+      bgmAudio.src = nextSrc;
+      bgmAudio.loop = true;
+      updateTrackTitle();
+
+      if (wasPlaying) {
+        bgmAudio.play().then(() => {
+          soundToggleBtn.classList.add('is-playing');
+          soundState.textContent = 'ON';
+        }).catch((err) => {
+          console.error("Audio playback failed:", err);
+          soundToggleBtn.classList.remove('is-playing');
+          soundState.textContent = 'OFF';
+        });
       }
     });
   }
