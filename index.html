@@ -17,6 +17,21 @@
 </head>
 <body>
 
+  <!-- ========== BGM CONTROLLER ========== -->
+  <audio id="bgm-audio" loop src="sound/k7g_bgm.mp3"></audio>
+  <button id="sound-toggle" class="sound-toggle-btn" aria-label="Toggle Sound">
+    <div class="sound-bars">
+      <span class="bar bar-1"></span>
+      <span class="bar bar-2"></span>
+      <span class="bar bar-3"></span>
+      <span class="bar bar-4"></span>
+    </div>
+    <div class="sound-text">
+      <span class="sound-label">SOUND</span>
+      <span class="sound-state" id="sound-state">OFF</span>
+    </div>
+  </button>
+
   <!-- ========== HERO CAROUSEL ========== -->
   <section class="hero" id="hero" aria-label="Featured works carousel">
     <div class="hero-track" id="hero-track"></div>
@@ -34,6 +49,16 @@
     <!-- Scroll cue -->
     <div class="scroll-cue" aria-hidden="true">
       <div class="scroll-cue-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== CURATED CAROUSEL ========== -->
+  <section class="curated-section" id="curated">
+    <div class="curated-header">
+      <h2 class="section-title">CURATED</h2>
+    </div>
+    <div class="curated-track-wrapper">
+      <div class="curated-track" id="curated-track"></div>
     </div>
   </section>
 
@@ -66,13 +91,18 @@
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
     </button>
   </div>
-
+  
   <!-- ========== VIDEO SECTION ========== -->
   <section class="video-section" id="video-section">
     <div class="video-parallax-wrapper">
       <video class="video-bg" id="video-bg" autoplay muted loop playsinline>
         <source src="movie/showreel.mp4" type="video/mp4">
       </video>
+    </div>
+    <div class="video-title-overlay" aria-hidden="true">
+      <h2 class="video-title">
+        <span class="title-gallery">galleryK7th</span>
+      </h2>
     </div>
     <div class="video-dot-overlay"></div>
   </section>
@@ -101,6 +131,8 @@
       <p class="footer-copy">&copy; K7th</p>
     </div>
   </footer>
+
+  <button class="page-top" id="page-top" aria-label="Back to top" title="Page Top">TOP</button>
 
   <script src="script.js"></script>
 </body>

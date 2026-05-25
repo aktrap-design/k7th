@@ -2,328 +2,388 @@
   "hero": [
     {
       "src": "heroes/k7-hero001.jpg",
-      "alt": "Featured Work 1"
+      "alt": "SPRING"
     },
     {
       "src": "heroes/k7-hero002.jpg",
-      "alt": "Featured Work 2"
+      "alt": "MODE"
     },
     {
       "src": "heroes/k7-hero003.jpg",
-      "alt": "Featured Work 3"
+      "alt": "RED"
     },
     {
       "src": "heroes/k7-hero004.jpg",
-      "alt": "Featured Work 4"
+      "alt": "WHITE"
     },
     {
       "src": "heroes/k7-hero005.jpg",
-      "alt": "Featured Work 5"
+      "alt": "Japonesque"
+    },
+    {
+      "src": "heroes/k7-hero006.jpg",
+      "alt": "SILVER"
     }
   ],
   "categories": [
+    "GRAPHIC",
     "LIFE",
-    "ART"
+    "MOMENT"
   ],
   "gallery": [
     {
-      "src": "images/K7_23HELLOWEEN.png",
-      "alt": "23HELLOWEEN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_241013M.png",
-      "alt": "241013M",
+      "src": "images/K7_260523Naa.png",
+      "alt": "260523Na",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250202.png",
-      "alt": "250202",
+      "src": "images/K7_260522Ma.png",
+      "alt": "260522M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250208c.png",
-      "alt": "250208c",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250209N.png",
-      "alt": "250209N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250313N.png",
-      "alt": "250313N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250315E.png",
-      "alt": "250315E",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250315MN.png",
-      "alt": "250315MN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250411M.png",
-      "alt": "250411M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250424N.png",
-      "alt": "250424N",
+      "src": "images/K7_260523Nm.png",
+      "alt": "260523Nm",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250509M.png",
-      "alt": "250509M",
+      "src": "images/K7_260503MtM.png",
+      "alt": "260503M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250510Af.png",
-      "alt": "250510Af",
+      "src": "images/ATTITUDE_poster26.png",
+      "alt": "ATTITUDE_poster26",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260510A2.png",
+      "alt": "260510A2",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250510MN.png",
-      "alt": "250510MN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250625N.png",
-      "alt": "250625N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250630A.png",
-      "alt": "250630A",
+      "src": "images/K7_260520A.png",
+      "alt": "260520A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250706Nan.png",
-      "alt": "250706Nan",
-      "category": "ART"
+      "src": "images/K7_260502farewell.png",
+      "alt": "Our farewell",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_250725MN.png",
-      "alt": "250725MN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250727MN.png",
-      "alt": "250727MN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250818M.png",
-      "alt": "250818M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250825M.png",
-      "alt": "250825M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250826MN.png",
-      "alt": "250826MN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250831A1.png",
-      "alt": "250831A1",
+      "src": "images/K7_260522Na.png",
+      "alt": "260522Na",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250831A7.png",
-      "alt": "250831A7",
-      "category": "ART"
+      "src": "images/K7_260512A.png",
+      "alt": "260512A",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_250902M.png",
-      "alt": "250902M",
-      "category": "ART"
+      "src": "images/K7_260513N.png",
+      "alt": "260513N",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_250905M.png",
-      "alt": "250905M",
+      "src": "images/K7_260510A.png",
+      "alt": "260510A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250909MN.png",
-      "alt": "250909MN",
+      "src": "images/K7_260509MN3.png",
+      "alt": "260509MN3",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250909em.png",
-      "alt": "250909em",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250910A.png",
-      "alt": "250910A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250915A2.png",
-      "alt": "250915A2",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250915A3.png",
-      "alt": "250915A3",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250920Na.png",
-      "alt": "250920Na",
+      "src": "images/K7_260509A.png",
+      "alt": "260509A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250921.png",
-      "alt": "250921",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250922A.png",
-      "alt": "250922A",
+      "src": "images/K7_260507A.png",
+      "alt": "260507A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250923M-QNS.png",
-      "alt": "250923M-QNS",
+      "src": "images/K7_260426N.png",
+      "alt": "260426N",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250924M.png",
-      "alt": "250924M",
+      "src": "images/K7_260419A1-3.png",
+      "alt": "260419A1-3 BREEZE",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260419A1-2.png",
+      "alt": "260419A1-2 FLOWER",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260418M.png",
+      "alt": "260418M SUMMER",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260417A.png",
+      "alt": "260417A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250926M.png",
-      "alt": "250926M",
+      "src": "images/K7_260414Na.png",
+      "alt": "260414Na",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_250926MN2.png",
-      "alt": "250926MN2",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_250927eM.png",
-      "alt": "250927eM",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251001N.png",
-      "alt": "251001N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251003M.png",
-      "alt": "251003M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251005A.png",
-      "alt": "251005A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251006MNX.png",
-      "alt": "251006MNX",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251011Ma.png",
-      "alt": "251011Ma",
+      "src": "images/K7_260413M.png",
+      "alt": "260413M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251013M.png",
-      "alt": "251013M",
+      "src": "images/K7_260412M.png",
+      "alt": "260412M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251014A.png",
-      "alt": "251014A",
+      "src": "images/K7_260411M.png",
+      "alt": "260411M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260408A.png",
+      "alt": "260408A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251014M.png",
-      "alt": "251014M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251019NN.png",
-      "alt": "251019NN",
+      "src": "images/K7_260330A.png",
+      "alt": "260330A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251020NA.png",
-      "alt": "251020NA",
-      "category": "ART"
+      "src": "images/K7_260327N.png",
+      "alt": "260327N",
+      "category": "MOMENT"
     },
     {
-      "src": "images/K7_251024MN.png",
-      "alt": "251024MN",
+      "src": "images/K7_260327M.png",
+      "alt": "260327M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251024N.png",
-      "alt": "251024N",
+      "src": "images/K7_260325M.png",
+      "alt": "260325M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251025em.png",
-      "alt": "251025em",
+      "src": "images/K7_260324M.png",
+      "alt": "260324M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251031HELL.png",
-      "alt": "251031HELL",
-      "category": "ART"
+      "src": "images/K7_260323M.png",
+      "alt": "260323M",
+      "category": "MOMENT"
     },
     {
-      "src": "images/K7_251102ane.png",
-      "alt": "251102ane",
+      "src": "images/K7_260322.png",
+      "alt": "260322",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260320M.png",
+      "alt": "260320M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251102eM.png",
-      "alt": "251102eM",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251103A.png",
-      "alt": "251103A",
+      "src": "images/K7_260319M.png",
+      "alt": "260319M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251103Ev.png",
-      "alt": "251103Ev",
+      "src": "images/K7_260308An.png",
+      "alt": "260308An LOCATION",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260306MN.png",
+      "alt": "260306MN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260303Na.png",
+      "alt": "260303Na",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260227N.png",
+      "alt": "260227N",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260221MN.png",
+      "alt": "260221MN",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260216A1.png",
+      "alt": "260216A1",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251103M.png",
-      "alt": "251103M",
-      "category": "ART"
+      "src": "images/K7_260215A1.png",
+      "alt": "260215A1",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_251105A.png",
-      "alt": "251105A",
+      "src": "images/K7_260214A.png",
+      "alt": "260214A",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260210Na.png",
+      "alt": "260210Na",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260201AN.png",
+      "alt": "260201AN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260127A.png",
+      "alt": "260127A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251105M.png",
-      "alt": "251105M",
+      "src": "images/K7_260121A.png",
+      "alt": "260121A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251109Na2.png",
-      "alt": "251109Na2",
+      "src": "images/K7_260117N.png",
+      "alt": "260117N",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260110As.png",
+      "alt": "260110As",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260107N.png",
+      "alt": "260107N",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260104M.png",
+      "alt": "260104M",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260102A.png",
+      "alt": "260102A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251230MN.png",
+      "alt": "251230MN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_catch.png",
+      "alt": "Catch me if you can",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251230M.png",
+      "alt": "Photogenic",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251203M.png",
+      "alt": "251203M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251129M.png",
+      "alt": "251129M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251203N.png",
+      "alt": "The Dance",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251129AN.png",
+      "alt": "251129AN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251128M.png",
+      "alt": "251128M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251126M.png",
+      "alt": "251126M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251124M.png",
+      "alt": "251124M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251124-1.png",
+      "alt": "251124-1",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251123A.png",
+      "alt": "251123A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251118M2.png",
+      "alt": "251118M2",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251117NLip.png",
+      "alt": "251117NLip",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251116Na.png",
+      "alt": "LAZERBEAM",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251115A.png",
+      "alt": "251115A",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251113Gazetta.png",
+      "alt": "Gazetta Replica '25WINTER",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251112A.png",
+      "alt": "251112A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251111N.png",
+      "alt": "251111N",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251111M.png",
+      "alt": "251111M",
       "category": "LIFE"
     },
     {
@@ -332,268 +392,354 @@
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251111M.png",
-      "alt": "251111M",
+      "src": "images/K7_251109Na2.png",
+      "alt": "251109Na2",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251105M.png",
+      "alt": "251105M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251111N.png",
-      "alt": "251111N",
+      "src": "images/K7_251105A.png",
+      "alt": "251105A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251112A.png",
-      "alt": "251112A",
+      "src": "images/K7_251103M.png",
+      "alt": "Wide-angle",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251103Ev.png",
+      "alt": "251103Ev",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251103A.png",
+      "alt": "251103A",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251102eM.png",
+      "alt": "251102eM",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251102ane.png",
+      "alt": "251102ane",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251113Gazetta.png",
-      "alt": "251113Gazetta",
-      "category": "ART"
+      "src": "images/K7_251031HELL.png",
+      "alt": "HALLOWEEN'25",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_251115A.png",
-      "alt": "251115A",
-      "category": "ART"
+      "src": "images/K7_251025em.png",
+      "alt": "251025em",
+      "category": "MOMENT"
     },
     {
-      "src": "images/K7_251116Na.png",
-      "alt": "251116Na",
+      "src": "images/K7_251024N.png",
+      "alt": "251024N",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251024MN.png",
+      "alt": "251024MN",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251020NA.png",
+      "alt": "251020NA",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251019NN.png",
+      "alt": "251019NN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251014M.png",
+      "alt": "251014M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251117NLip.png",
-      "alt": "251117NLip",
+      "src": "images/K7_251014A.png",
+      "alt": "251014A",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_251013M.png",
+      "alt": "251013M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251118M2.png",
-      "alt": "251118M2",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251123A.png",
-      "alt": "251123A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251124-1.png",
-      "alt": "251124-1",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251124M.png",
-      "alt": "251124M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251126M.png",
-      "alt": "251126M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251128M.png",
-      "alt": "251128M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251129AN.png",
-      "alt": "251129AN",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_251129M.png",
-      "alt": "251129M",
+      "src": "images/K7_251011Ma.png",
+      "alt": "251011Ma",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251203M.png",
-      "alt": "251203M",
+      "src": "images/K7_251006MNX.png",
+      "alt": "MOON SHINE DANCE",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251005A.png",
+      "alt": "THE TWIN",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251003M.png",
+      "alt": "251003M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251203N.png",
-      "alt": "251203N",
-      "category": "ART"
+      "src": "images/K7_251001N.png",
+      "alt": "251001N",
+      "category": "MOMENT"
     },
     {
-      "src": "images/K7_251230M.png",
-      "alt": "251230M",
+      "src": "images/K7_250927eM.png",
+      "alt": "250927eM",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_251230MN.png",
-      "alt": "251230MN",
-      "category": "ART"
+      "src": "images/K7_250926MN2.png",
+      "alt": "Mirage",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_260102A.png",
-      "alt": "260102A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260104M.png",
-      "alt": "260104M",
+      "src": "images/K7_250926M.png",
+      "alt": "250926M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260107N.png",
-      "alt": "260107N",
+      "src": "images/K7_250924M.png",
+      "alt": "250924M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260110As.png",
-      "alt": "260110As",
+      "src": "images/K7_250923M-QNS.png",
+      "alt": "250923M-QNS",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250922A.png",
+      "alt": "250922A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260117N.png",
-      "alt": "260117N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260121A.png",
-      "alt": "260121A",
+      "src": "images/K7_250921.png",
+      "alt": "250921 with cat",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260127A.png",
-      "alt": "260127A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260201AN.png",
-      "alt": "260201AN",
+      "src": "images/K7_250920Na.png",
+      "alt": "250920Na",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260210Na.png",
-      "alt": "260210Na",
+      "src": "images/K7_250915A3.png",
+      "alt": "250915A3",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260214A.png",
-      "alt": "260214A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260215A1.png",
-      "alt": "260215A1",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260216A1.png",
-      "alt": "260216A1",
+      "src": "images/K7_250915A2.png",
+      "alt": "250915A2",
       "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250910A.png",
+      "alt": "250910A",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250909em.png",
+      "alt": "250909em",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250909MN.png",
+      "alt": "250909MN",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250905M.png",
+      "alt": "250905M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250902M.png",
+      "alt": "250902M",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250831A7.png",
+      "alt": "250831A7",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250831A1.png",
+      "alt": "250831A1",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250826MN.png",
+      "alt": "250826MN",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250825M.png",
+      "alt": "Swings",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250818M.png",
+      "alt": "250818M",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250727MN.png",
+      "alt": "250727 FES",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250725MN.png",
+      "alt": "250725MN",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250706Nan.png",
+      "alt": "250706N Photo",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250630A.png",
+      "alt": "250630A",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250625N.png",
+      "alt": "250625N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250510MN.png",
+      "alt": "Pattern",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250510Af.png",
+      "alt": "250510Af",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250509M.png",
+      "alt": "250509M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250424N.png",
+      "alt": "250424N",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250411M.png",
+      "alt": "250411M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250315MN.png",
+      "alt": "250315MN BEER",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250315E.png",
+      "alt": "Waiting for the sunrise",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250313N.png",
+      "alt": "250313N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250209N.png",
+      "alt": "250209N",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250208c.png",
+      "alt": "250208c",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_250202.png",
+      "alt": "250202",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_241013M.png",
+      "alt": "241013M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_23HELLOWEEN.png",
+      "alt": "HELLOWEEN'23",
+      "category": "GRAPHIC"
+    }
+  ],
+  "curated": [
+    {
+      "src": "images/ATTITUDE_poster26.png",
+      "alt": "ATTITUDE_poster26"
+    },
+    {
+      "src": "images/K7_260419A1-3.png",
+      "alt": "260419A1-3 BREEZE",
+      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_260221MN.png",
       "alt": "260221MN",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_260104M.png",
+      "alt": "260104M",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251123A.png",
+      "alt": "251123A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260227N.png",
-      "alt": "260227N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260303Na.png",
-      "alt": "260303Na",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260306MN.png",
-      "alt": "260306MN",
+      "src": "images/K7_251105A.png",
+      "alt": "251105A",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260308An.png",
-      "alt": "260308An",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260319M.png",
-      "alt": "260319M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260320M.png",
-      "alt": "260320M",
+      "src": "images/K7_251019NN.png",
+      "alt": "251019NN",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260322.png",
-      "alt": "260322",
+      "src": "images/K7_250924M.png",
+      "alt": "250924M",
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260323M.png",
-      "alt": "260323M",
-      "category": "LIFE"
+      "src": "images/K7_250902M.png",
+      "alt": "250902M",
+      "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_260324M.png",
-      "alt": "260324M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260325M.png",
-      "alt": "260325M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260327M.png",
-      "alt": "260327M",
-      "category": "LIFE"
-    },
-    {
-      "src": "images/K7_260327N.png",
-      "alt": "260327N",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260330A.png",
-      "alt": "260330A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260408A.png",
-      "alt": "260408A",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260411M.png",
-      "alt": "260411M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260412M.png",
-      "alt": "260412M",
-      "category": "LIFE"
-    },
-    {
-      "src": "images/K7_260413M.png",
-      "alt": "260413M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_260414Na.png",
-      "alt": "260414Na",
-      "category": "LIFE"
-    },
-    {
-      "src": "images/K7_260417A.png",
-      "alt": "260417A",
-      "category": "LIFE"
-    },
-    {
-      "src": "images/K7_260418M.png",
-      "alt": "260418M",
-      "category": "ART"
-    },
-    {
-      "src": "images/K7_catch.png",
-      "alt": "catch",
+      "src": "images/K7_250510Af.png",
+      "alt": "250510Af",
       "category": "LIFE"
     }
   ]
