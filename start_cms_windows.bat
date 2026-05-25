@@ -1,25 +1,17 @@
 @echo off
-setlocal
+:: Gallery K7th CMS Start Script for Windows
 
+:: スクリプトがあるディレクトリ（galleryフォルダ）に移動
 cd /d "%~dp0"
 
-where node >nul 2>&1
-if errorlevel 1 (
-  echo [ERROR] Node.js が見つかりません。先にインストールしてください。
-  pause
-  exit /b 1
-)
+echo ======================================
+echo Starting Gallery K7th CMS Server...
+echo ======================================
 
-if not exist "node_modules" (
-  echo 依存関係をインストール中...
-  npm.cmd install
-  if errorlevel 1 (
-    echo [ERROR] npm install に失敗しました。
-    pause
-    exit /b 1
-  )
-)
+:: 2秒ほど待機してからブラウザを開く（サーバー起動完了を待つため）
+start /b cmd /c "ping 127.0.0.1 -n 3 > nul && start http://localhost:3000/admin"
 
-echo CMSサーバーを起動します...
-start "" http://localhost:3000/admin/
-node admin-server.js
+:: Nodeサーバーを起動
+call npm run admin
+
+pause
