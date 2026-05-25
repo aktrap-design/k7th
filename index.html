@@ -62,6 +62,31 @@
     </div>
   </section>
 
+  <section class="interlude-section" data-interlude-index="0" aria-label="Parallax interlude">
+    <div class="interlude-layer interlude-layer-back" data-speed="-0.08"></div>
+    <div class="interlude-layer interlude-layer-mid" data-speed="0.12"></div>
+    <div class="interlude-content" data-speed="0.2">
+      <p class="interlude-kicker">BETWEEN FRAMES</p>
+      <h2 class="interlude-title">KINETIC VISION</h2>
+    </div>
+  </section>
+  <section class="interlude-section" data-interlude-index="1" aria-label="Parallax interlude">
+    <div class="interlude-layer interlude-layer-back" data-speed="-0.08"></div>
+    <div class="interlude-layer interlude-layer-mid" data-speed="0.12"></div>
+    <div class="interlude-content" data-speed="0.2">
+      <p class="interlude-kicker">MOTION TRACE</p>
+      <h2 class="interlude-title">NEON MEMORY</h2>
+    </div>
+  </section>
+  <section class="interlude-section" data-interlude-index="2" aria-label="Parallax interlude">
+    <div class="interlude-layer interlude-layer-back" data-speed="-0.08"></div>
+    <div class="interlude-layer interlude-layer-mid" data-speed="0.12"></div>
+    <div class="interlude-content" data-speed="0.2">
+      <p class="interlude-kicker">AFTERIMAGE</p>
+      <h2 class="interlude-title">SLOW BURN</h2>
+    </div>
+  </section>
+
   <!-- ========== GALLERY ========== -->
   <section class="gallery-section" id="gallery">
     <div class="gallery-header">
@@ -71,6 +96,18 @@
       </nav>
     </div>
     <div class="gallery-grid" id="gallery-grid"></div>
+  </section>
+
+  <section class="throwback-section" id="throwback-section" aria-label="Throwback gallery">
+    <div class="throwback-inner">
+      <div class="throwback-head">
+        <h2 class="section-title">THROWBACK</h2>
+        <p class="throwback-copy">Past frames reloaded in a cinematic archive.</p>
+      </div>
+      <button class="throwback-banner" id="throwback-banner" aria-label="Open Throwback gallery" type="button">
+        <span class="throwback-banner-label">OPEN ARCHIVE</span>
+      </button>
+    </div>
   </section>
 
   <!-- ========== LIGHTBOX ========== -->
@@ -88,6 +125,24 @@
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
     <button class="lightbox-next" id="lightbox-next" aria-label="Next image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+  </div>
+
+  <div class="throwback-lightbox" id="throwback-lightbox" role="dialog" aria-modal="true" aria-label="Throwback image viewer" hidden>
+    <div class="throwback-backdrop"></div>
+    <div class="throwback-content">
+      <img class="throwback-image" id="throwback-image" src="" alt="">
+      <div class="throwback-meta">
+        <span class="throwback-title" id="throwback-title"></span>
+        <span class="throwback-counter" id="throwback-counter"></span>
+      </div>
+    </div>
+    <button class="throwback-close" id="throwback-close" aria-label="Close">&times;</button>
+    <button class="throwback-prev" id="throwback-prev" aria-label="Previous image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="throwback-next" id="throwback-next" aria-label="Next image">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
     </button>
   </div>

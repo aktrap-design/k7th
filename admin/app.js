@@ -1,5 +1,5 @@
 // ---------- STATE ----------
-let galleryData = { hero: [], curated: [], categories: [], gallery: [] };
+let galleryData = { hero: [], curated: [], categories: [], gallery: [], throwback: [] };
 let currentUploadList = null;
 
 // ---------- DOM ELEMENTS ----------
@@ -10,6 +10,7 @@ const loading = document.getElementById('loading');
 const heroList = document.getElementById('hero-list');
 const curatedList = document.getElementById('curated-list');
 const galleryList = document.getElementById('gallery-list');
+const throwbackList = document.getElementById('throwback-list');
 
 const uploadModal = document.getElementById('upload-modal');
 const uploadForm = document.getElementById('upload-form');
@@ -22,6 +23,9 @@ async function init() {
   try {
     const res = await fetch('/api/data');
     galleryData = await res.json();
+    if (!Array.isArray(galleryData.throwback)) {
+      galleryData.throwback = [];
+    }
     renderAll();
     setupSortable();
   } catch (err) {
@@ -35,6 +39,7 @@ function renderAll() {
   renderList(heroList, galleryData.hero, 'hero');
   renderList(curatedList, galleryData.curated, 'curated');
   renderList(galleryList, galleryData.gallery, 'gallery');
+  renderList(throwbackList, galleryData.throwback, 'throwback');
 }
 
 function renderList(container, items, listName) {
@@ -108,6 +113,7 @@ function setupSortable() {
   new Sortable(heroList, options);
   new Sortable(curatedList, options);
   new Sortable(galleryList, options);
+  new Sortable(throwbackList, options);
 }
 
 // ---------- TABS ----------

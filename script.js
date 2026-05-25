@@ -31,6 +31,16 @@
   const lightboxClose = document.getElementById('lightbox-close');
   const lightboxPrev = document.getElementById('lightbox-prev');
   const lightboxNext = document.getElementById('lightbox-next');
+  const throwbackSection = document.getElementById('throwback-section');
+  const throwbackBanner = document.getElementById('throwback-banner');
+  const throwbackLightbox = document.getElementById('throwback-lightbox');
+  const throwbackImage = document.getElementById('throwback-image');
+  const throwbackTitle = document.getElementById('throwback-title');
+  const throwbackCounter = document.getElementById('throwback-counter');
+  const throwbackClose = document.getElementById('throwback-close');
+  const throwbackPrev = document.getElementById('throwback-prev');
+  const throwbackNext = document.getElementById('throwback-next');
+  let throwbackIndex = 0;
 
   // ---------- INIT ----------
   async function init() {
@@ -46,9 +56,12 @@
     buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
+    buildThrowback(galleryData.throwback);
     setupLightbox();
+    setupThrowbackLightbox();
     observeScrollReveal();
     setupVideoParallax();
+    setupInterludeParallax();
     setupBGM();
     setupPageTopButton();
   }
@@ -332,6 +345,33 @@
   }
 
   // ==========================================
+  //  THROWBACK BANNER
+  // ==========================================
+  function buildThrowback(items) {
+    if (!throwbackSection || !throwbackBanner) return;
+    if (!Array.isArray(items) || items.length === 0) {
+      throwbackSection.hidden = true;
+      return;
+    }
+
+    throwbackSection.hidden = false;
+    const firstGalleryImage = Array.isArray(items) && items[0]
+      ? items[0].src
+      : null;
+    if (firstGalleryImage) {
+      throwbackBanner.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.58), rgba(0,0,0,0.12)), url("${firstGalleryImage}")`;
+      throwbackBanner.style.backgroundSize = 'cover';
+      throwbackBanner.style.backgroundPosition = 'center';
+    } else {
+      throwbackBanner.style.backgroundImage = 'linear-gradient(120deg, rgba(255,255,255,0.06) 0%, transparent 35%), #0f0f0f';
+      throwbackBanner.style.backgroundSize = 'auto';
+      throwbackBanner.style.backgroundPosition = '0 0';
+    }
+    throwbackBanner.style.backgroundRepeat = 'no-repeat';
+    throwbackBanner.addEventListener('click', () => openThrowback(0));
+  }
+
+  // ==========================================
   //  LIGHTBOX
   // ==========================================
   function setupLightbox() {
@@ -415,6 +455,65 @@
   }
 
   // ==========================================
+  //  THROWBACK LIGHTBOX
+  // ==========================================
+  function setupThrowbackLightbox() {
+    if (!throwbackLightbox || !throwbackClose || !throwbackPrev || !throwbackNext) return;
+
+    throwbackClose.addEventListener('click', closeThrowback);
+    throwbackPrev.addEventListener('click', () => navigateThrowback(-1));
+    throwbackNext.addEventListener('click', () => navigateThrowback(1));
+    throwbackLightbox.querySelector('.throwback-backdrop').addEventListener('click', closeThrowback);
+
+    document.addEventListener('keydown', (e) => {
+      if (!throwbackLightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeThrowback();
+      if (e.key === 'ArrowLeft') navigateThrowback(-1);
+      if (e.key === 'ArrowRight') navigateThrowback(1);
+    });
+  }
+
+  function openThrowback(index) {
+    const items = galleryData.throwback || [];
+    if (!items.length || !throwbackLightbox) return;
+
+    throwbackIndex = index;
+    updateThrowbackImage();
+    throwbackLightbox.removeAttribute('hidden');
+    void throwbackLightbox.offsetHeight;
+    throwbackLightbox.classList.add('open');
+    document.body.classList.add('lightbox-open');
+  }
+
+  function closeThrowback() {
+    if (!throwbackLightbox) return;
+    throwbackLightbox.classList.remove('open');
+    document.body.classList.remove('lightbox-open');
+    setTimeout(() => {
+      throwbackLightbox.setAttribute('hidden', '');
+    }, 350);
+  }
+
+  function navigateThrowback(dir) {
+    const items = galleryData.throwback || [];
+    if (!items.length) return;
+
+    throwbackIndex = (throwbackIndex + dir + items.length) % items.length;
+    updateThrowbackImage();
+  }
+
+  function updateThrowbackImage() {
+    const items = galleryData.throwback || [];
+    const item = items[throwbackIndex];
+    if (!item) return;
+
+    throwbackImage.src = item.src;
+    throwbackImage.alt = item.alt || 'Throwback image';
+    throwbackTitle.textContent = item.alt || `Throwback ${throwbackIndex + 1}`;
+    throwbackCounter.textContent = `${throwbackIndex + 1} / ${items.length}`;
+  }
+
+  // ==========================================
   //  SCROLL REVEAL (Intersection Observer)
   // ==========================================
   function observeScrollReveal() {
@@ -472,6 +571,54 @@
         ticking = true;
       }
     }, { passive: true });
+  }
+
+  // ==========================================
+  //  INTERLUDE PARALLAX
+  // ==========================================
+  function setupInterludeParallax() {
+    const sections = Array.from(document.querySelectorAll('.interlude-section'));
+    if (!sections.length) return;
+
+    const galleryItems = Array.isArray(galleryData.gallery) ? galleryData.gallery : [];
+    sections.forEach((section, index) => {
+      const item = galleryItems[index];
+      if (item && item.src) {
+        section.style.backgroundImage = `linear-gradient(135deg, rgba(7,7,7,0.74) 0%, rgba(19,19,19,0.56) 55%, rgba(9,9,9,0.74) 100%), url("${item.src}")`;
+        section.style.backgroundSize = 'cover';
+        section.style.backgroundPosition = 'center';
+      }
+    });
+
+    let ticking = false;
+    const update = () => {
+      const windowH = window.innerHeight;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < windowH) {
+          const progress = (windowH - rect.top) / (windowH + rect.height);
+          const centered = progress - 0.5;
+          section.querySelectorAll('[data-speed]').forEach((el) => {
+            const speed = Number(el.dataset.speed || 0);
+            const offsetY = centered * speed * 280;
+            el.style.transform = `translate3d(0, ${offsetY}px, 0)`;
+          });
+        }
+      });
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
   }
 
   // ==========================================

@@ -490,6 +490,73 @@ a {
   pointer-events: none;
 }
 
+.interlude-section {
+  position: relative;
+  height: 52vh;
+  min-height: 300px;
+  max-height: 540px;
+  overflow: hidden;
+  margin: 24px 0 12px;
+  background: linear-gradient(135deg, #070707 0%, #131313 55%, #090909 100%);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.interlude-layer {
+  position: absolute;
+  inset: -10%;
+  will-change: transform;
+}
+
+.interlude-layer-back {
+  background:
+    radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.1) 0%, transparent 32%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 28%);
+  filter: blur(2px);
+}
+
+.interlude-layer-mid {
+  background:
+    repeating-linear-gradient(
+      -28deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+
+.interlude-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  will-change: transform;
+}
+
+.interlude-kicker {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.interlude-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 14vw, 8rem);
+  letter-spacing: 0.12em;
+  line-height: 0.9;
+  margin-right: -0.12em;
+  color: #f2f2f2;
+  text-shadow: 0 10px 35px rgba(0, 0, 0, 0.55);
+}
+
 @media (min-width: 768px) {
   .curated-section {
     padding: 100px 0 60px;
@@ -643,6 +710,166 @@ a {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.7s var(--timing-smooth), transform 0.7s var(--timing-smooth);
+}
+
+/* ---------- THROWBACK ---------- */
+.throwback-section {
+  padding: 48px 16px 72px;
+}
+
+.throwback-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.throwback-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.throwback-copy {
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.throwback-banner {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,0.05) 0%, transparent 35%),
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.14) 0%, transparent 35%),
+    radial-gradient(circle at 82% 68%, rgba(255,255,255,0.12) 0%, transparent 30%),
+    #0f0f0f;
+  transition: transform 0.35s var(--timing-smooth), border-color 0.35s var(--timing-smooth);
+}
+
+.throwback-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04) 0px,
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+}
+
+.throwback-banner-label {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  z-index: 1;
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+  font-size: clamp(1.6rem, 6vw, 2.8rem);
+}
+
+.throwback-banner:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.35);
+}
+
+.throwback-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s var(--timing-smooth), visibility 0.45s;
+}
+
+.throwback-lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.throwback-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.throwback-content {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 1200px);
+  transform: scale(0.92) translateY(12px);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s var(--timing-smooth);
+}
+
+.throwback-lightbox.open .throwback-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.throwback-image {
+  width: 100%;
+  max-height: 76vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
+  filter: saturate(1.05) contrast(1.04);
+}
+
+.throwback-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s 0.12s var(--timing-smooth), transform 0.45s 0.12s var(--timing-smooth);
+}
+
+.throwback-lightbox.open .throwback-meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.throwback-close,
+.throwback-prev,
+.throwback-next {
+  position: absolute;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  border-radius: 50%;
+  transition: color 0.25s, background 0.25s;
+}
+
+.throwback-close { top: 18px; right: 18px; font-size: 28px; }
+.throwback-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.throwback-next { right: 14px; top: 50%; transform: translateY(-50%); }
+
+.throwback-close:hover,
+.throwback-prev:hover,
+.throwback-next:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ---------- LIGHTBOX ---------- */
@@ -820,6 +1047,9 @@ a {
 
   .lightbox-prev { left: 24px; }
   .lightbox-next { right: 24px; }
+
+  .throwback-section { padding: 64px 24px 92px; }
+  .throwback-banner { min-height: 280px; }
 }
 
 /* ---------- RESPONSIVE — Desktop ---------- */
@@ -857,6 +1087,11 @@ a {
     flex-direction: row;
     justify-content: space-between;
   }
+
+  .throwback-section { padding: 72px 40px 110px; }
+  .throwback-banner { min-height: 320px; }
+  .throwback-prev { left: 40px; }
+  .throwback-next { right: 40px; }
 }
 
 /* ---------- RESPONSIVE — Large Desktop ---------- */
