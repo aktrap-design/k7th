@@ -32,6 +32,11 @@
   ],
   "gallery": [
     {
+      "src": "images/K7_2605xa.png",
+      "alt": "PARTICLE",
+      "category": "GRAPHIC"
+    },
+    {
       "src": "images/K7_260523Naa.png",
       "alt": "260523Na",
       "category": "LIFE"
@@ -359,6 +364,11 @@
     {
       "src": "images/K7_251116Na.png",
       "alt": "LAZERBEAM",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7ai_0709NN.png",
+      "alt": "Rusalka",
       "category": "GRAPHIC"
     },
     {
@@ -694,8 +704,24 @@
   ],
   "curated": [
     {
+      "src": "images/K7_20260525X1.png",
+      "alt": "WINGS"
+    },
+    {
       "src": "images/ATTITUDE_poster26.png",
       "alt": "ATTITUDE_poster26"
+    },
+    {
+      "src": "images/K7_250908M.png",
+      "alt": "SEE"
+    },
+    {
+      "src": "images/K7_250202.png",
+      "alt": "PASSWAY"
+    },
+    {
+      "src": "images/K7_251008MN.png",
+      "alt": "REST"
     },
     {
       "src": "images/K7_260419A1-3.png",
@@ -703,24 +729,21 @@
       "category": "GRAPHIC"
     },
     {
+      "src": "images/K7_20260526th.png",
+      "alt": "ROOF"
+    },
+    {
+      "src": "images/__K7_260525A.png",
+      "alt": "260525A"
+    },
+    {
       "src": "images/K7_260221MN.png",
       "alt": "260221MN",
       "category": "GRAPHIC"
     },
     {
-      "src": "images/K7_260104M.png",
-      "alt": "260104M",
-      "category": "GRAPHIC"
-    },
-    {
-      "src": "images/K7_251123A.png",
-      "alt": "251123A",
-      "category": "LIFE"
-    },
-    {
-      "src": "images/K7_251105A.png",
-      "alt": "251105A",
-      "category": "LIFE"
+      "src": "images/K7ai_240813NN.png",
+      "alt": "THE DANCE"
     },
     {
       "src": "images/K7_251019NN.png",
@@ -728,14 +751,13 @@
       "category": "LIFE"
     },
     {
+      "src": "images/K7_250830Af.png",
+      "alt": "C3"
+    },
+    {
       "src": "images/K7_250924M.png",
       "alt": "250924M",
       "category": "LIFE"
-    },
-    {
-      "src": "images/K7_250902M.png",
-      "alt": "250902M",
-      "category": "GRAPHIC"
     },
     {
       "src": "images/K7_250510Af.png",
@@ -807,12 +829,12 @@
   ],
   "interlude": [
     {
-      "src": "images/K7_260525A5.png",
-      "alt": "PR1"
+      "src": "images/K7_SKY-HI.png",
+      "alt": "SKYHI"
     },
     {
-      "src": "images/K7pr2.png",
-      "alt": "PR2"
+      "src": "images/PR02.png",
+      "alt": "PR02"
     },
     {
       "src": "images/K7pr3.png",
