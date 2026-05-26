@@ -23,6 +23,10 @@
   --accent-glow: rgba(168, 85, 247, 0.25);
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-light: rgba(255, 255, 255, 0.1);
+  --glass-dark: rgba(0, 0, 0, 0.68);
+  --glass-darker: rgba(0, 0, 0, 0.92);
+  --overlay-vignette: rgba(10, 10, 10, 0.6);
+  --ui-hover-soft: rgba(255, 255, 255, 0.08);
   --shadow-lg: 0 25px 60px rgba(0, 0, 0, 0.5);
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -175,7 +179,7 @@ a {
 .sound-drawer-toggle {
   width: 22px;
   height: 28px;
-  background: rgba(0, 0, 0, 0.68);
+  background: var(--glass-dark);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-right: none;
@@ -189,7 +193,7 @@ a {
 
 .sound-select {
   width: 156px;
-  background: rgba(0, 0, 0, 0.68);
+  background: var(--glass-dark);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-right: none;
@@ -295,22 +299,21 @@ a {
 
 /* IN state: slide in to cover the screen */
 .hero.bars-in .transition-bars .bar { transform: translate3d(0, 0, 0); }
-.hero.bars-in .transition-bars .bar-0 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.0s; }
-.hero.bars-in .transition-bars .bar-1 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.1s; }
-.hero.bars-in .transition-bars .bar-2 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.05s; }
-.hero.bars-in .transition-bars .bar-3 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.15s; }
-.hero.bars-in .transition-bars .bar-4 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.08s; }
-.hero.bars-in .transition-bars .bar-5 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.03s; }
 
 /* OUT state: continue sliding to the opposite side */
 .hero.bars-out .transition-bars .bar:nth-child(odd) { transform: translate3d(100%, 0, 0); }
 .hero.bars-out .transition-bars .bar:nth-child(even) { transform: translate3d(-100%, 0, 0); }
-
-.hero.bars-out .transition-bars .bar-0 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.0s; }
+.hero.bars-in .transition-bars .bar-0,
+.hero.bars-out .transition-bars .bar-0 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0s; }
+.hero.bars-in .transition-bars .bar-1,
 .hero.bars-out .transition-bars .bar-1 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.1s; }
+.hero.bars-in .transition-bars .bar-2,
 .hero.bars-out .transition-bars .bar-2 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.05s; }
+.hero.bars-in .transition-bars .bar-3,
 .hero.bars-out .transition-bars .bar-3 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.15s; }
+.hero.bars-in .transition-bars .bar-4,
 .hero.bars-out .transition-bars .bar-4 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.08s; }
+.hero.bars-in .transition-bars .bar-5,
 .hero.bars-out .transition-bars .bar-5 { transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1) 0.03s; }
 
 /* Reset state: instant jump back without transition */
@@ -477,7 +480,7 @@ a {
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(10,10,10,0.6) 100%);
+  background: radial-gradient(ellipse at center, transparent 50%, var(--overlay-vignette) 100%);
 }
 
 .video-title-overlay {
@@ -970,7 +973,7 @@ a {
 .throwback-prev:hover,
 .throwback-next:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--ui-hover-soft);
 }
 
 @media (max-width: 767px) {
@@ -1010,7 +1013,7 @@ a {
 .lightbox-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.92);
+  background: var(--glass-darker);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -1079,7 +1082,7 @@ a {
 
 .lightbox-close:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--ui-hover-soft);
 }
 
 .lightbox-prev,
@@ -1104,7 +1107,7 @@ a {
 .lightbox-prev:hover,
 .lightbox-next:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--ui-hover-soft);
 }
 
 /* ---------- FOOTER ---------- */
