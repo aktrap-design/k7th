@@ -4,3 +4,10 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# local/system artifacts
+.DS_Store
+desktop.ini
+
+# node dependencies
+node_modules/
