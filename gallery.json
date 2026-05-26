@@ -804,5 +804,19 @@
       "src": "images/JK7_2506-004.png",
       "alt": "PROMOTION"
     }
+  ],
+  "interlude": [
+    {
+      "src": "images/K7_260525A5.png",
+      "alt": "PR1"
+    },
+    {
+      "src": "images/K7pr2.png",
+      "alt": "PR2"
+    },
+    {
+      "src": "images/K7pr3.png",
+      "alt": "PR"
+    }
   ]
 }

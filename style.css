@@ -866,6 +866,14 @@ a {
   font-family: var(--font-display);
   letter-spacing: 0.14em;
   font-size: clamp(1.6rem, 6vw, 2.8rem);
+  opacity: 0;
+  transform: translate3d(56px, 0, 0);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease;
+}
+
+.throwback-section.is-visible .throwback-banner-label {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .throwback-banner:hover {

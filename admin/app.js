@@ -1,5 +1,5 @@
 // ---------- STATE ----------
-let galleryData = { hero: [], curated: [], categories: [], gallery: [], throwback: [] };
+let galleryData = { hero: [], interlude: [], curated: [], categories: [], gallery: [], throwback: [] };
 let currentUploadList = null;
 
 // ---------- DOM ELEMENTS ----------
@@ -8,6 +8,7 @@ const statusBar = document.getElementById('status-bar');
 const loading = document.getElementById('loading');
 
 const heroList = document.getElementById('hero-list');
+const interludeList = document.getElementById('interlude-list');
 const curatedList = document.getElementById('curated-list');
 const galleryList = document.getElementById('gallery-list');
 const throwbackList = document.getElementById('throwback-list');
@@ -28,6 +29,9 @@ async function init() {
     if (!Array.isArray(galleryData.throwback)) {
       galleryData.throwback = [];
     }
+    if (!Array.isArray(galleryData.interlude)) {
+      galleryData.interlude = Array.isArray(galleryData.hero) ? galleryData.hero.slice(0, 3) : [];
+    }
     renderAll();
     setupSortable();
   } catch (err) {
@@ -39,6 +43,7 @@ async function init() {
 // ---------- RENDER ----------
 function renderAll() {
   renderList(heroList, galleryData.hero, 'hero');
+  renderList(interludeList, galleryData.interlude, 'interlude');
   renderList(curatedList, galleryData.curated, 'curated');
   renderList(galleryList, galleryData.gallery, 'gallery');
   renderList(throwbackList, galleryData.throwback, 'throwback');
@@ -113,6 +118,7 @@ function setupSortable() {
   };
 
   new Sortable(heroList, options);
+  new Sortable(interludeList, options);
   new Sortable(curatedList, options);
   new Sortable(galleryList, options);
   new Sortable(throwbackList, options);
@@ -197,6 +203,11 @@ uploadForm.addEventListener('submit', async (e) => {
     const result = await res.json();
 
     if (result.success) {
+      if (currentUploadList === 'interlude' && galleryData.interlude.length >= 3) {
+        showStatus('Interlude images can contain up to 3 items.', 'error');
+        showLoading(false);
+        return;
+      }
       // 2. Add to JSON structure
       const newItem = {
         src: result.src,

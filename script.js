@@ -360,16 +360,71 @@
       ? items[0].src
       : null;
     if (firstGalleryImage) {
+      throwbackBanner.dataset.hasParallaxBg = '1';
       throwbackBanner.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.58), rgba(0,0,0,0.12)), url("${firstGalleryImage}")`;
-      throwbackBanner.style.backgroundSize = 'cover';
-      throwbackBanner.style.backgroundPosition = 'center';
+      throwbackBanner.style.backgroundSize = 'cover, 112%';
+      throwbackBanner.style.backgroundPosition = 'center, center';
     } else {
+      throwbackBanner.dataset.hasParallaxBg = '0';
       throwbackBanner.style.backgroundImage = 'linear-gradient(120deg, rgba(255,255,255,0.06) 0%, transparent 35%), #0f0f0f';
       throwbackBanner.style.backgroundSize = 'auto';
       throwbackBanner.style.backgroundPosition = '0 0';
     }
     throwbackBanner.style.backgroundRepeat = 'no-repeat';
     throwbackBanner.addEventListener('click', () => openThrowback(0));
+    setupThrowbackBannerParallax();
+    setupThrowbackBannerLabelReveal();
+  }
+
+  function setupThrowbackBannerParallax() {
+    if (!throwbackSection || !throwbackBanner || throwbackBanner.dataset.hasParallaxBg !== '1') return;
+
+    let ticking = false;
+    const update = () => {
+      const rect = throwbackSection.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      if (rect.bottom > 0 && rect.top < windowH) {
+        const progress = (windowH - rect.top) / (windowH + rect.height);
+        const centered = progress - 0.5;
+        const bgOffsetY = centered * 90;
+        const bgScale = 112 + Math.abs(centered) * 10;
+        throwbackBanner.style.backgroundPosition = `center, center calc(50% + ${bgOffsetY}px)`;
+        throwbackBanner.style.backgroundSize = `cover, ${bgScale}%`;
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  }
+
+  function setupThrowbackBannerLabelReveal() {
+    if (!throwbackSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            throwbackSection.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.2,
+      }
+    );
+
+    observer.observe(throwbackSection);
   }
 
   // ==========================================
@@ -594,13 +649,16 @@
     const sections = Array.from(document.querySelectorAll('.interlude-section'));
     if (!sections.length) return;
 
-    const galleryItems = Array.isArray(galleryData.gallery) ? galleryData.gallery : [];
+    const interludeItems = Array.isArray(galleryData.interlude) && galleryData.interlude.length
+      ? galleryData.interlude
+      : (Array.isArray(galleryData.gallery) ? galleryData.gallery : []);
     sections.forEach((section, index) => {
-      const item = galleryItems[index];
+      const item = interludeItems[index];
       if (item && item.src) {
+        section.dataset.hasParallaxBg = '1';
         section.style.backgroundImage = `linear-gradient(135deg, rgba(7,7,7,0.74) 0%, rgba(19,19,19,0.56) 55%, rgba(9,9,9,0.74) 100%), url("${item.src}")`;
-        section.style.backgroundSize = 'cover';
-        section.style.backgroundPosition = 'center';
+        section.style.backgroundSize = 'cover, 108%';
+        section.style.backgroundPosition = 'center, center';
       }
     });
 
@@ -613,6 +671,12 @@
         if (rect.bottom > 0 && rect.top < windowH) {
           const progress = (windowH - rect.top) / (windowH + rect.height);
           const centered = progress - 0.5;
+          if (section.dataset.hasParallaxBg === '1') {
+            const bgOffsetY = centered * 140;
+            const bgScale = 108 + Math.abs(centered) * 16;
+            section.style.backgroundPosition = `center, center calc(50% + ${bgOffsetY}px)`;
+            section.style.backgroundSize = `cover, ${bgScale}%`;
+          }
           section.querySelectorAll('[data-speed]').forEach((el) => {
             const speed = Number(el.dataset.speed || 0);
             const phase = sectionIndex % 2 === 0 ? 1 : -1;
