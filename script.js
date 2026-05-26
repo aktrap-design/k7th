@@ -8,7 +8,8 @@
 
   // ---------- CONFIG ----------
   const CAROUSEL_INTERVAL = 5000; // ms between slides
-  const CAROUSEL_TRANSITION = 1400; // matches CSS transition
+  const HERO_WIPE_SWAP_MS = 650;
+  const HERO_WIPE_CLEANUP_MS = 1300;
   const SWIPE_THRESHOLD = 50; // px
 
   // ---------- STATE ----------
@@ -23,6 +24,7 @@
   // ---------- DOM REFS ----------
   const heroTrack = document.getElementById('hero-track');
   const heroIndicators = document.getElementById('hero-indicators');
+  const hero = document.getElementById('hero');
   const galleryGrid = document.getElementById('gallery-grid');
   const filterBar = document.getElementById('filter-bar');
   const lightbox = document.getElementById('lightbox');
@@ -42,6 +44,35 @@
   const throwbackNext = document.getElementById('throwback-next');
   let throwbackIndex = 0;
   let throwbackTouchStartX = 0;
+
+  function addRafScrollListener(update) {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  function openOverlay(el) {
+    if (!el) return;
+    el.removeAttribute('hidden');
+    void el.offsetHeight; // force reflow for transition start
+    el.classList.add('open');
+    document.body.classList.add('lightbox-open');
+  }
+
+  function closeOverlay(el, delayMs) {
+    if (!el) return;
+    el.classList.remove('open');
+    document.body.classList.remove('lightbox-open');
+    setTimeout(() => {
+      el.setAttribute('hidden', '');
+    }, delayMs);
+  }
 
   // ---------- INIT ----------
   async function init() {
@@ -89,7 +120,7 @@
       bar.className = 'bar bar-' + i;
       transitionLayer.appendChild(bar);
     }
-    const hero = document.getElementById('hero');
+    if (!hero) return;
     hero.appendChild(transitionLayer);
 
     // Create indicator dots
@@ -125,7 +156,7 @@
 
     const prevSlideEl = slides[currentSlide];
     const nextSlideEl = slides[index];
-    const hero = document.getElementById('hero');
+    if (!hero) return;
 
     // 1. Black bars slide IN to cover the screen
     hero.classList.add('bars-in');
@@ -145,12 +176,12 @@
 
       // Reset auto-advance timer
       startCarouselTimer();
-    }, 650);
+    }, HERO_WIPE_SWAP_MS);
 
     // 4. Clean up transition classes after animation finishes
     setTimeout(() => {
       hero.classList.remove('bars-out');
-    }, 1300);
+    }, HERO_WIPE_CLEANUP_MS);
   }
 
   function nextSlide() {
@@ -379,7 +410,6 @@
   function setupThrowbackBannerParallax() {
     if (!throwbackSection || !throwbackBanner || throwbackBanner.dataset.hasParallaxBg !== '1') return;
 
-    let ticking = false;
     const update = () => {
       const rect = throwbackSection.getBoundingClientRect();
       const windowH = window.innerHeight;
@@ -393,15 +423,7 @@
       }
     };
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+    addRafScrollListener(update);
 
     update();
   }
@@ -454,19 +476,11 @@
   function openLightbox(index) {
     lightboxIndex = index;
     updateLightboxImage();
-    lightbox.removeAttribute('hidden');
-    // Force reflow before adding class for transition
-    void lightbox.offsetHeight;
-    lightbox.classList.add('open');
-    document.body.classList.add('lightbox-open');
+    openOverlay(lightbox);
   }
 
   function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.classList.remove('lightbox-open');
-    setTimeout(() => {
-      lightbox.setAttribute('hidden', '');
-    }, 400);
+    closeOverlay(lightbox, 400);
   }
 
   function navigateLightbox(dir) {
@@ -537,19 +551,11 @@
 
     throwbackIndex = index;
     updateThrowbackImage();
-    throwbackLightbox.removeAttribute('hidden');
-    void throwbackLightbox.offsetHeight;
-    throwbackLightbox.classList.add('open');
-    document.body.classList.add('lightbox-open');
+    openOverlay(throwbackLightbox);
   }
 
   function closeThrowback() {
-    if (!throwbackLightbox) return;
-    throwbackLightbox.classList.remove('open');
-    document.body.classList.remove('lightbox-open');
-    setTimeout(() => {
-      throwbackLightbox.setAttribute('hidden', '');
-    }, 350);
+    closeOverlay(throwbackLightbox, 350);
   }
 
   function navigateThrowback(dir) {
@@ -623,23 +629,16 @@
     const videoWrapper = videoSection ? videoSection.querySelector('.video-parallax-wrapper') : null;
     if (!videoSection || !videoWrapper) return;
 
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const rect = videoSection.getBoundingClientRect();
-          const windowH = window.innerHeight;
-          // Only animate when section is in view
-          if (rect.bottom > 0 && rect.top < windowH) {
-            const progress = (windowH - rect.top) / (windowH + rect.height);
-            const offset = (progress - 0.5) * 20; // -10% to +10% range
-            videoWrapper.style.transform = `translateY(${offset}%)`;
-          }
-          ticking = false;
-        });
-        ticking = true;
+    addRafScrollListener(() => {
+      const rect = videoSection.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      // Only animate when section is in view
+      if (rect.bottom > 0 && rect.top < windowH) {
+        const progress = (windowH - rect.top) / (windowH + rect.height);
+        const offset = (progress - 0.5) * 20; // -10% to +10% range
+        videoWrapper.style.transform = `translateY(${offset}%)`;
       }
-    }, { passive: true });
+    });
   }
 
   // ==========================================
@@ -662,7 +661,6 @@
       }
     });
 
-    let ticking = false;
     const update = () => {
       const windowH = window.innerHeight;
 
@@ -695,15 +693,7 @@
       });
     };
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+    addRafScrollListener(update);
 
     update();
   }
