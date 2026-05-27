@@ -129,7 +129,7 @@
     {
       "src": "images/K7_260418M.png",
       "alt": "260418M SUMMER",
-      "category": "GRAPHIC"
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_260417A.png",
@@ -149,12 +149,12 @@
     {
       "src": "images/K7_260412M.png",
       "alt": "260412M",
-      "category": "LIFE"
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_260411M.png",
       "alt": "260411M",
-      "category": "MOMENT"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260408A.png",
@@ -169,7 +169,7 @@
     {
       "src": "images/K7_260327N.png",
       "alt": "260327N",
-      "category": "MOMENT"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260327M.png",
@@ -294,7 +294,7 @@
     {
       "src": "images/K7_251230MN.png",
       "alt": "251230MN",
-      "category": "MOMENT"
+      "category": "LIFE"
     },
     {
       "src": "images/K7_catch.png",
@@ -304,7 +304,7 @@
     {
       "src": "images/K7_251230M.png",
       "alt": "Photogenic",
-      "category": "GRAPHIC"
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_251203M.png",
@@ -329,7 +329,7 @@
     {
       "src": "images/K7_251128M.png",
       "alt": "251128M",
-      "category": "LIFE"
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_251126M.png",
@@ -709,7 +709,7 @@
     },
     {
       "src": "images/ATTITUDE_poster26.png",
-      "alt": "ATTITUDE_poster26"
+      "alt": "ATTITUDE_poster'26"
     },
     {
       "src": "images/K7_250908M.png",
@@ -725,20 +725,20 @@
     },
     {
       "src": "images/K7_260419A1-3.png",
-      "alt": "260419A1-3 BREEZE",
+      "alt": "FRORAL BREEZE",
       "category": "GRAPHIC"
     },
     {
       "src": "images/K7_20260526th.png",
-      "alt": "ROOF"
+      "alt": "ROOFVIEW"
     },
     {
       "src": "images/__K7_260525A.png",
-      "alt": "260525A"
+      "alt": "Publicity?"
     },
     {
       "src": "images/K7_260221MN.png",
-      "alt": "260221MN",
+      "alt": "GUIDING LIGHTS",
       "category": "GRAPHIC"
     },
     {
@@ -747,21 +747,21 @@
     },
     {
       "src": "images/K7_251019NN.png",
-      "alt": "251019NN",
+      "alt": "NIGHT TEMPO",
       "category": "LIFE"
     },
     {
       "src": "images/K7_250830Af.png",
-      "alt": "C3"
+      "alt": "RIDE MY C3"
     },
     {
       "src": "images/K7_250924M.png",
-      "alt": "250924M",
+      "alt": "GRAY",
       "category": "LIFE"
     },
     {
       "src": "images/K7_250510Af.png",
-      "alt": "250510Af",
+      "alt": "FAV.",
       "category": "LIFE"
     }
   ],

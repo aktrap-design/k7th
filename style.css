@@ -518,6 +518,28 @@ a {
   color: rgba(0, 0, 0, 0.82);
 }
 
+.fav-links {
+  max-width: 1400px;
+  margin: 10px auto 0;
+  padding: 0 16px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.fav-links a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.25s var(--timing-smooth);
+}
+
+.fav-links a:hover {
+  color: var(--text-primary);
+}
+
 /* ---------- CURATED SECTION ---------- */
 .curated-section {
   padding: 80px 0 40px;
@@ -1212,6 +1234,7 @@ a {
   .throwback-banner { min-height: 320px; }
   .throwback-prev { left: 40px; }
   .throwback-next { right: 40px; }
+  .fav-links { padding: 0 40px; font-size: 11px; }
 }
 
 /* ---------- RESPONSIVE — Large Desktop ---------- */
