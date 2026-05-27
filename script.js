@@ -17,6 +17,7 @@
   let currentSlide = 0;
   let carouselTimer = null;
   let lightboxIndex = -1;
+  let lightboxMode = 'gallery';
   let visibleItems = []; // currently visible gallery items (after filter)
   let touchStartX = 0;
   let touchStartY = 0;
@@ -234,12 +235,11 @@
     const createItem = (img) => {
       const item = document.createElement('div');
       item.className = 'curated-item';
-      const mainIndex = galleryData.gallery.findIndex(g => g.src === img.src);
       item.innerHTML = `<img src="${img.src}" alt="${img.alt}" loading="lazy">`;
       
       item.addEventListener('click', () => {
-        if (!isDraggingCurated && mainIndex !== -1) {
-          openLightbox(mainIndex);
+        if (!isDraggingCurated) {
+          openCuratedLightbox(img.src);
         }
       });
       return item;
@@ -474,6 +474,17 @@
   }
 
   function openLightbox(index) {
+    lightboxMode = 'gallery';
+    lightboxIndex = index;
+    updateLightboxImage();
+    openOverlay(lightbox);
+  }
+
+  function openCuratedLightbox(src) {
+    const curatedItems = Array.isArray(galleryData.curated) ? galleryData.curated : [];
+    const index = curatedItems.findIndex((item) => item.src === src);
+    if (index < 0) return;
+    lightboxMode = 'curated';
     lightboxIndex = index;
     updateLightboxImage();
     openOverlay(lightbox);
@@ -484,31 +495,40 @@
   }
 
   function navigateLightbox(dir) {
-    const images = galleryData.gallery;
-    // Find next/prev visible item
-    let newIndex = lightboxIndex;
-    const totalImages = images.length;
+    if (lightboxMode === 'curated') {
+      const items = Array.isArray(galleryData.curated) ? galleryData.curated : [];
+      if (!items.length) return;
+      lightboxIndex = (lightboxIndex + dir + items.length) % items.length;
+    } else {
+      const images = galleryData.gallery;
+      // Find next/prev visible item
+      let newIndex = lightboxIndex;
+      const totalImages = images.length;
 
-    for (let step = 0; step < totalImages; step++) {
-      newIndex = (newIndex + dir + totalImages) % totalImages;
-      // Check if this image is currently visible (not filtered out)
-      const item = galleryGrid.querySelector(`.gallery-item[data-index="${newIndex}"]`);
-      if (item && !item.classList.contains('filtered-out')) {
-        break;
+      for (let step = 0; step < totalImages; step++) {
+        newIndex = (newIndex + dir + totalImages) % totalImages;
+        // Check if this image is currently visible (not filtered out)
+        const item = galleryGrid.querySelector(`.gallery-item[data-index="${newIndex}"]`);
+        if (item && !item.classList.contains('filtered-out')) {
+          break;
+        }
       }
+      lightboxIndex = newIndex;
     }
-
-    lightboxIndex = newIndex;
     updateLightboxImage();
   }
 
   function updateLightboxImage() {
-    const img = galleryData.gallery[lightboxIndex];
+    const source = lightboxMode === 'curated'
+      ? (Array.isArray(galleryData.curated) ? galleryData.curated : [])
+      : (Array.isArray(galleryData.gallery) ? galleryData.gallery : []);
+    const img = source[lightboxIndex];
     if (!img) return;
     lightboxImage.src = img.src;
     lightboxImage.alt = img.alt;
     lightboxInfo.querySelector('.lightbox-title').textContent = img.alt;
-    lightboxInfo.querySelector('.lightbox-category').textContent = img.category;
+    lightboxInfo.querySelector('.lightbox-category').textContent =
+      lightboxMode === 'curated' ? 'CURATED' : img.category;
   }
 
   // Lightbox swipe
