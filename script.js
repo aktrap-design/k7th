@@ -1024,6 +1024,67 @@
     if (!bgmAudio || !soundToggleBtn || !soundState || !soundDrawer || !soundDrawerToggle || !soundSelect || !soundTrackTitle) return;
     bgmAudio.preload = 'auto';
 
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let audioContext = null;
+    let webAudioSource = null;
+    let webAudioGain = null;
+    const decodedAudioBuffers = new Map();
+
+    const getAudioSrc = () => bgmAudio.getAttribute('src') || soundSelect.value;
+    const getAudioContext = () => {
+      if (!AudioContextClass) return null;
+      if (!audioContext) audioContext = new AudioContextClass();
+      return audioContext;
+    };
+    const loadAudioBuffer = async (src) => {
+      const context = getAudioContext();
+      if (!context) return null;
+      if (decodedAudioBuffers.has(src)) return decodedAudioBuffers.get(src);
+
+      const response = await fetch(src);
+      if (!response.ok) throw new Error(`Audio fetch failed: ${response.status}`);
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await context.decodeAudioData(arrayBuffer);
+      decodedAudioBuffers.set(src, audioBuffer);
+      return audioBuffer;
+    };
+    const stopWebAudio = () => {
+      if (!webAudioSource) return;
+      webAudioSource.onended = null;
+      webAudioSource.stop();
+      webAudioSource.disconnect();
+      webAudioSource = null;
+    };
+    const playWebAudio = async () => {
+      const context = getAudioContext();
+      if (!context) return false;
+      const audioBuffer = await loadAudioBuffer(getAudioSrc());
+      if (context.state === 'suspended') await context.resume();
+
+      stopWebAudio();
+      if (!webAudioGain) {
+        webAudioGain = context.createGain();
+        webAudioGain.connect(context.destination);
+      }
+
+      webAudioSource = context.createBufferSource();
+      webAudioSource.buffer = audioBuffer;
+      webAudioSource.loop = true;
+      webAudioSource.connect(webAudioGain);
+      webAudioSource.start(0);
+      return true;
+    };
+    const playCurrentTrack = () => {
+      return playWebAudio().catch((err) => {
+        console.warn("Web Audio playback failed, falling back to HTML audio:", err);
+        stopWebAudio();
+        return false;
+      }).then((playedWithWebAudio) => {
+        if (playedWithWebAudio) return;
+        return bgmAudio.play();
+      });
+    };
+
     // MP3 files can include encoder padding, but OGG usually loops cleanly natively.
     // Only apply the early seek where it helps, otherwise let the browser loop it.
     let seamlessLoopLock = false;
@@ -1033,7 +1094,7 @@
       const src = (bgmAudio.currentSrc || bgmAudio.getAttribute('src') || '').split('?')[0].toLowerCase();
       return src.endsWith('.mp3') ? mp3LoopThresholdSec : 0;
     };
-    const isSoundPlaying = () => soundToggleBtn.classList.contains('is-playing') && !bgmAudio.paused;
+    const isSoundPlaying = () => soundToggleBtn.classList.contains('is-playing') && (webAudioSource || !bgmAudio.paused);
     const startSeamlessMonitor = () => {
       if (getLoopThresholdSec() <= 0) return;
       if (seamlessMonitorFrame) return;
@@ -1099,8 +1160,8 @@
     });
 
     soundToggleBtn.addEventListener('click', () => {
-      if (bgmAudio.paused) {
-        bgmAudio.play().then(() => {
+      if (!isSoundPlaying()) {
+        playCurrentTrack().then(() => {
           soundToggleBtn.classList.add('is-playing');
           soundState.textContent = 'ON';
           startSeamlessMonitor();
@@ -1108,6 +1169,7 @@
           console.error("Audio playback failed:", err);
         });
       } else {
+        stopWebAudio();
         bgmAudio.pause();
         soundToggleBtn.classList.remove('is-playing');
         soundState.textContent = 'OFF';
@@ -1117,15 +1179,17 @@
 
     soundSelect.addEventListener('change', () => {
       const nextSrc = soundSelect.value;
-      const wasPlaying = !bgmAudio.paused;
+      const wasPlaying = isSoundPlaying();
 
       stopSeamlessMonitor();
+      stopWebAudio();
+      bgmAudio.pause();
       bgmAudio.src = nextSrc;
       bgmAudio.loop = true;
       updateTrackTitle();
 
       if (wasPlaying) {
-        bgmAudio.play().then(() => {
+        playCurrentTrack().then(() => {
           soundToggleBtn.classList.add('is-playing');
           soundState.textContent = 'ON';
           startSeamlessMonitor();
