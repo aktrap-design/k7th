@@ -119,25 +119,36 @@
     });
   }
 
-  async function runGalleryLoadingForFilter(category) {
+  function getNetworkTuning() {
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const effectiveType = conn && conn.effectiveType ? conn.effectiveType : '';
+    const saveData = Boolean(conn && conn.saveData);
+    const isSlow = saveData || /(^2g$|^slow-2g$|^3g$)/.test(effectiveType);
+    return { isSlow };
+  }
+
+  async function runGalleryLoadingForFilter(category, options = {}) {
     const token = ++galleryLoadingToken;
-    const minDurationMs = 500;
-    const maxDurationMs = 1200;
+    const { isSlow } = getNetworkTuning();
+    const minDurationMs = options.minDurationMs ?? (isSlow ? 0 : 120);
+    const maxDurationMs = options.maxDurationMs ?? (isSlow ? 320 : 700);
     const startAt = performance.now();
 
     showGalleryLoading();
     applyFilter(category);
 
     const source = Array.isArray(galleryData?.gallery) ? galleryData.gallery : [];
-    const preloadLimit = category === 'ALL' ? 6 : 8;
+    const preloadLimit = options.preloadLimit ?? (category === 'ALL' ? (isSlow ? 2 : 4) : (isSlow ? 3 : 6));
     const filtered = (category === 'ALL'
       ? source
       : source.filter((item) => item.category === category))
       .slice(0, preloadLimit);
 
-    const preloadPromise = preloadImages(filtered.map((item) => item.src), maxDurationMs);
-    const timeoutPromise = new Promise((resolve) => setTimeout(resolve, maxDurationMs));
-    await Promise.race([preloadPromise, timeoutPromise]);
+    if (filtered.length) {
+      const preloadPromise = preloadImages(filtered.map((item) => item.src), maxDurationMs);
+      const timeoutPromise = new Promise((resolve) => setTimeout(resolve, maxDurationMs));
+      await Promise.race([preloadPromise, timeoutPromise]);
+    }
 
     const elapsed = performance.now() - startAt;
     if (elapsed < minDurationMs) {
@@ -163,7 +174,7 @@
     buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
-    runGalleryLoadingForFilter('ALL');
+    runGalleryLoadingForFilter('ALL', { preloadLimit: 3, minDurationMs: 0, maxDurationMs: 450 });
     buildThrowback(galleryData.throwback);
     buildBehindTheFrame(galleryData.behindTheFrame);
     setupLightbox();
@@ -434,7 +445,7 @@
       filterBar.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
 
-      runGalleryLoadingForFilter(btn.dataset.filter);
+      runGalleryLoadingForFilter(btn.dataset.filter, { minDurationMs: 80, maxDurationMs: 650 });
     });
   }
 
