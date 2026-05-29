@@ -104,7 +104,9 @@
   }
 
   function preloadCriticalFrames(data, maxWaitMs = 2500) {
-    const heroFrames = Array.isArray(data?.hero) ? data.hero.slice(0, 2) : [];
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const heroSource = Array.isArray(data?.hero) ? data.hero : [];
+    const heroFrames = isMobile ? heroSource : heroSource.slice(0, 2);
     const galleryFrames = Array.isArray(data?.gallery) ? data.gallery.slice(0, 10) : [];
     const curatedFrames = Array.isArray(data?.curated) ? data.curated.slice(0, 4) : [];
     const candidates = [...heroFrames, ...galleryFrames, ...curatedFrames]
@@ -213,12 +215,13 @@
     if (!slides || slides.length === 0) return;
 
     // Create slide elements
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
     slides.forEach((slide, i) => {
       const div = document.createElement('div');
       div.className = 'hero-slide' + (i === 0 ? ' active' : '');
-      const loadingMode = i < 4 ? 'eager' : 'lazy';
+      const loadingMode = isMobile || i < 4 ? 'eager' : 'lazy';
       const fetchPriority = i < 2 ? 'high' : 'auto';
-      div.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" loading="${loadingMode}" fetchpriority="${fetchPriority}">`;
+      div.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" loading="${loadingMode}" fetchpriority="${fetchPriority}" decoding="async">`;
       heroTrack.appendChild(div);
     });
 

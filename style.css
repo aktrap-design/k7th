@@ -82,12 +82,24 @@ body.app-loading .page-top {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.35s var(--timing-smooth), visibility 0.35s var(--timing-smooth);
+  flex-direction: column;
+  gap: 12px;
 }
 
 .app-initial-loader.show {
   opacity: 1;
   visibility: visible;
   animation: appLoaderPulse 1.4s ease-in-out infinite;
+}
+
+.app-initial-loader::before {
+  content: '';
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-top-color: rgba(255, 255, 255, 0.92);
+  animation: appLoaderSpin 0.9s linear infinite;
 }
 
 .app-initial-loader::after {
@@ -109,6 +121,10 @@ body.app-loading .page-top {
   25% { content: '.'; }
   50% { content: '..'; }
   75%, 100% { content: '...'; }
+}
+
+@keyframes appLoaderSpin {
+  to { transform: rotate(360deg); }
 }
 
 img {
