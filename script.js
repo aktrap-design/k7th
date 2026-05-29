@@ -27,6 +27,7 @@
   const heroIndicators = document.getElementById('hero-indicators');
   const hero = document.getElementById('hero');
   const galleryGrid = document.getElementById('gallery-grid');
+  const galleryLoading = document.getElementById('gallery-loading');
   const filterBar = document.getElementById('filter-bar');
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightbox-image');
@@ -45,6 +46,7 @@
   const throwbackNext = document.getElementById('throwback-next');
   let throwbackIndex = 0;
   let throwbackTouchStartX = 0;
+  let galleryLoadingToken = 0;
 
   function addRafScrollListener(update) {
     let ticking = false;
@@ -75,6 +77,75 @@
     }, delayMs);
   }
 
+  function showGalleryLoading() {
+    if (!galleryLoading) return;
+    galleryLoading.classList.add('show');
+    galleryLoading.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideGalleryLoading() {
+    if (!galleryLoading) return;
+    galleryLoading.classList.remove('show');
+    galleryLoading.setAttribute('aria-hidden', 'true');
+  }
+
+  function preloadImages(urls, maxWaitMs = 2500) {
+    const list = urls.filter(Boolean);
+    if (!list.length) return Promise.resolve();
+    return new Promise((resolve) => {
+      let completed = 0;
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        resolve();
+      };
+      const timer = setTimeout(finish, maxWaitMs);
+
+      list.forEach((src) => {
+        const img = new Image();
+        const done = () => {
+          completed += 1;
+          if (completed >= list.length) {
+            clearTimeout(timer);
+            finish();
+          }
+        };
+        img.onload = done;
+        img.onerror = done;
+        img.src = src;
+      });
+    });
+  }
+
+  async function runGalleryLoadingForFilter(category) {
+    const token = ++galleryLoadingToken;
+    const minDurationMs = 500;
+    const maxDurationMs = 2500;
+    const startAt = performance.now();
+
+    showGalleryLoading();
+    applyFilter(category);
+
+    const source = Array.isArray(galleryData?.gallery) ? galleryData.gallery : [];
+    const filtered = category === 'ALL'
+      ? source
+      : source.filter((item) => item.category === category);
+
+    const preloadPromise = preloadImages(filtered.map((item) => item.src), maxDurationMs);
+    const timeoutPromise = new Promise((resolve) => setTimeout(resolve, maxDurationMs));
+    await Promise.race([preloadPromise, timeoutPromise]);
+
+    const elapsed = performance.now() - startAt;
+    if (elapsed < minDurationMs) {
+      await new Promise((resolve) => setTimeout(resolve, minDurationMs - elapsed));
+    }
+
+    if (token === galleryLoadingToken) {
+      hideGalleryLoading();
+    }
+  }
+
   // ---------- INIT ----------
   async function init() {
     try {
@@ -89,6 +160,7 @@
     buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
+    await runGalleryLoadingForFilter('ALL');
     buildThrowback(galleryData.throwback);
     setupLightbox();
     setupThrowbackLightbox();
@@ -329,7 +401,7 @@
       filterBar.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
 
-      applyFilter(btn.dataset.filter);
+      runGalleryLoadingForFilter(btn.dataset.filter);
     });
   }
 
