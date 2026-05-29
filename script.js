@@ -84,37 +84,6 @@
     galleryLoading.setAttribute('aria-hidden', 'false');
   }
 
-  function createInitialLoader() {
-    const el = document.createElement('div');
-    el.className = 'app-initial-loader show';
-    el.id = 'app-initial-loader';
-    el.textContent = 'Loading frames...';
-    document.body.appendChild(el);
-    document.body.classList.add('app-loading');
-    return el;
-  }
-
-  function finishInitialLoader(loaderEl) {
-    if (!loaderEl) return;
-    loaderEl.classList.remove('show');
-    document.body.classList.remove('app-loading');
-    window.setTimeout(() => {
-      loaderEl.remove();
-    }, 360);
-  }
-
-  function preloadCriticalFrames(data, maxWaitMs = 2500) {
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    const heroSource = Array.isArray(data?.hero) ? data.hero : [];
-    const heroFrames = isMobile ? heroSource : heroSource.slice(0, 2);
-    const galleryFrames = Array.isArray(data?.gallery) ? data.gallery.slice(0, 10) : [];
-    const curatedFrames = Array.isArray(data?.curated) ? data.curated.slice(0, 4) : [];
-    const candidates = [...heroFrames, ...galleryFrames, ...curatedFrames]
-      .map((item) => item && item.src)
-      .filter(Boolean);
-    return preloadImages(candidates, maxWaitMs);
-  }
-
   function hideGalleryLoading() {
     if (!galleryLoading) return;
     galleryLoading.classList.remove('show');
@@ -153,16 +122,18 @@
   async function runGalleryLoadingForFilter(category) {
     const token = ++galleryLoadingToken;
     const minDurationMs = 500;
-    const maxDurationMs = 2500;
+    const maxDurationMs = 1200;
     const startAt = performance.now();
 
     showGalleryLoading();
     applyFilter(category);
 
     const source = Array.isArray(galleryData?.gallery) ? galleryData.gallery : [];
-    const filtered = category === 'ALL'
+    const preloadLimit = category === 'ALL' ? 6 : 8;
+    const filtered = (category === 'ALL'
       ? source
-      : source.filter((item) => item.category === category);
+      : source.filter((item) => item.category === category))
+      .slice(0, preloadLimit);
 
     const preloadPromise = preloadImages(filtered.map((item) => item.src), maxDurationMs);
     const timeoutPromise = new Promise((resolve) => setTimeout(resolve, maxDurationMs));
@@ -180,14 +151,11 @@
 
   // ---------- INIT ----------
   async function init() {
-    const initialLoader = createInitialLoader();
     try {
       const res = await fetch('gallery.json');
       galleryData = await res.json();
-      await preloadCriticalFrames(galleryData, 2500);
     } catch (e) {
       console.error('Failed to load gallery.json:', e);
-      finishInitialLoader(initialLoader);
       return;
     }
 
@@ -195,7 +163,7 @@
     buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
-    await runGalleryLoadingForFilter('ALL');
+    runGalleryLoadingForFilter('ALL');
     buildThrowback(galleryData.throwback);
     buildBehindTheFrame(galleryData.behindTheFrame);
     setupLightbox();
@@ -205,7 +173,6 @@
     setupInterludeParallax();
     setupBGM();
     setupPageTopButton();
-    finishInitialLoader(initialLoader);
   }
 
   // ==========================================
@@ -215,13 +182,12 @@
     if (!slides || slides.length === 0) return;
 
     // Create slide elements
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
     slides.forEach((slide, i) => {
       const div = document.createElement('div');
       div.className = 'hero-slide' + (i === 0 ? ' active' : '');
-      const loadingMode = isMobile || i < 4 ? 'eager' : 'lazy';
+      const loadingMode = i < 3 ? 'eager' : 'lazy';
       const fetchPriority = i < 2 ? 'high' : 'auto';
-      div.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" loading="${loadingMode}" fetchpriority="${fetchPriority}" decoding="async">`;
+      div.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" loading="${loadingMode}" fetchpriority="${fetchPriority}" decoding="async" width="1920" height="1080">`;
       heroTrack.appendChild(div);
     });
 
@@ -347,7 +313,7 @@
     const createItem = (img) => {
       const item = document.createElement('div');
       item.className = 'curated-item';
-      item.innerHTML = `<img src="${img.src}" alt="${img.alt}" loading="lazy">`;
+      item.innerHTML = `<img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async" width="1200" height="900">`;
       
       item.addEventListener('click', () => {
         if (!isDraggingCurated) {
@@ -473,7 +439,7 @@
       item.dataset.category = img.category;
 
       item.innerHTML = `
-        <img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async">
+        <img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async" width="900" height="1200">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">${img.alt}</span>
           <span class="gallery-item-category">${img.category}</span>
@@ -618,7 +584,7 @@
         : '';
 
       card.innerHTML = `
-        ${item.image ? `<img class="behind-image" src="${item.image}" alt="${item.title || 'Behind the Frame'}" loading="lazy">` : ''}
+        ${item.image ? `<img class="behind-image" src="${item.image}" alt="${item.title || 'Behind the Frame'}" loading="lazy" decoding="async" width="1200" height="900">` : ''}
         <div class="behind-body">
           ${item.title ? `<h3 class="behind-title">${item.title}</h3>` : ''}
           ${item.promptPreview ? `<p class="behind-preview">${item.promptPreview}</p>` : ''}
