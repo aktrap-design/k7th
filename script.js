@@ -49,6 +49,20 @@
   let throwbackTouchStartX = 0;
   let galleryLoadingToken = 0;
 
+  function normalizeList(maybeList) {
+    if (Array.isArray(maybeList)) return maybeList;
+    if (maybeList && typeof maybeList === 'object') return Object.values(maybeList);
+    return [];
+  }
+
+  function getThrowbackItems() {
+    const direct = normalizeList(galleryData && galleryData.throwback);
+    if (direct.length) return direct.filter((item) => item && item.src);
+    // Backward/alternate fallback just in case data key changed in CMS.
+    const legacy = normalizeList(galleryData && galleryData.throwBack);
+    return legacy.filter((item) => item && item.src);
+  }
+
   function addRafScrollListener(update) {
     let ticking = false;
     window.addEventListener('scroll', () => {
@@ -175,7 +189,7 @@
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
     runGalleryLoadingForFilter('ALL', { preloadLimit: 3, minDurationMs: 0, maxDurationMs: 450 });
-    buildThrowback(galleryData.throwback);
+    buildThrowback(getThrowbackItems());
     buildBehindTheFrame(galleryData.behindTheFrame);
     setupLightbox();
     setupThrowbackLightbox();
@@ -827,7 +841,7 @@
   }
 
   function openThrowback(index) {
-    const items = galleryData.throwback || [];
+    const items = getThrowbackItems();
     if (!items.length || !throwbackLightbox) return;
 
     throwbackIndex = index;
@@ -840,7 +854,7 @@
   }
 
   function navigateThrowback(dir) {
-    const items = galleryData.throwback || [];
+    const items = getThrowbackItems();
     if (!items.length) return;
 
     throwbackIndex = (throwbackIndex + dir + items.length) % items.length;
@@ -848,7 +862,7 @@
   }
 
   function updateThrowbackImage() {
-    const items = galleryData.throwback || [];
+    const items = getThrowbackItems();
     const item = items[throwbackIndex];
     if (!item) return;
 
