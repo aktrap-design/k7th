@@ -731,6 +731,23 @@
     const soundTrackTitle = document.getElementById('sound-track-title');
     
     if (!bgmAudio || !soundToggleBtn || !soundState || !soundDrawer || !soundDrawerToggle || !soundSelect || !soundTrackTitle) return;
+    bgmAudio.preload = 'auto';
+
+    // Some MP3 files include encoder padding that can cause a tiny gap on native loop.
+    // This guard jumps to the head slightly before the end to keep playback continuous.
+    let seamlessLoopLock = false;
+    const seamlessLoopThresholdSec = 0.08;
+    bgmAudio.addEventListener('timeupdate', () => {
+      if (bgmAudio.paused || seamlessLoopLock) return;
+      if (!Number.isFinite(bgmAudio.duration) || bgmAudio.duration <= 0) return;
+      if (bgmAudio.currentTime >= bgmAudio.duration - seamlessLoopThresholdSec) {
+        seamlessLoopLock = true;
+        bgmAudio.currentTime = 0;
+        bgmAudio.play().finally(() => {
+          seamlessLoopLock = false;
+        });
+      }
+    });
 
     const updateTrackTitle = () => {
       const selectedOption = soundSelect.options[soundSelect.selectedIndex];
