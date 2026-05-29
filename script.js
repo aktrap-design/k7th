@@ -44,6 +44,7 @@
   const throwbackClose = document.getElementById('throwback-close');
   const throwbackPrev = document.getElementById('throwback-prev');
   const throwbackNext = document.getElementById('throwback-next');
+  const behindGrid = document.getElementById('behind-grid');
   let throwbackIndex = 0;
   let throwbackTouchStartX = 0;
   let galleryLoadingToken = 0;
@@ -162,6 +163,7 @@
     buildGallery(galleryData.gallery);
     await runGalleryLoadingForFilter('ALL');
     buildThrowback(galleryData.throwback);
+    buildBehindTheFrame(galleryData.behindTheFrame);
     setupLightbox();
     setupThrowbackLightbox();
     observeScrollReveal();
@@ -475,8 +477,141 @@
     }
     throwbackBanner.style.backgroundRepeat = 'no-repeat';
     throwbackBanner.addEventListener('click', () => openThrowback(0));
+    const throwbackLabel = throwbackBanner.querySelector('.throwback-banner-label');
+    if (throwbackLabel) {
+      throwbackLabel.dataset.text = throwbackLabel.textContent || 'OPEN ARCHIVE';
+      setupThrowbackLabelGlitch(throwbackLabel);
+    }
     setupThrowbackBannerParallax();
     setupThrowbackBannerLabelReveal();
+  }
+
+  function setupThrowbackLabelGlitch(labelEl) {
+    const originalText = (labelEl.textContent || 'OPEN ARCHIVE').trim();
+    const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
+    let running = false;
+
+    const runTypeGlitch = () => {
+      if (running) return;
+      running = true;
+      labelEl.classList.add('is-glitching');
+      const durationMs = 260;
+      const stepMs = 42;
+      const start = performance.now();
+
+      const tick = () => {
+        const elapsed = performance.now() - start;
+        const progress = Math.min(1, elapsed / durationMs);
+        const keepCount = Math.floor(originalText.length * progress);
+
+        let nextText = '';
+        for (let i = 0; i < originalText.length; i++) {
+          if (originalText[i] === ' ') {
+            nextText += ' ';
+            continue;
+          }
+          if (i < keepCount) {
+            nextText += originalText[i];
+          } else {
+            nextText += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          }
+        }
+        labelEl.textContent = nextText;
+
+        if (progress < 1) {
+          window.setTimeout(tick, stepMs);
+        } else {
+          labelEl.textContent = originalText;
+          labelEl.classList.remove('is-glitching');
+          running = false;
+        }
+      };
+      tick();
+    };
+
+    let timerId = null;
+    const schedule = () => {
+      const nextInMs = 2200 + Math.random() * 3400;
+      timerId = window.setTimeout(() => {
+        runTypeGlitch();
+        window.setTimeout(() => {
+          schedule();
+        }, 260);
+      }, nextInMs);
+    };
+    schedule();
+    labelEl.addEventListener('mouseenter', () => {
+      runTypeGlitch();
+    });
+    window.addEventListener('beforeunload', () => {
+      if (timerId) clearTimeout(timerId);
+    });
+  }
+
+  function buildBehindTheFrame(items) {
+    if (!behindGrid) return;
+    behindGrid.innerHTML = '';
+    if (!Array.isArray(items) || !items.length) return;
+
+    const featured = items
+      .filter((item) => item && item.isPublished && item.isFeatured)
+      .sort((a, b) => Number(a.sortOrder || 0) - Number(b.sortOrder || 0))
+      .slice(0, 3);
+
+    featured.forEach((item, index) => {
+      const card = document.createElement('article');
+      card.className = 'behind-card reveal';
+      card.dataset.index = String(index);
+
+      const tags = Array.isArray(item.tags) ? item.tags.filter(Boolean) : [];
+      const linkedWork = item.linkedWork ? `<p class="behind-notes">Linked work: ${item.linkedWork}</p>` : '';
+      const notes = item.notes ? `<p class="behind-notes">${item.notes}</p>` : '';
+      const tagsHtml = tags.length
+        ? `<div class="behind-tags">${tags.map((tag) => `<span class="behind-tag">${tag}</span>`).join('')}</div>`
+        : '';
+
+      const showFull = (item.visibilityLevel || 'public') === 'public' && item.fullPrompt;
+      const fullId = `behind-full-${index}`;
+      const fullHtml = showFull
+        ? `<div class="behind-full" id="${fullId}" hidden>${item.fullPrompt}</div>`
+        : '';
+      const toggleHtml = showFull
+        ? `<button class="behind-toggle" type="button" aria-expanded="false" aria-controls="${fullId}">View full prompt</button>`
+        : '';
+
+      card.innerHTML = `
+        ${item.image ? `<img class="behind-image" src="${item.image}" alt="${item.title || 'Behind the Frame'}" loading="lazy">` : ''}
+        <div class="behind-body">
+          ${item.title ? `<h3 class="behind-title">${item.title}</h3>` : ''}
+          ${item.promptPreview ? `<p class="behind-preview">${item.promptPreview}</p>` : ''}
+          ${toggleHtml}
+          ${fullHtml}
+          ${notes}
+          ${linkedWork}
+          ${tagsHtml}
+        </div>
+      `;
+
+      if (showFull) {
+        const toggleBtn = card.querySelector('.behind-toggle');
+        const full = card.querySelector('.behind-full');
+        if (toggleBtn && full) {
+          toggleBtn.addEventListener('click', () => {
+            const opening = full.hasAttribute('hidden');
+            if (opening) {
+              full.removeAttribute('hidden');
+              toggleBtn.textContent = 'Hide full prompt';
+            } else {
+              full.setAttribute('hidden', '');
+              toggleBtn.textContent = 'View full prompt';
+            }
+            toggleBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+          });
+        }
+      }
+
+      behindGrid.appendChild(card);
+    });
   }
 
   function setupThrowbackBannerParallax() {

@@ -867,5 +867,58 @@
       "src": "images/K7pr3.png",
       "alt": "PR"
     }
+  ],
+  "behindTheFrame": [
+    {
+      "title": "Abandon places",
+      "image": "images/the_after.png",
+      "promptPreview": "a wide rooftop portrait of a person seated on a mossy stone ledge beside weathered old concrete walls, ",
+      "fullPrompt": "a wide rooftop portrait of a person seated on a mossy stone ledge beside weathered old concrete walls, realistic editorial photography with cool overcast daylight and deep urban atmosphere, the subject faces the camera with a calm neutral expression, short black bob hair framing the face, wearing a long sheer white lace dress with fitted waist, translucent long sleeves, scalloped edges, and a visible dark inner layer at the neckline, paired with black ankle-strap heeled sandals and a small pendant necklace, soft diffused light creates gentle highlights on the lace, face, hands, and legs while the aged stone surfaces remain muted and textured, cracked pavement, moss patches, peeling plaster, exposed brick, dark window openings, and a distant city skyline recede into a hazy background, delicate lace transparency, rough concrete, damp moss, worn masonry, desaturated gray-green palette contrasted with bright white fabric and black shoes, quiet melancholic urban ruin atmosphere, (weathered rooftop ruins, sheer white lace dress, hazy city skyline)",
+      "notes": "The after Hours",
+      "tags": [
+        "portrait",
+        "abandon",
+        "cityscape"
+      ],
+      "linkedWork": "",
+      "visibilityLevel": "public",
+      "isFeatured": true,
+      "isPublished": true,
+      "sortOrder": 1
+    },
+    {
+      "title": "DIVE",
+      "image": "images/K7_SKY-HI-s.png",
+      "promptPreview": "er body is twisted in a dynamic midair pose, with her upper body angled toward the viewer while both legs are lifted behind her in a natural,",
+      "fullPrompt": "A young Japanese woman with fair skin and long, dark brown hair parted to one side is depicted high above a vast metropolis, as if slowly free-falling face-down through the open air. She has a smiling expression with her gaze turned toward the viewer, creating a bright and engaging impression. Her body is twisted in a dynamic midair pose, with her upper body angled toward the viewer while both legs are lifted behind her in a natural, anatomically correct position. She has exactly two legs and two feet, with no extra limbs, no duplicated legs, and no distorted anatomy.\n\nShe is wearing a fitted black top that contrasts elegantly with a flowing skirt that makes vivid use of light blue tones, accented by subtle white and soft complementary hues for a graceful, airy look. On her feet, she wears one pair of white heeled sandals, clearly visible as one sandal on each foot. Her skirt and hair flutter naturally in the wind, emphasizing the sensation of floating and gentle free-fall.\n\nBelow her stretches an expansive cityscape seen from a high aerial perspective, filled with countless skyscrapers extending into the distance. A large body of water winds through the city, and the sky is partly cloudy with warm late-afternoon or early-evening light casting a golden glow across the horizon and reflecting off the buildings. The composition places the viewer slightly above and in front of her, looking down as she slowly descends through the air over the urban landscape, creating a dreamy and cinematic atmosphere.\n\nNegative prompt: extra legs, extra feet, duplicated limbs, additional limbs, fused legs, malformed legs, distorted feet, unnatural anatomy, broken joints, incorrect body proportions, multiple pairs of sandals, more than two legs, more than two feet.",
+      "notes": "",
+      "tags": [
+        "dive",
+        "imagination",
+        "mood"
+      ],
+      "linkedWork": "",
+      "visibilityLevel": "public",
+      "isFeatured": true,
+      "isPublished": true,
+      "sortOrder": 2
+    },
+    {
+      "title": "A FIGHT",
+      "image": "images/the_cos.png",
+      "promptPreview": "A central armored figure stands on wide stone steps in a defensive sword stance, facing an armored opponent partially visible in the right foreground.",
+      "fullPrompt": "apply hyper-realistic iPhone 17 Pro front-camera composition behavior blended with authentic early-2000s CCD digital camera tonal rendering while preserving exact facial structure, natural asymmetry, realistic proportions, and believable portrait realism.\n\nSCENE:\nA central armored figure stands on wide stone steps in a defensive sword stance, facing an armored opponent partially visible in the right foreground. The subject’s body is angled slightly forward with both hands gripping a sword, long hair and layered fabric moving outward, while the face is turned toward the opponent with focused eye direction.\n\nCAMERA / PHOTOGRAPHY LOGIC:\nThe camera is positioned at a medium full-body distance with a slightly low, dynamic angle and strong diagonal action framing. The foreground opponent is cropped close and partially blurred, creating depth, while the main subject remains sharp with natural handheld framing and compact-camera realism.\n\nUse realistic photography style:\nshot on an old CCD digital camera, early-2000s digicam sensor aesthetic, weak dynamic range, mild highlight clipping, soft electronic sharpening, subtle digital grain, unstable auto white balance behavior, compressed tonal separation, slightly washed but natural colors, faint cyan contamination in shaded areas, realistic compact-camera rendering.\n\nMAIN SUBJECT / SKIN DETAILS:\nThe subject has a balanced facial structure with natural asymmetry, realistic proportions, soft skin texture, subtle pores, gentle tonal variation, and restrained daylight reflectivity across the cheeks and forehead. The eyes are clearly visible and intent, with natural under-eye depth, a softly defined nose bridge, and muted natural lip texture.\n\nEXPRESSION / MOOD:\nThe expression is concentrated and controlled, with a steady gaze toward the opponent and a quiet sense of tension. The posture, crossed swords, and flying sparks create a visually active but restrained combat atmosphere.\n\nMAKEUP:\nMinimal visible makeup with a natural skin finish, softly defined eyes, neutral eyelids, and a muted natural lip tone. No heavy cosmetic styling or artificial smoothing.\n\nHAIRSTYLE:\nLong dark hair flows outward from the movement, with loose strands crossing around the face and shoulders. A delicate headpiece rests along the hairline, catching small highlights while the wind-swept strands add motion.\n\nOUTFIT:\nThe subject wears polished silver armor with shoulder plates, a fitted breastplate, metal gauntlets, gloves, and tall reflective armored boots. Layered black and cream fabric panels with embroidered patterns, translucent lace-like sleeves, tassel trim, and flowing skirt sections move dramatically across the stone steps.\n\nBACKGROUND / ENVIRONMENT:\nThe background shows stone stairways, carved columns, and a dark architectural entrance with decorative hanging banners. The setting has layered depth, with weathered stone textures, recessed shadows, and the opponent’s reflective armor occupying the near foreground.\n\nLIGHTING:\nNatural daylight strikes from the upper side, creating bright metallic highlights on armor, soft illumination on the face, and mild bloom on sparks and reflective sword edges. Shadows are moderately dense around the stone architecture, with slight CCD-style clipping on polished metal and no cinematic grading or stylized color manipulation.\n\nCOMPOSITION:\nThe composition is dynamic and diagonal, with the main subject centered-left and the opponent cropped tightly on the right foreground. The crossed swords, flowing skirt, stair lines, and sparks guide the eye toward the subject’s face and armor, creating layered depth and natural handheld action framing.",
+      "notes": "",
+      "tags": [
+        "Digital cos-play",
+        "AI-Images",
+        "concept"
+      ],
+      "linkedWork": "",
+      "visibilityLevel": "public",
+      "isFeatured": true,
+      "isPublished": true,
+      "sortOrder": 3
+    }
   ]
 }

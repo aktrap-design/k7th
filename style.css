@@ -937,7 +937,7 @@ a {
 
 /* ---------- THROWBACK ---------- */
 .throwback-section {
-  padding: 48px 16px 72px;
+  padding: 36px 16px 36px;
 }
 
 .throwback-inner {
@@ -990,25 +990,167 @@ a {
 
 .throwback-banner-label {
   position: absolute;
-  left: 20px;
-  bottom: 18px;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
   z-index: 1;
   font-family: var(--font-display);
   letter-spacing: 0.14em;
-  font-size: clamp(1.6rem, 6vw, 2.8rem);
+  font-size: clamp(1.25rem, 4.8vw, 2.1rem);
   opacity: 0;
-  transform: translate3d(56px, 0, 0);
+  transform: translate3d(calc(-50% + 56px), -50%, 0);
   transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease;
+  text-align: center;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .throwback-section.is-visible .throwback-banner-label {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.throwback-banner-label.is-glitching {
+  animation: throwbackTypeJolt 180ms steps(2, end) 1;
+}
+
+@keyframes throwbackTypeJolt {
+  0% { transform: translate3d(-50%, -50%, 0); }
+  50% { transform: translate3d(calc(-50% + 1px), calc(-50% - 1px), 0); }
+  100% { transform: translate3d(-50%, -50%, 0); }
 }
 
 .throwback-banner:hover {
   transform: translateY(-2px);
   border-color: rgba(255,255,255,0.35);
+}
+
+.throwback-banner-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.78);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  animation: throwbackCtaPulse 1.9s ease-in-out infinite;
+}
+
+.throwback-banner-arrow {
+  display: inline-block;
+  animation: throwbackArrowNudge 1.2s ease-in-out infinite;
+}
+
+@keyframes throwbackCtaPulse {
+  0%, 100% { opacity: 0.62; }
+  50% { opacity: 1; }
+}
+
+@keyframes throwbackArrowNudge {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(2px, -2px); }
+}
+
+.behind-section {
+  padding: 28px 16px 42px;
+}
+
+.behind-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.behind-head {
+  margin-bottom: 20px;
+}
+
+.behind-subtitle {
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.behind-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.behind-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.behind-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--bg-secondary);
+}
+
+.behind-body {
+  padding: 14px;
+}
+
+.behind-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.behind-preview {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.behind-toggle {
+  margin-top: 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.behind-full {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.behind-notes {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.behind-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.behind-tag {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 3px 7px;
 }
 
 .throwback-lightbox {
@@ -1295,8 +1437,10 @@ a {
   .lightbox-prev { left: 24px; }
   .lightbox-next { right: 24px; }
 
-  .throwback-section { padding: 64px 24px 92px; }
+  .throwback-section { padding: 44px 24px 46px; }
   .throwback-banner { min-height: 280px; }
+  .behind-section { padding: 36px 24px 52px; }
+  .behind-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ---------- RESPONSIVE — Desktop ---------- */
@@ -1335,11 +1479,13 @@ a {
     justify-content: space-between;
   }
 
-  .throwback-section { padding: 72px 40px 110px; }
+  .throwback-section { padding: 48px 40px 56px; }
   .throwback-banner { min-height: 320px; }
   .throwback-prev { left: 40px; }
   .throwback-next { right: 40px; }
   .fav-links { padding: 0 40px; font-size: 11px; }
+  .behind-section { padding: 40px 40px 60px; }
+  .behind-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ---------- RESPONSIVE — Large Desktop ---------- */

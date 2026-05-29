@@ -214,6 +214,48 @@ body {
   align-items: center;
 }
 
+.item-details-behind {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.item-details-behind .alt-input,
+.item-details-behind .preview-input,
+.item-details-behind .full-prompt-input,
+.item-details-behind .notes-input,
+.item-details-behind .tags-input,
+.item-details-behind .linked-work-input {
+  grid-column: 1 / -1;
+}
+
+.item-details-behind textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.behind-flags {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.behind-flags label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.behind-flags .sort-order-input {
+  width: 80px;
+  padding: 6px 8px;
+}
+
 .input-field {
   background: var(--bg-dark);
   border: 1px solid var(--border);

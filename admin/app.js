@@ -1,6 +1,7 @@
 // ---------- STATE ----------
-let galleryData = { hero: [], interlude: [], curated: [], categories: [], gallery: [], throwback: [] };
+let galleryData = { hero: [], interlude: [], curated: [], categories: [], gallery: [], throwback: [], behindTheFrame: [] };
 let currentUploadList = null;
+let replaceTarget = null;
 
 // ---------- DOM ELEMENTS ----------
 const saveBtn = document.getElementById('save-btn');
@@ -12,6 +13,7 @@ const interludeList = document.getElementById('interlude-list');
 const curatedList = document.getElementById('curated-list');
 const galleryList = document.getElementById('gallery-list');
 const throwbackList = document.getElementById('throwback-list');
+const behindList = document.getElementById('behind-list');
 
 const uploadModal = document.getElementById('upload-modal');
 const uploadForm = document.getElementById('upload-form');
@@ -32,6 +34,9 @@ async function init() {
     if (!Array.isArray(galleryData.interlude)) {
       galleryData.interlude = Array.isArray(galleryData.hero) ? galleryData.hero.slice(0, 3) : [];
     }
+    if (!Array.isArray(galleryData.behindTheFrame)) {
+      galleryData.behindTheFrame = [];
+    }
     renderAll();
     setupSortable();
   } catch (err) {
@@ -47,6 +52,7 @@ function renderAll() {
   renderList(curatedList, galleryData.curated, 'curated');
   renderList(galleryList, galleryData.gallery, 'gallery');
   renderList(throwbackList, galleryData.throwback, 'throwback');
+  renderList(behindList, galleryData.behindTheFrame, 'behindTheFrame');
 }
 
 function renderList(container, items, listName) {
@@ -60,9 +66,9 @@ function renderList(container, items, listName) {
 
     let html = `
       <div class="drag-handle">☰</div>
-      <img src="../${item.src}" class="item-thumb" alt="thumb">
-      <div class="item-details">
-        <input type="text" class="input-field alt-input" value="${item.alt}" placeholder="Alt Text">
+      <img src="../${item.src || item.image || ''}" class="item-thumb" alt="thumb">
+      <div class="item-details ${listName === 'behindTheFrame' ? 'item-details-behind' : ''}">
+        <input type="text" class="input-field alt-input" value="${item.alt || item.title || ''}" placeholder="${listName === 'behindTheFrame' ? 'Title' : 'Alt Text'}">
     `;
 
     if (listName === 'gallery') {
@@ -75,20 +81,82 @@ function renderList(container, items, listName) {
       `;
     }
 
+    if (listName === 'behindTheFrame') {
+      html += `
+        <select class="input-field visibility-input">
+          <option value="public" ${(item.visibilityLevel || 'public') === 'public' ? 'selected' : ''}>visibility: public</option>
+          <option value="private" ${(item.visibilityLevel || 'public') === 'private' ? 'selected' : ''}>visibility: private</option>
+        </select>
+        <input type="text" class="input-field linked-work-input" value="${item.linkedWork || ''}" placeholder="linkedWork (optional)">
+        <input type="text" class="input-field preview-input" value="${item.promptPreview || ''}" placeholder="promptPreview">
+        <textarea class="input-field full-prompt-input" placeholder="fullPrompt">${item.fullPrompt || ''}</textarea>
+        <textarea class="input-field notes-input" placeholder="notes">${item.notes || ''}</textarea>
+        <input type="text" class="input-field tags-input" value="${Array.isArray(item.tags) ? item.tags.join(', ') : ''}" placeholder="tags (comma separated)">
+        <div class="behind-flags">
+          <label><input type="checkbox" class="featured-input" ${item.isFeatured ? 'checked' : ''}> isFeatured</label>
+          <label><input type="checkbox" class="published-input" ${item.isPublished !== false ? 'checked' : ''}> isPublished</label>
+          <label>sortOrder <input type="number" class="input-field sort-order-input" value="${Number(item.sortOrder || 0)}"></label>
+        </div>
+      `;
+    }
+
     html += `</div>
+      <button class="btn btn-secondary replace-image-btn" type="button">Replace Image</button>
       <button class="btn btn-danger delete-btn" aria-label="Delete">🗑️</button>
     `;
 
     div.innerHTML = html;
 
+    div.querySelector('.replace-image-btn').addEventListener('click', () => {
+      replaceTarget = { listName, index };
+      currentUploadList = listName;
+      categoryGroup.style.display = 'none';
+      uploadForm.reset();
+      uploadModal.classList.add('open');
+    });
+
     // Listeners for updates
     div.querySelector('.alt-input').addEventListener('input', (e) => {
-      galleryData[listName][index].alt = e.target.value;
+      if (listName === 'behindTheFrame') {
+        galleryData[listName][index].title = e.target.value;
+      } else {
+        galleryData[listName][index].alt = e.target.value;
+      }
     });
 
     if (listName === 'gallery') {
       div.querySelector('.category-input').addEventListener('change', (e) => {
         galleryData[listName][index].category = e.target.value;
+      });
+    }
+
+    if (listName === 'behindTheFrame') {
+      div.querySelector('.preview-input').addEventListener('input', (e) => {
+        galleryData[listName][index].promptPreview = e.target.value;
+      });
+      div.querySelector('.full-prompt-input').addEventListener('input', (e) => {
+        galleryData[listName][index].fullPrompt = e.target.value;
+      });
+      div.querySelector('.notes-input').addEventListener('input', (e) => {
+        galleryData[listName][index].notes = e.target.value;
+      });
+      div.querySelector('.tags-input').addEventListener('input', (e) => {
+        galleryData[listName][index].tags = e.target.value.split(',').map((s) => s.trim()).filter(Boolean);
+      });
+      div.querySelector('.linked-work-input').addEventListener('input', (e) => {
+        galleryData[listName][index].linkedWork = e.target.value;
+      });
+      div.querySelector('.visibility-input').addEventListener('change', (e) => {
+        galleryData[listName][index].visibilityLevel = e.target.value;
+      });
+      div.querySelector('.featured-input').addEventListener('change', (e) => {
+        galleryData[listName][index].isFeatured = e.target.checked;
+      });
+      div.querySelector('.published-input').addEventListener('change', (e) => {
+        galleryData[listName][index].isPublished = e.target.checked;
+      });
+      div.querySelector('.sort-order-input').addEventListener('input', (e) => {
+        galleryData[listName][index].sortOrder = Number(e.target.value || 0);
       });
     }
 
@@ -122,6 +190,7 @@ function setupSortable() {
   new Sortable(curatedList, options);
   new Sortable(galleryList, options);
   new Sortable(throwbackList, options);
+  new Sortable(behindList, options);
 }
 
 // ---------- TABS ----------
@@ -137,6 +206,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 // ---------- MODAL & UPLOAD ----------
 document.querySelectorAll('.add-new-btn').forEach(btn => {
   btn.addEventListener('click', () => {
+    replaceTarget = null;
     currentUploadList = btn.dataset.list;
     categoryGroup.style.display = currentUploadList === 'gallery' ? 'block' : 'none';
     uploadForm.reset();
@@ -145,6 +215,7 @@ document.querySelectorAll('.add-new-btn').forEach(btn => {
 });
 
 cancelUploadBtn.addEventListener('click', () => {
+  replaceTarget = null;
   uploadModal.classList.remove('open');
 });
 
@@ -203,8 +274,27 @@ uploadForm.addEventListener('submit', async (e) => {
     const result = await res.json();
 
     if (result.success) {
-      if (currentUploadList === 'interlude' && galleryData.interlude.length >= 3) {
+      if (!replaceTarget && currentUploadList === 'interlude' && galleryData.interlude.length >= 3) {
         showStatus('Interlude images can contain up to 3 items.', 'error');
+        showLoading(false);
+        return;
+      }
+      if (replaceTarget) {
+        const target = galleryData[replaceTarget.listName][replaceTarget.index];
+        if (!target) {
+          showStatus('Target item not found.', 'error');
+          showLoading(false);
+          return;
+        }
+        if (replaceTarget.listName === 'behindTheFrame') {
+          target.image = result.src;
+        } else {
+          target.src = result.src;
+        }
+        renderAll();
+        uploadModal.classList.remove('open');
+        replaceTarget = null;
+        showStatus('Image replaced successfully', 'success');
         showLoading(false);
         return;
       }
@@ -215,6 +305,24 @@ uploadForm.addEventListener('submit', async (e) => {
       };
       if (currentUploadList === 'gallery') {
         newItem.category = categoryInput.value;
+      }
+      if (currentUploadList === 'behindTheFrame') {
+        const defaultTitle = altInput.value || fileInput.files[0].name.replace(/\.[^.]+$/, '');
+        Object.assign(newItem, {
+          image: result.src,
+          title: defaultTitle,
+          promptPreview: '',
+          fullPrompt: '',
+          notes: '',
+          tags: [],
+          linkedWork: '',
+          visibilityLevel: 'public',
+          isFeatured: false,
+          isPublished: true,
+          sortOrder: 0
+        });
+        delete newItem.src;
+        delete newItem.alt;
       }
 
       galleryData[currentUploadList].unshift(newItem); // Add to top
