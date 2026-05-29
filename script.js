@@ -751,7 +751,8 @@
 
     const updateTrackTitle = () => {
       const selectedOption = soundSelect.options[soundSelect.selectedIndex];
-      soundTrackTitle.textContent = selectedOption ? selectedOption.text : '';
+      const title = selectedOption ? selectedOption.text : '';
+      soundTrackTitle.innerHTML = `<span>Now playing: ${title}</span>`;
     };
 
     const syncSelectionFromAudio = () => {
@@ -767,10 +768,16 @@
 
     syncSelectionFromAudio();
 
-    soundDrawerToggle.addEventListener('click', () => {
+    const toggleSoundDrawer = () => {
       const isOpen = soundDrawer.classList.toggle('open');
       soundDrawerToggle.textContent = isOpen ? '<' : '>';
       soundDrawerToggle.setAttribute('aria-label', isOpen ? 'Close music selector' : 'Open music selector');
+    };
+
+    soundDrawerToggle.addEventListener('click', toggleSoundDrawer);
+    soundDrawer.addEventListener('click', (e) => {
+      if (e.target === soundSelect) return;
+      toggleSoundDrawer();
     });
 
     soundToggleBtn.addEventListener('click', () => {
@@ -806,6 +813,11 @@
           soundState.textContent = 'OFF';
         });
       }
+
+      // Close selector after picking a track and reset toggle glyph.
+      soundDrawer.classList.remove('open');
+      soundDrawerToggle.textContent = '>';
+      soundDrawerToggle.setAttribute('aria-label', 'Open music selector');
     });
   }
 

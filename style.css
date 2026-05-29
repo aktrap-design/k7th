@@ -83,7 +83,7 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-right: none;
   border-radius: 4px 0 0 4px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -102,6 +102,7 @@ a {
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.1;
+  min-width: 124px;
 }
 
 .sound-label {
@@ -119,16 +120,31 @@ a {
 }
 
 .sound-track-title {
+  display: none;
   font-family: var(--font-body);
   font-size: 9px;
   color: rgba(255, 255, 255, 0.72);
   font-weight: 400;
   letter-spacing: 0.4px;
   margin-top: 2px;
-  max-width: 118px;
+  width: 124px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+.sound-toggle-btn.is-playing .sound-track-title {
+  display: block;
+}
+
+.sound-toggle-btn.is-playing .sound-track-title span {
+  display: inline-block;
+  padding-right: 24px;
+  animation: soundTrackMarquee 10s linear infinite;
+}
+
+@keyframes soundTrackMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
 }
 
 .sound-toggle-btn.is-playing .sound-state {
@@ -173,7 +189,24 @@ a {
   z-index: 1000;
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
+  gap: 0;
+  justify-content: flex-end;
+  width: fit-content;
+}
+
+.sound-pick-label {
+  background: var(--glass-dark);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  padding: 0 10px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.76);
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .sound-drawer-toggle {
@@ -182,8 +215,8 @@ a {
   background: var(--glass-dark);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-right: none;
-  border-radius: 4px 0 0 4px;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
   font-size: 11px;
   line-height: 1;
   display: inline-flex;
@@ -192,6 +225,9 @@ a {
 }
 
 .sound-select {
+  position: absolute;
+  top: 0;
+  right: 22px;
   width: 156px;
   background: var(--glass-dark);
   color: #fff;
@@ -210,12 +246,25 @@ a {
 }
 
 .sound-drawer.open .sound-select {
+  right: 0;
   transform: translateX(0);
   opacity: 1;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
 }
 
 .sound-drawer.open .sound-drawer-toggle {
+  position: absolute;
+  left: 0;
+  right: auto;
+  border-right: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 4px 0 0 4px;
+}
+
+.sound-drawer.open .sound-pick-label {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ---------- HERO CAROUSEL ---------- */
