@@ -1024,31 +1024,44 @@
     if (!bgmAudio || !soundToggleBtn || !soundState || !soundDrawer || !soundDrawerToggle || !soundSelect || !soundTrackTitle) return;
     bgmAudio.preload = 'auto';
 
-    // Some MP3 files include encoder padding that can cause a tiny gap on native loop.
-    // This guard jumps to the head slightly before the end to keep playback continuous.
+    // MP3 files can include encoder padding, but OGG usually loops cleanly natively.
+    // Only apply the early seek where it helps, otherwise let the browser loop it.
     let seamlessLoopLock = false;
-    const seamlessLoopThresholdSec = 0.32;
-    const seamlessLoopPollMs = 120;
-    let seamlessMonitorTimer = null;
+    const mp3LoopThresholdSec = 0.30;
+    let seamlessMonitorFrame = null;
+    const getLoopThresholdSec = () => {
+      const src = (bgmAudio.currentSrc || bgmAudio.getAttribute('src') || '').split('?')[0].toLowerCase();
+      return src.endsWith('.mp3') ? mp3LoopThresholdSec : 0;
+    };
+    const isSoundPlaying = () => soundToggleBtn.classList.contains('is-playing') && !bgmAudio.paused;
     const startSeamlessMonitor = () => {
-      if (seamlessMonitorTimer) return;
-      seamlessMonitorTimer = setInterval(maybeSeekLoopHead, seamlessLoopPollMs);
+      if (getLoopThresholdSec() <= 0) return;
+      if (seamlessMonitorFrame) return;
+      const monitor = () => {
+        seamlessMonitorFrame = null;
+        maybeSeekLoopHead();
+        if (isSoundPlaying() && getLoopThresholdSec() > 0) {
+          seamlessMonitorFrame = requestAnimationFrame(monitor);
+        }
+      };
+      seamlessMonitorFrame = requestAnimationFrame(monitor);
     };
     const stopSeamlessMonitor = () => {
-      if (!seamlessMonitorTimer) return;
-      clearInterval(seamlessMonitorTimer);
-      seamlessMonitorTimer = null;
+      if (!seamlessMonitorFrame) return;
+      cancelAnimationFrame(seamlessMonitorFrame);
+      seamlessMonitorFrame = null;
     };
     const maybeSeekLoopHead = () => {
-      if (bgmAudio.paused || seamlessLoopLock) return;
+      if (!isSoundPlaying() || seamlessLoopLock) return;
       if (!Number.isFinite(bgmAudio.duration) || bgmAudio.duration <= 0) return;
-      if (bgmAudio.currentTime >= bgmAudio.duration - seamlessLoopThresholdSec) {
+      const loopThresholdSec = getLoopThresholdSec();
+      if (loopThresholdSec <= 0) return;
+      if (bgmAudio.currentTime >= bgmAudio.duration - loopThresholdSec) {
         seamlessLoopLock = true;
         bgmAudio.currentTime = 0;
         seamlessLoopLock = false;
       }
     };
-    bgmAudio.addEventListener('timeupdate', maybeSeekLoopHead);
     bgmAudio.addEventListener('play', startSeamlessMonitor);
     bgmAudio.addEventListener('pause', stopSeamlessMonitor);
     bgmAudio.addEventListener('ended', stopSeamlessMonitor);
@@ -1106,6 +1119,7 @@
       const nextSrc = soundSelect.value;
       const wasPlaying = !bgmAudio.paused;
 
+      stopSeamlessMonitor();
       bgmAudio.src = nextSrc;
       bgmAudio.loop = true;
       updateTrackTitle();
@@ -1121,8 +1135,6 @@
           soundState.textContent = 'OFF';
           stopSeamlessMonitor();
         });
-      } else {
-        stopSeamlessMonitor();
       }
 
       // Close selector after picking a track and reset toggle glyph.
