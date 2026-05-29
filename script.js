@@ -84,6 +84,35 @@
     galleryLoading.setAttribute('aria-hidden', 'false');
   }
 
+  function createInitialLoader() {
+    const el = document.createElement('div');
+    el.className = 'app-initial-loader show';
+    el.id = 'app-initial-loader';
+    el.textContent = 'Loading frames...';
+    document.body.appendChild(el);
+    document.body.classList.add('app-loading');
+    return el;
+  }
+
+  function finishInitialLoader(loaderEl) {
+    if (!loaderEl) return;
+    loaderEl.classList.remove('show');
+    document.body.classList.remove('app-loading');
+    window.setTimeout(() => {
+      loaderEl.remove();
+    }, 360);
+  }
+
+  function preloadCriticalFrames(data, maxWaitMs = 2500) {
+    const heroFrames = Array.isArray(data?.hero) ? data.hero.slice(0, 2) : [];
+    const galleryFrames = Array.isArray(data?.gallery) ? data.gallery.slice(0, 10) : [];
+    const curatedFrames = Array.isArray(data?.curated) ? data.curated.slice(0, 4) : [];
+    const candidates = [...heroFrames, ...galleryFrames, ...curatedFrames]
+      .map((item) => item && item.src)
+      .filter(Boolean);
+    return preloadImages(candidates, maxWaitMs);
+  }
+
   function hideGalleryLoading() {
     if (!galleryLoading) return;
     galleryLoading.classList.remove('show');
@@ -149,11 +178,14 @@
 
   // ---------- INIT ----------
   async function init() {
+    const initialLoader = createInitialLoader();
     try {
       const res = await fetch('gallery.json');
       galleryData = await res.json();
+      await preloadCriticalFrames(galleryData, 2500);
     } catch (e) {
       console.error('Failed to load gallery.json:', e);
+      finishInitialLoader(initialLoader);
       return;
     }
 
@@ -171,6 +203,7 @@
     setupInterludeParallax();
     setupBGM();
     setupPageTopButton();
+    finishInitialLoader(initialLoader);
   }
 
   // ==========================================

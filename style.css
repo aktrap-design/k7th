@@ -54,6 +54,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.app-loading {
+  overflow: hidden;
+}
+
+body.app-loading main,
+body.app-loading section,
+body.app-loading footer,
+body.app-loading .sound-toggle-btn,
+body.app-loading .sound-drawer,
+body.app-loading .page-top {
+  visibility: hidden;
+}
+
+.app-initial-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  color: rgba(245, 245, 245, 0.9);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s var(--timing-smooth), visibility 0.35s var(--timing-smooth);
+}
+
+.app-initial-loader.show {
+  opacity: 1;
+  visibility: visible;
+}
+
 img {
   display: block;
   max-width: 100%;
