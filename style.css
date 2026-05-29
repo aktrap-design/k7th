@@ -346,6 +346,15 @@ a {
   animation: titleFadeIn 1.8s var(--timing-smooth) 0.3s both;
 }
 
+.title-subtext {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: clamp(10px, 1.4vw, 13px);
+  letter-spacing: 0.06em;
+  color: rgba(240, 240, 240, 0.82);
+}
+
 .title-gallery {
   display: block;
   font-family: var(--font-display);
@@ -518,6 +527,16 @@ a {
   color: rgba(0, 0, 0, 0.82);
 }
 
+.video-message-detail {
+  max-width: min(90vw, 920px);
+  margin-top: 8px;
+  font-size: clamp(9px, 1.2vw, 11px);
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.78);
+  text-align: center;
+  line-height: 1.5;
+}
+
 .fav-links {
   max-width: 1400px;
   margin: 10px auto 0;
@@ -550,6 +569,13 @@ a {
   padding: 0 16px;
   max-width: 1400px;
   margin: 0 auto 32px;
+}
+
+.curated-subtext {
+  margin-top: 6px;
+  font-size: clamp(10px, 1.2vw, 12px);
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
 }
 
 .curated-track-wrapper {
