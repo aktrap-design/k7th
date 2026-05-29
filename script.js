@@ -365,23 +365,50 @@
       track.scrollLeft = scrollLeft - walk;
     });
 
-    // Slow auto-scroll loop
+    // Auto-scroll runs only while curated track is visible to reduce background CPU.
     const autoScrollSpeed = 0.5; // pixels per frame
-    const autoScroll = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let isTrackVisible = false;
+    let autoScrollRunning = false;
+    let autoScrollRafId = null;
+
+    const shouldRunAutoScroll = () => isTrackVisible && !document.hidden && !reduceMotion.matches;
+    const stepAutoScroll = () => {
+      if (!autoScrollRunning) return;
       if (!isDown && !isHovering) {
         track.scrollLeft += autoScrollSpeed;
-        
-        // Infinite loop seam reset
-        // Since we duplicated exactly once, the scrollWidth is 2x the content width.
         if (track.scrollLeft >= track.scrollWidth / 2) {
           track.scrollLeft -= track.scrollWidth / 2;
         }
       }
-      requestAnimationFrame(autoScroll);
+      autoScrollRafId = requestAnimationFrame(stepAutoScroll);
     };
-    
-    // Start auto-scroll
-    requestAnimationFrame(autoScroll);
+
+    const startAutoScroll = () => {
+      if (autoScrollRunning || !shouldRunAutoScroll()) return;
+      autoScrollRunning = true;
+      autoScrollRafId = requestAnimationFrame(stepAutoScroll);
+    };
+
+    const stopAutoScroll = () => {
+      autoScrollRunning = false;
+      if (autoScrollRafId) {
+        cancelAnimationFrame(autoScrollRafId);
+        autoScrollRafId = null;
+      }
+    };
+
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      isTrackVisible = Boolean(entries[0]?.isIntersecting);
+      if (shouldRunAutoScroll()) startAutoScroll();
+      else stopAutoScroll();
+    }, { threshold: 0.08 });
+    visibilityObserver.observe(track);
+
+    document.addEventListener('visibilitychange', () => {
+      if (shouldRunAutoScroll()) startAutoScroll();
+      else stopAutoScroll();
+    });
   }
 
   // ==========================================
@@ -535,6 +562,10 @@
 
     let timerId = null;
     const schedule = () => {
+      if (document.hidden) {
+        timerId = null;
+        return;
+      }
       const nextInMs = 2200 + Math.random() * 3400;
       timerId = window.setTimeout(() => {
         runTypeGlitch();
@@ -546,6 +577,14 @@
     schedule();
     labelEl.addEventListener('mouseenter', () => {
       runTypeGlitch();
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (timerId) clearTimeout(timerId);
+        timerId = null;
+      } else if (!timerId) {
+        schedule();
+      }
     });
     window.addEventListener('beforeunload', () => {
       if (timerId) clearTimeout(timerId);
@@ -948,22 +987,31 @@
     // This guard jumps to the head slightly before the end to keep playback continuous.
     let seamlessLoopLock = false;
     const seamlessLoopThresholdSec = 0.32;
-    const seamlessLoopPollMs = 30;
+    const seamlessLoopPollMs = 120;
+    let seamlessMonitorTimer = null;
+    const startSeamlessMonitor = () => {
+      if (seamlessMonitorTimer) return;
+      seamlessMonitorTimer = setInterval(maybeSeekLoopHead, seamlessLoopPollMs);
+    };
+    const stopSeamlessMonitor = () => {
+      if (!seamlessMonitorTimer) return;
+      clearInterval(seamlessMonitorTimer);
+      seamlessMonitorTimer = null;
+    };
     const maybeSeekLoopHead = () => {
       if (bgmAudio.paused || seamlessLoopLock) return;
       if (!Number.isFinite(bgmAudio.duration) || bgmAudio.duration <= 0) return;
       if (bgmAudio.currentTime >= bgmAudio.duration - seamlessLoopThresholdSec) {
         seamlessLoopLock = true;
         bgmAudio.currentTime = 0;
-        bgmAudio.play().finally(() => {
-          seamlessLoopLock = false;
-        });
+        seamlessLoopLock = false;
       }
     };
     bgmAudio.addEventListener('timeupdate', maybeSeekLoopHead);
-    setInterval(() => {
-      maybeSeekLoopHead();
-    }, seamlessLoopPollMs);
+    bgmAudio.addEventListener('play', startSeamlessMonitor);
+    bgmAudio.addEventListener('pause', stopSeamlessMonitor);
+    bgmAudio.addEventListener('ended', stopSeamlessMonitor);
+    bgmAudio.addEventListener('emptied', stopSeamlessMonitor);
 
     const updateTrackTitle = () => {
       const selectedOption = soundSelect.options[soundSelect.selectedIndex];
@@ -1001,6 +1049,7 @@
         bgmAudio.play().then(() => {
           soundToggleBtn.classList.add('is-playing');
           soundState.textContent = 'ON';
+          startSeamlessMonitor();
         }).catch((err) => {
           console.error("Audio playback failed:", err);
         });
@@ -1008,6 +1057,7 @@
         bgmAudio.pause();
         soundToggleBtn.classList.remove('is-playing');
         soundState.textContent = 'OFF';
+        stopSeamlessMonitor();
       }
     });
 
@@ -1023,11 +1073,15 @@
         bgmAudio.play().then(() => {
           soundToggleBtn.classList.add('is-playing');
           soundState.textContent = 'ON';
+          startSeamlessMonitor();
         }).catch((err) => {
           console.error("Audio playback failed:", err);
           soundToggleBtn.classList.remove('is-playing');
           soundState.textContent = 'OFF';
+          stopSeamlessMonitor();
         });
+      } else {
+        stopSeamlessMonitor();
       }
 
       // Close selector after picking a track and reset toggle glyph.
