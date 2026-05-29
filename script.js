@@ -808,8 +808,9 @@
     // Some MP3 files include encoder padding that can cause a tiny gap on native loop.
     // This guard jumps to the head slightly before the end to keep playback continuous.
     let seamlessLoopLock = false;
-    const seamlessLoopThresholdSec = 0.08;
-    bgmAudio.addEventListener('timeupdate', () => {
+    const seamlessLoopThresholdSec = 0.32;
+    const seamlessLoopPollMs = 30;
+    const maybeSeekLoopHead = () => {
       if (bgmAudio.paused || seamlessLoopLock) return;
       if (!Number.isFinite(bgmAudio.duration) || bgmAudio.duration <= 0) return;
       if (bgmAudio.currentTime >= bgmAudio.duration - seamlessLoopThresholdSec) {
@@ -819,7 +820,11 @@
           seamlessLoopLock = false;
         });
       }
-    });
+    };
+    bgmAudio.addEventListener('timeupdate', maybeSeekLoopHead);
+    setInterval(() => {
+      maybeSeekLoopHead();
+    }, seamlessLoopPollMs);
 
     const updateTrackTitle = () => {
       const selectedOption = soundSelect.options[soundSelect.selectedIndex];
