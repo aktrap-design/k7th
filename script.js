@@ -49,6 +49,22 @@
   let throwbackTouchStartX = 0;
   let galleryLoadingToken = 0;
 
+  function enforceTopOnReload() {
+    try {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      const navEntry = performance.getEntriesByType('navigation')[0];
+      const isReload = navEntry && navEntry.type === 'reload';
+      if (isReload) {
+        window.scrollTo(0, 0);
+        requestAnimationFrame(() => window.scrollTo(0, 0));
+      }
+    } catch (_) {
+      // no-op
+    }
+  }
+
   function normalizeList(maybeList) {
     if (Array.isArray(maybeList)) return maybeList;
     if (maybeList && typeof maybeList === 'object') return Object.values(maybeList);
@@ -1137,6 +1153,7 @@
   }
 
   // ---------- BOOT ----------
+  enforceTopOnReload();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
