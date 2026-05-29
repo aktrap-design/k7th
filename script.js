@@ -216,7 +216,9 @@
     slides.forEach((slide, i) => {
       const div = document.createElement('div');
       div.className = 'hero-slide' + (i === 0 ? ' active' : '');
-      div.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" loading="${i === 0 ? 'eager' : 'lazy'}">`;
+      const loadingMode = i < 4 ? 'eager' : 'lazy';
+      const fetchPriority = i < 2 ? 'high' : 'auto';
+      div.innerHTML = `<img src="${slide.src}" alt="${slide.alt}" loading="${loadingMode}" fetchpriority="${fetchPriority}">`;
       heroTrack.appendChild(div);
     });
 
