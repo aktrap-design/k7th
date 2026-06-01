@@ -42,11 +42,6 @@
       "category": "MOMENT"
     },
     {
-      "src": "images/260517NN1.png",
-      "alt": "260517NN1",
-      "category": "LIFE"
-    },
-    {
       "src": "images/K7_260526M.png",
       "alt": "260526M",
       "category": "LIFE"
@@ -59,6 +54,11 @@
     {
       "src": "images/K7_260522Ma.png",
       "alt": "260522M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/260517NN1.png",
+      "alt": "260517NN1",
       "category": "LIFE"
     },
     {
@@ -90,6 +90,11 @@
       "src": "images/K7_260522Na.png",
       "alt": "260522Na",
       "category": "LIFE"
+    },
+    {
+      "src": "images/K7_250920AM.png",
+      "alt": "Instax25",
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_260520A.png",
@@ -374,6 +379,11 @@
     {
       "src": "images/K7_251124M.png",
       "alt": "251124M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_250728NN.png",
+      "alt": "BAR",
       "category": "MOMENT"
     },
     {
