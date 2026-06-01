@@ -127,6 +127,11 @@
       "category": "LIFE"
     },
     {
+      "src": "images/K7_260505books.png",
+      "alt": "TETEMONO-TANBOU",
+      "category": "GRAPHIC"
+    },
+    {
       "src": "images/K7_260426N.png",
       "alt": "260426N",
       "category": "LIFE"
@@ -192,6 +197,11 @@
       "category": "LIFE"
     },
     {
+      "src": "images/K7_251221M.png",
+      "alt": "FALL",
+      "category": "MOMENT"
+    },
+    {
       "src": "images/K7_260325M.png",
       "alt": "260325M",
       "category": "LIFE"
@@ -245,6 +255,11 @@
       "src": "images/K7_260221MN.png",
       "alt": "260221MN",
       "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_251226M.png",
+      "alt": "251226M",
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_260216A1.png",
@@ -310,6 +325,11 @@
       "src": "images/K7_251230MN.png",
       "alt": "251230MN",
       "category": "LIFE"
+    },
+    {
+      "src": "images/K7_251216Na.png",
+      "alt": "251216Na",
+      "category": "MOMENT"
     },
     {
       "src": "images/K7_catch.png",
