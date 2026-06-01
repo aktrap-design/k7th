@@ -52,13 +52,13 @@
       "category": "LIFE"
     },
     {
-      "src": "images/K7_260522Ma.png",
-      "alt": "260522M",
+      "src": "images/K7_260510A2.png",
+      "alt": "260510A2",
       "category": "LIFE"
     },
     {
-      "src": "images/260517NN1.png",
-      "alt": "260517NN1",
+      "src": "images/K7_260522Ma.png",
+      "alt": "260522M",
       "category": "LIFE"
     },
     {
@@ -69,11 +69,6 @@
     {
       "src": "images/K7_260523Nm.png",
       "alt": "260523Nm",
-      "category": "LIFE"
-    },
-    {
-      "src": "images/K7_260510A2.png",
-      "alt": "260510A2",
       "category": "LIFE"
     },
     {
@@ -95,6 +90,11 @@
       "src": "images/K7_250920AM.png",
       "alt": "Instax25",
       "category": "MOMENT"
+    },
+    {
+      "src": "images/260517NN1.png",
+      "alt": "260517NN1",
+      "category": "LIFE"
     },
     {
       "src": "images/K7_260520A.png",
@@ -820,6 +820,10 @@
   ],
   "throwback": [
     {
+      "src": "images/K7JK_250828Af.png",
+      "alt": "YOU KNOW"
+    },
+    {
       "src": "images/K7JK_260305M.png",
       "alt": "AM I"
     },
@@ -834,10 +838,6 @@
     {
       "src": "images/K7JK_260326M.png",
       "alt": "MYSELF"
-    },
-    {
-      "src": "images/K7JK_250828Af.png",
-      "alt": "YOU KNOW"
     },
     {
       "src": "images/K7JK_251120A.png",
