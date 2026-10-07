@@ -123,11 +123,20 @@
   <!-- ========== GALLERY ========== -->
   <section class="gallery-section" id="gallery">
     <div class="gallery-header">
-      <h2 class="section-title">IMAGINATIONS</h2>
+      <div class="gallery-heading">
+        <p class="gallery-kicker">THE VISUAL ARCHIVE <span aria-hidden="true">/</span> <span id="gallery-count" aria-live="polite"></span></p>
+        <h2 class="section-title">IMAGINATIONS</h2>
+      </div>
       <nav class="filter-bar" id="filter-bar" aria-label="Category filter">
         <button class="filter-btn active" data-filter="ALL">ALL</button>
       </nav>
+      <label class="gallery-search">
+        <span class="gallery-search-label">SEARCH FRAMES</span>
+        <input id="gallery-search" type="search" placeholder="Title or category" autocomplete="off" aria-label="Search gallery frames">
+        <span class="gallery-search-icon" aria-hidden="true">⌕</span>
+      </label>
     </div>
+    <div class="gallery-progress" aria-hidden="true"><span id="gallery-progress-bar"></span></div>
     <div class="gallery-loading" id="gallery-loading" aria-live="polite" aria-hidden="true">
       <span class="gallery-loading-text">Loading frames...</span>
     </div>
