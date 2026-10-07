@@ -29,6 +29,9 @@
   const galleryGrid = document.getElementById('gallery-grid');
   const galleryLoading = document.getElementById('gallery-loading');
   const filterBar = document.getElementById('filter-bar');
+  const galleryCount = document.getElementById('gallery-count');
+  const gallerySearch = document.getElementById('gallery-search');
+  const galleryProgressBar = document.getElementById('gallery-progress-bar');
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightbox-image');
   const lightboxInfo = document.getElementById('lightbox-info');
@@ -48,6 +51,7 @@
   let throwbackIndex = 0;
   let throwbackTouchStartX = 0;
   let galleryLoadingToken = 0;
+  let activeGalleryFilter = 'ALL';
 
   function enforceTopOnReload() {
     try {
@@ -204,6 +208,8 @@
     buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
+    setupGallerySearch();
+    setupGalleryProgress();
     runGalleryLoadingForFilter('ALL', { preloadLimit: 3, minDurationMs: 0, maxDurationMs: 450 });
     buildThrowback(getThrowbackItems());
     buildBehindTheFrame(galleryData.behindTheFrame);
@@ -462,7 +468,8 @@
       const btn = document.createElement('button');
       btn.className = 'filter-btn';
       btn.dataset.filter = cat;
-      btn.textContent = cat;
+      const count = (galleryData.gallery || []).filter((item) => item.category === cat).length;
+      btn.innerHTML = `<span>${cat}</span><span class="filter-count">${String(count).padStart(2, '0')}</span>`;
       filterBar.appendChild(btn);
     });
 
@@ -474,6 +481,7 @@
       // Update active state
       filterBar.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
+      activeGalleryFilter = btn.dataset.filter;
 
       runGalleryLoadingForFilter(btn.dataset.filter, { minDurationMs: 80, maxDurationMs: 650 });
     });
@@ -484,7 +492,10 @@
     visibleItems = [];
 
     items.forEach((item) => {
-      const match = category === 'ALL' || item.dataset.category === category;
+      const categoryMatch = category === 'ALL' || item.dataset.category === category;
+      const query = gallerySearch ? gallerySearch.value.trim().toLocaleLowerCase() : '';
+      const searchMatch = !query || `${item.dataset.title} ${item.dataset.category}`.toLocaleLowerCase().includes(query);
+      const match = categoryMatch && searchMatch;
       if (match) {
         item.classList.remove('filtered-out');
         visibleItems.push(item);
@@ -492,6 +503,37 @@
         item.classList.add('filtered-out');
       }
     });
+    if (galleryCount) {
+      const label = category === 'ALL' ? 'FRAMES' : `${category} · FRAMES`;
+      galleryCount.textContent = `${String(visibleItems.length).padStart(2, '0')} ${label}`;
+    }
+  }
+
+  function setupGallerySearch() {
+    if (!gallerySearch) return;
+    gallerySearch.addEventListener('input', () => applyFilter(activeGalleryFilter));
+  }
+
+  function setupGalleryProgress() {
+    if (!galleryProgressBar) return;
+    let ticking = false;
+    const update = () => {
+      const section = document.getElementById('gallery');
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const travel = section.offsetHeight - window.innerHeight;
+      const progress = travel <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / travel));
+      galleryProgressBar.style.transform = `scaleX(${progress})`;
+      ticking = false;
+    };
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    requestUpdate();
   }
 
   // ==========================================
@@ -503,18 +545,30 @@
     images.forEach((img, i) => {
       const item = document.createElement('div');
       item.className = 'gallery-item reveal';
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-label', `${img.alt} — ${img.category} を拡大表示`);
       item.dataset.index = i;
       item.dataset.category = img.category;
+      item.dataset.title = img.alt;
 
       item.innerHTML = `
         <img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async" width="900" height="1200">
         <div class="gallery-item-overlay">
+          <span class="gallery-item-index">FRAME ${String(i + 1).padStart(2, '0')}</span>
           <span class="gallery-item-title">${img.alt}</span>
           <span class="gallery-item-category">${img.category}</span>
+          <span class="gallery-item-open" aria-hidden="true">↗</span>
         </div>
       `;
 
       item.addEventListener('click', () => openLightbox(i));
+      item.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(i);
+        }
+      });
       galleryGrid.appendChild(item);
     });
 
