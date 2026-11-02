@@ -11,6 +11,14 @@
   const HERO_WIPE_SWAP_MS = 650;
   const HERO_WIPE_CLEANUP_MS = 1300;
   const SWIPE_THRESHOLD = 50; // px
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const processorCores = navigator.hardwareConcurrency || 4;
+  const tileProfile = !coarsePointer && finePointer && processorCores >= 8
+    ? { edge: 13, budget: 240 }
+    : coarsePointer || processorCores <= 4
+      ? { edge: 20, budget: 144 }
+      : { edge: 17, budget: 180 };
 
   // ---------- STATE ----------
   let galleryData = null;
@@ -142,6 +150,7 @@
     setupGalleryProgress();
     runGalleryLoadingForFilter('ALL');
     setupGalleryDepth();
+    setupGalleryNumberParallax();
     buildThrowback(getThrowbackItems());
     buildBehindTheFrame(galleryData.behindTheFrame);
     setupLightbox();
@@ -575,6 +584,37 @@
     }, { passive: true });
   }
 
+  function setupGalleryNumberParallax() {
+    if (!galleryGrid || galleryGrid.classList.contains('low-motion') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const numbers = Array.from(galleryGrid.querySelectorAll('.gallery-item-serial'));
+    if (!numbers.length || !('IntersectionObserver' in window)) return;
+
+    const activeNumbers = new Set();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeNumbers.add(entry.target);
+          entry.target.style.willChange = 'transform';
+        } else {
+          activeNumbers.delete(entry.target);
+          entry.target.style.willChange = '';
+        }
+      });
+    }, { rootMargin: '100px 0px' });
+    numbers.forEach((number) => observer.observe(number));
+
+    addRafScrollListener(() => {
+      const viewportCenter = window.innerHeight / 2;
+      activeNumbers.forEach((number) => {
+        const rect = number.getBoundingClientRect();
+        const distance = (viewportCenter - (rect.top + rect.height / 2)) / viewportCenter;
+        const offset = Math.max(-18, Math.min(18, distance * 18));
+        number.style.setProperty('--serial-scroll-y', `${offset.toFixed(1)}px`);
+      });
+    });
+  }
+
   function playGalleryTileReveal(item) {
     if (!galleryGrid || galleryGrid.classList.contains('low-motion')) return;
     if (!item.classList.contains('visible') || !item.classList.contains('image-ready') || item.dataset.tilesPlayed) return;
@@ -585,9 +625,9 @@
 
     item.dataset.tilesPlayed = 'true';
     const rect = item.getBoundingClientRect();
-    let columns = Math.max(6, Math.min(18, Math.round(rect.width / 20)));
-    let rows = Math.max(7, Math.min(20, Math.round(rect.height / 20)));
-    const tileBudget = 160;
+    let columns = Math.max(6, Math.min(22, Math.round(rect.width / tileProfile.edge)));
+    let rows = Math.max(7, Math.min(26, Math.round(rect.height / tileProfile.edge)));
+    const tileBudget = tileProfile.budget;
     while (columns * rows > tileBudget) {
       if (rect.width / columns < rect.height / rows) columns -= 1;
       else rows -= 1;

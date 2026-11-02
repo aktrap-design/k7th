@@ -331,7 +331,6 @@ a {
 .transition-bars .bar {
   background: var(--bg-primary); /* Uses black background */
   width: 100%;
-  will-change: transform;
 }
 
 /* Base state - hidden offscreen */
@@ -511,7 +510,6 @@ a {
 .video-parallax-wrapper {
   position: absolute;
   inset: -20% 0;
-  will-change: transform;
 }
 
 .video-bg {
@@ -1779,6 +1777,7 @@ body.lightbox-open {
   100% {
     transform: translate(0,0) rotate(0) scale(1);
     opacity: 1;
+    border-color: transparent;
   }
 }
 @keyframes galleryTileOrbit {
@@ -1790,7 +1789,7 @@ body.lightbox-open {
     transform: translate(var(--tile-mid-x),var(--tile-mid-y)) rotate(var(--tile-mid-rotation)) scale(1.1);
     opacity: 1;
   }
-  100% { transform: translate(0,0) rotate(0) scale(1); opacity: 1; }
+  100% { transform: translate(0,0) rotate(0) scale(1); opacity: 1; border-color: transparent; }
 }
 @keyframes galleryTileSignal {
   0% {
@@ -1802,7 +1801,7 @@ body.lightbox-open {
     transform: translate(var(--tile-mid-x),var(--tile-mid-y)) rotate(var(--tile-mid-rotation)) scale(1.06);
     opacity: 1;
   }
-  100% { transform: translate(0,0) rotate(0) scale(1); opacity: 1; }
+  100% { transform: translate(0,0) rotate(0) scale(1); opacity: 1; border-color: transparent; }
 }
 @keyframes galleryTileScan {
   0% { transform: translateY(-110%); opacity: 0; }
@@ -1831,7 +1830,7 @@ body.lightbox-open {
   line-height: .8;
   letter-spacing: -.045em;
   opacity: .72;
-  transform: translateX(4px);
+  transform: translate3d(0, var(--serial-scroll-y, 0px), 0) translateX(4px);
   transition: opacity .4s ease, transform .4s var(--timing-smooth);
 }
 .gallery-item-index {
@@ -1893,7 +1892,7 @@ body.lightbox-open {
   .gallery-item:hover .gallery-item-overlay { transform: translateY(0); }
   .gallery-item:hover .gallery-item-open { opacity: 1; transform: translate(0,0); }
   .gallery-item:hover .gallery-item-serial,
-  .gallery-item:focus-visible .gallery-item-serial { opacity: .96; transform: translateX(0); }
+  .gallery-item:focus-visible .gallery-item-serial { opacity: .96; transform: translate3d(0, var(--serial-scroll-y, 0px), 0) translateX(0); }
 }
 @media (max-width: 1023px) {
   .gallery-search { align-self: stretch; }
@@ -1904,6 +1903,7 @@ body.lightbox-open {
 }
 @media (prefers-reduced-motion: reduce) {
   .gallery-item img { will-change: auto; }
+  .gallery-item-serial { transform: none !important; will-change: auto; }
   .gallery-loading-text::before { animation: none; }
   .gallery-item.is-loading.visible::before { animation: none; }
   .gallery-item-tiles { display: none; }
