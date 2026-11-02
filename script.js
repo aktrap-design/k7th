@@ -50,7 +50,6 @@
   const behindGrid = document.getElementById('behind-grid');
   let throwbackIndex = 0;
   let throwbackTouchStartX = 0;
-  let galleryLoadingToken = 0;
   let activeGalleryFilter = 'ALL';
 
   function enforceTopOnReload() {
@@ -112,86 +111,15 @@
     }, delayMs);
   }
 
-  function showGalleryLoading() {
-    if (!galleryLoading) return;
-    galleryLoading.classList.add('show');
-    galleryLoading.setAttribute('aria-hidden', 'false');
-  }
-
   function hideGalleryLoading() {
     if (!galleryLoading) return;
     galleryLoading.classList.remove('show');
     galleryLoading.setAttribute('aria-hidden', 'true');
   }
 
-  function preloadImages(urls, maxWaitMs = 2500) {
-    const list = urls.filter(Boolean);
-    if (!list.length) return Promise.resolve();
-    return new Promise((resolve) => {
-      let completed = 0;
-      let settled = false;
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        resolve();
-      };
-      const timer = setTimeout(finish, maxWaitMs);
-
-      list.forEach((src) => {
-        const img = new Image();
-        const done = () => {
-          completed += 1;
-          if (completed >= list.length) {
-            clearTimeout(timer);
-            finish();
-          }
-        };
-        img.onload = done;
-        img.onerror = done;
-        img.src = src;
-      });
-    });
-  }
-
-  function getNetworkTuning() {
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const effectiveType = conn && conn.effectiveType ? conn.effectiveType : '';
-    const saveData = Boolean(conn && conn.saveData);
-    const isSlow = saveData || /(^2g$|^slow-2g$|^3g$)/.test(effectiveType);
-    return { isSlow };
-  }
-
-  async function runGalleryLoadingForFilter(category, options = {}) {
-    const token = ++galleryLoadingToken;
-    const { isSlow } = getNetworkTuning();
-    const minDurationMs = options.minDurationMs ?? (isSlow ? 0 : 120);
-    const maxDurationMs = options.maxDurationMs ?? (isSlow ? 320 : 700);
-    const startAt = performance.now();
-
-    showGalleryLoading();
+  function runGalleryLoadingForFilter(category) {
     applyFilter(category);
-
-    const source = Array.isArray(galleryData?.gallery) ? galleryData.gallery : [];
-    const preloadLimit = options.preloadLimit ?? (category === 'ALL' ? (isSlow ? 2 : 4) : (isSlow ? 3 : 6));
-    const filtered = (category === 'ALL'
-      ? source
-      : source.filter((item) => item.category === category))
-      .slice(0, preloadLimit);
-
-    if (filtered.length) {
-      const preloadPromise = preloadImages(filtered.map((item) => item.src), maxDurationMs);
-      const timeoutPromise = new Promise((resolve) => setTimeout(resolve, maxDurationMs));
-      await Promise.race([preloadPromise, timeoutPromise]);
-    }
-
-    const elapsed = performance.now() - startAt;
-    if (elapsed < minDurationMs) {
-      await new Promise((resolve) => setTimeout(resolve, minDurationMs - elapsed));
-    }
-
-    if (token === galleryLoadingToken) {
-      hideGalleryLoading();
-    }
+    galleryGrid.setAttribute('aria-busy', 'false');
   }
 
   // ---------- INIT ----------
@@ -201,6 +129,7 @@
       galleryData = await res.json();
     } catch (e) {
       console.error('Failed to load gallery.json:', e);
+      if (galleryLoading) galleryLoading.textContent = 'Gallery could not be loaded';
       return;
     }
 
@@ -208,9 +137,11 @@
     buildCuratedCarousel(galleryData.curated);
     buildFilterButtons(galleryData.categories);
     buildGallery(galleryData.gallery);
+    hideGalleryLoading();
     setupGallerySearch();
     setupGalleryProgress();
-    runGalleryLoadingForFilter('ALL', { preloadLimit: 3, minDurationMs: 0, maxDurationMs: 450 });
+    runGalleryLoadingForFilter('ALL');
+    setupGalleryDepth();
     buildThrowback(getThrowbackItems());
     buildBehindTheFrame(galleryData.behindTheFrame);
     setupLightbox();
@@ -483,7 +414,7 @@
       btn.classList.add('active');
       activeGalleryFilter = btn.dataset.filter;
 
-      runGalleryLoadingForFilter(btn.dataset.filter, { minDurationMs: 80, maxDurationMs: 650 });
+      runGalleryLoadingForFilter(btn.dataset.filter);
     });
   }
 
@@ -516,10 +447,10 @@
 
   function setupGalleryProgress() {
     if (!galleryProgressBar) return;
+    const section = document.getElementById('gallery');
+    if (!section) return;
     let ticking = false;
     const update = () => {
-      const section = document.getElementById('gallery');
-      if (!section) return;
       const rect = section.getBoundingClientRect();
       const travel = section.offsetHeight - window.innerHeight;
       const progress = travel <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / travel));
@@ -531,9 +462,17 @@
       ticking = true;
       requestAnimationFrame(update);
     };
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    requestUpdate();
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        window.addEventListener('scroll', requestUpdate, { passive: true });
+        window.addEventListener('resize', requestUpdate);
+        requestUpdate();
+      } else {
+        window.removeEventListener('scroll', requestUpdate);
+        window.removeEventListener('resize', requestUpdate);
+      }
+    }, { rootMargin: '100% 0px' });
+    visibilityObserver.observe(section);
   }
 
   // ==========================================
@@ -559,8 +498,24 @@
           <span class="gallery-item-title">${img.alt}</span>
           <span class="gallery-item-category">${img.category}</span>
           <span class="gallery-item-open" aria-hidden="true">↗</span>
+          <span class="gallery-item-serial" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
         </div>
+        <span class="gallery-item-tiles" aria-hidden="true"></span>
       `;
+
+      const image = item.querySelector('img');
+      item.classList.add('is-loading');
+      const markImageReady = () => {
+        item.classList.remove('is-loading');
+        item.classList.add('image-ready');
+        playGalleryTileReveal(item);
+      };
+      image.addEventListener('load', markImageReady, { once: true });
+      image.addEventListener('error', () => {
+        item.classList.remove('is-loading');
+        item.classList.add('is-error');
+      }, { once: true });
+      if (image.complete && image.naturalWidth > 0) markImageReady();
 
       item.addEventListener('click', () => openLightbox(i));
       item.addEventListener('keydown', (event) => {
@@ -574,6 +529,105 @@
 
     // Initialize visible items
     visibleItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
+  }
+
+  function setupGalleryDepth() {
+    if (!galleryGrid) return;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || (connection && connection.saveData)) {
+      galleryGrid.classList.add('low-motion');
+      return;
+    }
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    let frame = 0;
+    let activeItem = null;
+    let pointerX = 0;
+    let pointerY = 0;
+    galleryGrid.addEventListener('pointermove', (event) => {
+      const item = event.target.closest('.gallery-item');
+      if (!item || item.classList.contains('filtered-out')) return;
+      activeItem = item;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        if (!activeItem) { frame = 0; return; }
+        const rect = activeItem.getBoundingClientRect();
+        const x = (pointerX - rect.left) / rect.width - 0.5;
+        const y = (pointerY - rect.top) / rect.height - 0.5;
+        activeItem.style.setProperty('--tilt-x', `${(x * 3.2).toFixed(2)}deg`);
+        activeItem.style.setProperty('--tilt-y', `${(-y * 3.2).toFixed(2)}deg`);
+        activeItem.style.setProperty('--shine-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+        activeItem.style.setProperty('--shine-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+        frame = 0;
+      });
+    }, { passive: true });
+    galleryGrid.addEventListener('pointerout', (event) => {
+      const item = event.target.closest('.gallery-item');
+      if (!item || item.contains(event.relatedTarget)) return;
+      item.style.removeProperty('--tilt-x');
+      item.style.removeProperty('--tilt-y');
+      item.style.removeProperty('--shine-x');
+      item.style.removeProperty('--shine-y');
+      if (activeItem === item) activeItem = null;
+    }, { passive: true });
+  }
+
+  function playGalleryTileReveal(item) {
+    if (!galleryGrid || galleryGrid.classList.contains('low-motion')) return;
+    if (!item.classList.contains('visible') || !item.classList.contains('image-ready') || item.dataset.tilesPlayed) return;
+
+    const image = item.querySelector('img');
+    const layer = item.querySelector('.gallery-item-tiles');
+    if (!image || !layer || !image.naturalWidth || !image.naturalHeight) return;
+
+    item.dataset.tilesPlayed = 'true';
+    const columns = 10;
+    const rows = 9;
+    const rect = item.getBoundingClientRect();
+    const scale = Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+    const renderWidth = image.naturalWidth * scale;
+    const renderHeight = image.naturalHeight * scale;
+    const cropX = (renderWidth - rect.width) / 2;
+    const cropY = (renderHeight - rect.height) / 2;
+    const tileWidth = rect.width / columns;
+    const tileHeight = rect.height / rows;
+    const tiles = [];
+    const fragment = document.createDocumentFragment();
+
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < columns; column += 1) {
+        const tile = document.createElement('span');
+        const horizontal = column - (columns - 1) / 2;
+        const vertical = row - (rows - 1) / 2;
+        const variance = Math.sin((row + 1) * (column + 3)) * 3;
+        const offsetX = horizontal * 22 + variance * 1.4;
+        const offsetY = vertical * 22 - variance * 1.4;
+        tile.className = 'gallery-pixel-tile';
+        tile.style.left = `${column * 100 / columns}%`;
+        tile.style.top = `${row * 100 / rows}%`;
+        tile.style.width = `${100 / columns}%`;
+        tile.style.height = `${100 / rows}%`;
+        tile.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
+        tile.style.backgroundSize = `${renderWidth}px ${renderHeight}px`;
+        tile.style.backgroundPosition = `${-cropX - column * tileWidth}px ${-cropY - row * tileHeight}px`;
+        tile.style.setProperty('--tile-x', `${offsetX.toFixed(1)}px`);
+        tile.style.setProperty('--tile-y', `${offsetY.toFixed(1)}px`);
+        tile.style.setProperty('--tile-z', `${18 + Math.abs(horizontal + vertical) * 2}px`);
+        tile.style.setProperty('--tile-rotate', `${(variance * 1.8).toFixed(1)}deg`);
+        tile.style.setProperty('--tile-delay', `${(row * 18 + column * 7)}ms`);
+        tiles.push(tile);
+        fragment.appendChild(tile);
+      }
+    }
+
+    item.classList.add('tiles-revealing');
+    layer.appendChild(fragment);
+    tiles[tiles.length - 1].addEventListener('animationend', () => {
+      layer.remove();
+      item.classList.remove('tiles-revealing');
+    }, { once: true });
   }
 
   // ==========================================
@@ -969,6 +1023,7 @@
 
             setTimeout(() => {
               item.classList.add('visible');
+              playGalleryTileReveal(item);
             }, delay);
 
             observer.unobserve(item);
