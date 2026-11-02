@@ -137,10 +137,10 @@
       </label>
     </div>
     <div class="gallery-progress" aria-hidden="true"><span id="gallery-progress-bar"></span></div>
-    <div class="gallery-loading" id="gallery-loading" aria-live="polite" aria-hidden="true">
-      <span class="gallery-loading-text">Loading frames...</span>
+    <div class="gallery-loading show" id="gallery-loading" role="status" aria-live="polite" aria-hidden="false">
+      <span class="gallery-loading-text">Arranging frames</span>
     </div>
-    <div class="gallery-grid" id="gallery-grid"></div>
+    <div class="gallery-grid" id="gallery-grid" aria-busy="false"></div>
   </section>
 
   <section class="throwback-section" id="throwback-section" aria-label="Throwback gallery">
