@@ -32,6 +32,196 @@
   ],
   "gallery": [
     {
+      "src": "images/K7_261031NM2.png",
+      "alt": "K7_261031NM2",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_261026Ax.png",
+      "alt": "K7_261026Ax",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_261027NFa.png",
+      "alt": "K7_261027NFa",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_261023Na.png",
+      "alt": "K7_261023Na",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_261019N.png",
+      "alt": "K7_261019N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_261016N1.png",
+      "alt": "K7_261016N1",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_261016M.png",
+      "alt": "K7_261016M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_261014A1.png",
+      "alt": "K7_261014A1",
+      "category": "GRAPHIC"
+    },
+    {
+      "src": "images/K7_261011A1.png",
+      "alt": "K7_261011A1",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_261009A.png",
+      "alt": "K7_261009A",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260930MM.png",
+      "alt": "K7_260930MM",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260903N.png",
+      "alt": "K7_260903N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260826A0.png",
+      "alt": "K7_260826A0",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260823N.png",
+      "alt": "K7_260823N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260816MA3.png",
+      "alt": "K7_260816MA3",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260815N.png",
+      "alt": "K7_260815N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260815AAA.png",
+      "alt": "K7_260815AAA",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260806MNg.png",
+      "alt": "K7_260806MNg",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260724M.png",
+      "alt": "K7_260724M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260722M.png",
+      "alt": "K7_260722M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260722A.png",
+      "alt": "K7_260722A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260718N1.png",
+      "alt": "K7_260718N1",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260715N.png",
+      "alt": "K7_260715N",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260714NN.png",
+      "alt": "K7_260714NN",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260619M.png",
+      "alt": "K7_260619M",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260620Aa.png",
+      "alt": "K7_260620Aa",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260620M.png",
+      "alt": "K7_260620M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260617M2.png",
+      "alt": "K7_260617M2",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260614NN.png",
+      "alt": "K7_260614NN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260614M2.png",
+      "alt": "K7_260614M2",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260612NA.png",
+      "alt": "K7_260612NA",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260610A.png",
+      "alt": "K7_260610A",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260605N2.png",
+      "alt": "K7_260605N2",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260605M.png",
+      "alt": "K7_260605M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260605M2.png",
+      "alt": "K7_260605M2",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260603M.png",
+      "alt": "K7_260603M",
+      "category": "LIFE"
+    },
+    {
+      "src": "images/K7_260914NN.png",
+      "alt": "K7_260914NN",
+      "category": "MOMENT"
+    },
+    {
+      "src": "images/K7_260921N.png",
+      "alt": "K7_260921N",
+      "category": "LIFE"
+    },
+    {
       "src": "images/K7_2605xa.png",
       "alt": "PARTICLE",
       "category": "GRAPHIC"
@@ -748,6 +938,18 @@
     }
   ],
   "curated": [
+    {
+      "src": "images/K7_261031NX0.png",
+      "alt": "HELLOWEEN'26"
+    },
+    {
+      "src": "images/k7_260617N1.png",
+      "alt": "FACE"
+    },
+    {
+      "src": "images/K7_260704N.png",
+      "alt": "NIGHT BY NIGHT"
+    },
     {
       "src": "images/K7_20260525X1.png",
       "alt": "WINGS"
