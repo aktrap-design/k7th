@@ -490,6 +490,7 @@
       item.dataset.index = i;
       item.dataset.category = img.category;
       item.dataset.title = img.alt;
+      item.dataset.materialize = ['orbit', 'scan', 'signal'][i % 3];
 
       item.innerHTML = `
         <img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async" width="900" height="1200">
@@ -583,9 +584,15 @@
     if (!image || !layer || !image.naturalWidth || !image.naturalHeight) return;
 
     item.dataset.tilesPlayed = 'true';
-    const columns = 10;
-    const rows = 9;
     const rect = item.getBoundingClientRect();
+    let columns = Math.max(6, Math.min(18, Math.round(rect.width / 20)));
+    let rows = Math.max(7, Math.min(20, Math.round(rect.height / 20)));
+    const tileBudget = 160;
+    while (columns * rows > tileBudget) {
+      if (rect.width / columns < rect.height / rows) columns -= 1;
+      else rows -= 1;
+    }
+    const maxRadial = Math.hypot((columns - 1) / 2, (rows - 1) / 2);
     const scale = Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
     const renderWidth = image.naturalWidth * scale;
     const renderHeight = image.naturalHeight * scale;
@@ -593,17 +600,47 @@
     const cropY = (renderHeight - rect.height) / 2;
     const tileWidth = rect.width / columns;
     const tileHeight = rect.height / rows;
-    const tiles = [];
+    let finishedTiles = 0;
+    let cleanupTimer;
     const fragment = document.createDocumentFragment();
+    const finishReveal = () => {
+      if (!layer.isConnected) return;
+      window.clearTimeout(cleanupTimer);
+      layer.remove();
+      item.classList.remove('tiles-revealing');
+    };
 
     for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < columns; column += 1) {
         const tile = document.createElement('span');
         const horizontal = column - (columns - 1) / 2;
         const vertical = row - (rows - 1) / 2;
-        const variance = Math.sin((row + 1) * (column + 3)) * 3;
-        const offsetX = horizontal * 22 + variance * 1.4;
-        const offsetY = vertical * 22 - variance * 1.4;
+        const seed = Math.sin((row + 1) * 12.9898 + (column + 1) * 78.233) * 43758.5453;
+        const noise = seed - Math.floor(seed);
+        const radial = Math.hypot(horizontal, vertical) || 1;
+        let fromX;
+        let fromY;
+        let rotation;
+        let delay;
+
+        if (item.dataset.materialize === 'orbit') {
+          fromX = (horizontal / radial) * (22 + noise * 24);
+          fromY = (vertical / radial) * (22 + noise * 24);
+          rotation = (noise - .5) * 18;
+          delay = (1 - radial / maxRadial) * 330 + noise * 90;
+        } else if (item.dataset.materialize === 'scan') {
+          const direction = column % 2 === 0 ? -1 : 1;
+          fromX = direction * (18 + noise * 18);
+          fromY = (noise - .5) * 10;
+          rotation = direction * (1.5 + noise * 3.5);
+          delay = (row / Math.max(1, rows - 1)) * 420 + column * 3.5;
+        } else {
+          fromX = (noise - .5) * 72;
+          fromY = (Math.cos((row + 1) * (column + 2)) * 14) + (noise - .5) * 36;
+          rotation = (noise - .5) * 20;
+          delay = noise * 360;
+        }
+
         tile.className = 'gallery-pixel-tile';
         tile.style.left = `${column * 100 / columns}%`;
         tile.style.top = `${row * 100 / rows}%`;
@@ -612,22 +649,24 @@
         tile.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
         tile.style.backgroundSize = `${renderWidth}px ${renderHeight}px`;
         tile.style.backgroundPosition = `${-cropX - column * tileWidth}px ${-cropY - row * tileHeight}px`;
-        tile.style.setProperty('--tile-x', `${offsetX.toFixed(1)}px`);
-        tile.style.setProperty('--tile-y', `${offsetY.toFixed(1)}px`);
-        tile.style.setProperty('--tile-z', `${18 + Math.abs(horizontal + vertical) * 2}px`);
-        tile.style.setProperty('--tile-rotate', `${(variance * 1.8).toFixed(1)}deg`);
-        tile.style.setProperty('--tile-delay', `${(row * 18 + column * 7)}ms`);
-        tiles.push(tile);
+        tile.style.setProperty('--tile-from-x', `${fromX.toFixed(1)}px`);
+        tile.style.setProperty('--tile-from-y', `${fromY.toFixed(1)}px`);
+        tile.style.setProperty('--tile-mid-x', `${(fromX * .32).toFixed(1)}px`);
+        tile.style.setProperty('--tile-mid-y', `${(fromY * .32).toFixed(1)}px`);
+        tile.style.setProperty('--tile-rotation', `${rotation.toFixed(1)}deg`);
+        tile.style.setProperty('--tile-mid-rotation', `${(rotation * .24).toFixed(1)}deg`);
+        tile.style.setProperty('--tile-delay', `${Math.round(delay)}ms`);
+        tile.addEventListener('animationend', () => {
+          finishedTiles += 1;
+          if (finishedTiles === columns * rows) finishReveal();
+        }, { once: true });
         fragment.appendChild(tile);
       }
     }
 
     item.classList.add('tiles-revealing');
     layer.appendChild(fragment);
-    tiles[tiles.length - 1].addEventListener('animationend', () => {
-      layer.remove();
-      item.classList.remove('tiles-revealing');
-    }, { once: true });
+    cleanupTimer = window.setTimeout(finishReveal, 2600);
   }
 
   // ==========================================
